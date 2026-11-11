@@ -70,3 +70,12 @@ test('ZMK auto-starts browser output testing without issuing any QMK matrix requ
  f.events.focus();await delay(5);assert.equal(f.el('tester-toggle').textContent,'暂停检测');
  f.ui.setVisible(false);f.events.keydown(key('keydown'));assert.equal(f.el('tester-total').textContent,1);assert.equal(f.runtime.closed,false);
 });
+
+test('active test surface captures Tab and browser shortcuts; controls and pause retain normal navigation',async t=>{
+ const f=fixture(t,{connected:true,zmk:true});f.ui.setVisible(true);await delay(5);
+ function key(key,code,control=false){return {type:'keydown',key,code,ctrlKey:key==='f',target:{closest:()=>control?{}:null},preventDefault(){this.prevented=true},stopPropagation(){this.stopped=true}};}
+ for(const e of [key('Tab','Tab'),key('f','KeyF'),{...key('Tab','Tab'),shiftKey:true}]){f.events.keydown(e);assert.equal(e.prevented,true);assert.equal(e.stopped,true);}
+ const control=key('Tab','Tab',true);f.events.keydown(control);assert.equal(control.prevented,undefined);
+ f.el('tester-toggle').onclick();const paused=key('Tab','Tab');f.events.keydown(paused);assert.equal(paused.prevented,undefined);
+ f.ui.setVisible(false);const closed=key('f','KeyF');f.events.keydown(closed);assert.equal(closed.prevented,undefined);
+});

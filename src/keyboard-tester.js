@@ -185,10 +185,11 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
   }
   function onKey(event) {
     if(!active || !visible || document.hidden || document.querySelector('dialog[open]:not(#tester-dialog)')) return;
-    // Keep the sound and mode controls keyboard-accessible while testing.
-    if(event.key !== 'Tab' && event.target?.closest?.('.tester-options, .tester-actions, .modal-heading, .modal-notices'))return;
+    // Controls keep normal keyboard navigation; the focused test surface captures
+    // Tab and other cancelable browser shortcuts as test input.
+    if(event.target?.closest?.('.tester-options, .tester-actions, .modal-heading, .modal-notices'))return;
     if(audio.context?.state!=='running')void enableAudio();
-    if(event.key !== 'Tab') { event.preventDefault(); event.stopPropagation(); }
+    event.preventDefault(); event.stopPropagation();
     if(event.type==='keydown') $('tester-code').textContent=`${event.code || '未知键码'} · ${event.key===' '?'Space':event.key}`;
     if(mode!=='browser') return;
     const id=codes.get(event.code);
