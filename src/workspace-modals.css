@@ -235,3 +235,10 @@ body.workspace-modal-open { overflow: hidden; }
 .typing-settings{border-top:1px solid var(--line);padding:16px 0}.typing-settings label{display:grid;gap:8px;font-size:12px;color:#4e554b}.typing-setting-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}.typing-settings select{width:100%;min-width:0;background:#fafbf7;border:1px solid #dde1d5;border-radius:7px;padding:10px 7px;font-size:12px}.typing-color-fields{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}.typing-color-fields label{align-items:center;text-align:center;justify-items:center;font-size:11px}.typing-color-fields label[hidden]{display:none}.typing-color-fields input{width:38px;height:38px;padding:2px;border:1px solid #d9ddd3;border-radius:8px;background:white}.typing-settings p{font-size:11px;line-height:1.7;color:#707766;margin:12px 0 4px}.typing-settings .text-button{font-size:11px;padding:6px 0}
 
 .typing-background-fields{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.typing-background-title{font-size:12px;color:#4e554b}.typing-background-fields .typing-color-fields{grid-template-columns:repeat(2,1fr);margin-top:10px}.typing-background-fields .typing-color-fields label{grid-template-columns:38px 1fr;text-align:left;justify-items:start;gap:10px}.typing-background-note{display:block;margin-top:10px;font-size:11px;color:#707766;line-height:1.7}
+/* Keep test controls reachable and key legends legible on narrow screens. */
+@media (max-width: 600px) {
+  #tester-dialog .modal-heading { flex-wrap: wrap; }
+  #tester-dialog .modal-heading-actions { width: 100%; gap: 10px; justify-content: flex-end; }
+  #tester-dialog .modal-heading h2 { font-size: 22px; }
+  #tester-dialog .keyboard-scroll { overflow-x: auto; }
+}

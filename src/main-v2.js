@@ -95,7 +95,7 @@ function updateDevice() {
   renderConnectionControls(state.boot, state.busy);
   const isZmk=state.boot?.protocol==='zmk';
   const screenSupported = !isZmk && state.boot?.capabilities?.screen !== false;
-  for(const id of ['tester-nav','firmware-nav','connection-test-feature']){const e=$(id);if(e)e.hidden=isZmk;}
+  for(const id of ['firmware-nav']){const e=$(id);if(e)e.hidden=isZmk;}
   $('keymap-workspace').hidden=isZmk;
   zmkUI?.refresh();
   $("connection-screen-feature").hidden = !screenSupported;
@@ -116,7 +116,8 @@ function updateDevice() {
     : "尚未连接 v2 键盘";
   $("connection-dot").classList.toggle("connected", !!boot);
   petUI?.refreshConnection();
-  if(!isZmk){keymapUI?.refreshConnection();testerUI?.refreshConnection();}
+  if(!isZmk)keymapUI?.refreshConnection();
+  testerUI?.refreshConnection();
   $("write").disabled =
     !state.boot?.capabilities?.screen || !boot || !state.bytes || state.busy || state.preparedEpoch !== state.epoch;
   $("download").disabled = !state.bytes || state.busy;
@@ -832,7 +833,7 @@ navigator.usb?.addEventListener("disconnect", (e) => {
 });
 document.querySelectorAll("[data-modal-connect]").forEach(b => { b.onclick = () => $("connect").click(); });
 zmkUI=setupZmkUI({getDevice:()=>state.boot,notice});
-testerUI=setupKeyboardTester({getProfile:()=>keymapUI?.getProfile(),getDevice:()=>state.boot?.protocol==='zmk'?null:state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
+testerUI=setupKeyboardTester({getProfile:()=>keymapUI?.getProfile(),getDevice:()=>state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
 keymapUI=setupKeymap({getDemo:()=>state.demo,getDevice:()=>state.boot,getBusy:()=>state.busy,setBusy:busy,notice,onView:(view)=>testerUI.setVisible(view === "test")});
 $("gate-demo").onclick=async()=>{
   if(state.busy)return;

@@ -178,12 +178,14 @@
         <div class="tester-heading"><div><h1>按键响应</h1><p id="tester-mode">检测每个按键的响应</p></div><div class="tester-actions"><button id="tester-clear" class="outline small">清空记录</button><button id="tester-toggle" class="primary small">暂停检测</button></div></div>
         <div class="tester-options">
           <label>检测方式 <select id="tester-input-mode"><option value="matrix">物理按键（含 MO/Fn）</option><option value="browser">浏览器按键（不含 MO/Fn）</option></select></label>
+          <label id="tester-layer-control" hidden>测试层 <select id="tester-layer"></select></label>
           <label>提示音 <select id="tester-sound"><option value="digital">电子滴答</option><option value="arcade">复古 8-bit</option><option value="soft">柔和水滴</option><option value="off">关闭提示音</option></select></label>
           <label>音量 <input id="tester-volume" type="range" min="0" max="100" value="20" aria-label="提示音音量"/><output id="tester-volume-label">20%</output></label>
           <button id="tester-sound-preview" class="text-button">试听 ♪</button>
           <span id="tester-audio-status" role="status"></span>
         </div>
-        <p class="tester-system-hint">Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。</p>
+        <p id="tester-zmk-hint" class="tester-system-hint" hidden>此测试按所选层匹配输出，不切换键盘实际层。请在键盘上切到相同层；虚线键不计入检测，绿色仅表示收到对应输出。</p>
+        <p id="tester-system-hint" class="tester-system-hint">Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。</p>
         <div id="tester-surface" class="tester-surface" tabindex="0" aria-label="键盘测试区域">
           <div class="keyboard-scroll"><div class="keyboard-case"><div id="tester-keyboard" class="keyboard" aria-label="测试键盘布局"></div></div></div>
         </div>

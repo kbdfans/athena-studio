@@ -1,10 +1,10 @@
+import {zmkTestLayout} from './zmk-keyboard-test.js';
 import {DEVICE_PROFILES} from "./device-profiles.js";
 import {profileLayout} from "./profile-layouts.js";
 import { platformKeyLabel } from './platform-keys.js';
 
 
-import { keyboardLayout } from './keyboard-layout.js';
-import { keycapStyle, KEYBOARD_ASPECT_RATIO, SCREEN_POSITION } from './keyboard-geometry.js';
+import { keycapStyle } from './keyboard-geometry.js';
 import { keyInfo } from './keycodes.js';
 import { KeymapDevice } from './keymap-protocol.js';
 import { TestAudio, readTestAudioSettings } from './keyboard-test-audio.js';
@@ -35,8 +35,47 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
   let visible = false, active = false, starting = false, mode = 'browser', epoch = 0, timer,
     manualPaused = false, focused = document.hasFocus(), focusTimer = null, focusDeadline = 0, failedDevice = null, lastDevice = null, device = null, keys = [], buttons = new Map(), codes = new Map(), browserPositions = new Set(), layout = null;
   const live = () => { const d = getDevice(); return d && !d.broken && d.device.opened ? d : null; };
-  const name = (id) => { const [r,c] = id.split(',').map(Number); return platformKeyLabel(keyInfo(defaults[r*8+c])); };
+  let zmk=false, testLayer=null, zmkBoard=null, renderedDevice=null, names=new Map(), reasons=new Map();
+  const name = (id) => { if(zmk)return names.get(id)||id; const [r,c] = id.split(',').map(Number); return platformKeyLabel(keyInfo(defaults[r*8+c])); };
   function renderBoard() {
+    const current=getDevice(),nextZmk=current?.protocol==='zmk';
+    const selector=$('tester-input-mode');
+    if(nextZmk!==zmk)selector.value=nextZmk?'browser':'matrix';
+    zmk=nextZmk;
+    selector.disabled=zmk;
+    if(zmk)selector.value='browser';
+    $('tester-layer-control').hidden=!zmk;
+    $('tester-zmk-hint').hidden=!zmk;
+    $('tester-system-hint').hidden=zmk;
+    if(zmk){
+      const layers=current.map?.layers||[];
+      if(renderedDevice!==current||!layers.some(l=>l.id===testLayer))testLayer=layers[0]?.id;
+      const nextLayout=JSON.stringify([testLayer,current.map,current.physical]);
+      if(renderedDevice===current&&layout===nextLayout)return;
+      renderedDevice=current;layout=nextLayout;profileId=null;
+      $('tester-layer').replaceChildren();
+      for(const l of layers){const option=document.createElement('option');option.value=String(l.id);option.textContent=l.name||String(l.id);$('tester-layer').append(option);}
+      $('tester-layer').value=String(testLayer);
+      zmkBoard=zmkTestLayout(current,testLayer);
+      profile=current.profile;state.clear();buttons=new Map();codes=new Map();names=new Map();reasons=new Map();
+      const host=$('tester-keyboard');host.replaceChildren();
+      $('tester-last').textContent='等待输入';$('tester-code').textContent='—';
+      if(zmkBoard){
+        const geometry=zmkBoard;keys=geometry.keys;host.style.aspectRatio=`${geometry.board.width} / ${geometry.board.height}`;
+        host.parentElement.style.width=`min(100%, ${Math.min(1100,geometry.board.width/geometry.board.height*320,geometry.board.width/19*60)}px)`;
+        host.parentElement.style.minWidth=`${Math.min(600,geometry.board.width/19*60)}px`;
+        for(const k of keys){
+          const cap=document.createElement('div');cap.className='keycap tester-keycap';cap.dataset.position=k.position;
+          cap.textContent=k.label;cap.style.cssText=keycapStyle(k,geometry.board);
+          if(k.r){cap.style.transformOrigin=`${(k.rx-k.x)*19/(k.w*19-1)*100}% ${(k.ry-k.y)*19/(k.h*19-1)*100}%`;cap.style.transform=`rotate(${k.r}deg)`;}
+          host.append(cap);buttons.set(k.id,cap);names.set(k.id,k.label);reasons.set(k.id,k.reason);if(k.code)codes.set(k.code,k.id);
+        }
+      }
+      browserPositions=new Set(codes.values());paint();return;
+    }
+    const hostCase=$('tester-keyboard').parentElement;
+    if(hostCase){hostCase.style.width='';hostCase.style.minWidth='';}
+    renderedDevice=current;
     const nextLayout = getLayoutOptions();
     const nextProfile=getDevice()?.profile||getProfile()||DEVICE_PROFILES.athena75;
     if (layout === nextLayout&&profileId===nextProfile.id) return;
@@ -69,9 +108,9 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
       if(cap.dataset.visual===visual)continue;
       cap.dataset.visual=visual;
       cap.classList.toggle('unavailable', unavailable);
-      cap.title = unavailable ? `${name(id)}：请连接键盘并选择物理按键模式` : ''; 
+      cap.title = unavailable ? `${name(id)}：${zmk?reasons.get(id):'请连接键盘并选择物理按键模式'}` : '';
       cap.classList.toggle('tested',state.seen.has(id)); cap.classList.toggle('pressed',state.held.has(id));
-      cap.setAttribute('aria-label',`${name(id)}：${unavailable?'仅物理模式可检测':state.held.has(id)?'正在按下':state.seen.has(id)?'已检测':'未检测'}`);
+      cap.setAttribute('aria-label',`${name(id)}：${unavailable?(zmk?reasons.get(id):'仅物理模式可检测'):state.held.has(id)?'正在按下':state.seen.has(id)?'已检测':'未检测'}`);
     }
     $('tester-held').textContent=state.held.size;
     $('tester-count').textContent=`${state.seen.size} / ${physical ? buttons.size : browserPositions.size}`;
@@ -101,7 +140,8 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     $('tester-toggle').disabled=true;
     $('tester-status').textContent='正在准备测试…';
     device=live();
-    const requested=$('tester-input-mode').value;
+    const requested=zmk?'browser':$('tester-input-mode').value;
+    if(zmk&&(!device||!zmkBoard)){stop('请连接并解锁键盘，读取布局后开始测试。');return;}
     $('tester-mode').textContent=requested==='matrix'?'物理按键模式 · 含 MO/Fn，需连接键盘':'浏览器模式 · 不支持 MO/Fn';
     if(requested==='matrix'&&!device){stop('等待连接键盘，连接成功后自动检测（含 MO/Fn）。');$('tester-toggle').textContent='等待连接';$('tester-toggle').disabled=true;return;}
 
@@ -124,6 +164,11 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
       $('tester-mode').textContent=mode==='matrix'?`物理按键模式 · ${profile.name} USB 直读`:'浏览器模式 · 检测系统收到的按键';
       $('tester-status').textContent=mode==='matrix'?'正在读取物理矩阵，MO/Fn 也应对应高亮。':'正在检测浏览器按键；MO/Fn 不会发送系统键码，因此不计入此模式。';
       $('tester-note').textContent=mode==='matrix'?'只读检测物理按键，不修改键位。短按过快可能漏采，可再次按下确认；离页暂停，返回自动继续；系统快捷键导致失焦时短暂完成采样后暂停。':'浏览器模式可接收任意键盘输入，不能区分设备。Fn、屏幕功能键及系统截获的快捷键可能不触发；改键后按系统收到的键码显示。';
+      if(zmk){
+        $('tester-mode').textContent=`${profile.name} · 浏览器输出测试`;
+        $('tester-status').textContent='正在检测当前所选层的普通按键输出。';
+        $('tester-note').textContent='ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能、宏及重复输出位置不计入；系统快捷键可能被拦截，输入也可能来自其他键盘。';
+      }
       $('tester-surface').focus({preventScroll:true}); paint();
       if(mode==='matrix') tick(token);
     } catch(e) { if(token===epoch) {failedDevice=device;stop(`无法开始测试：${e.message}`);} }
@@ -147,7 +192,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     if(event.type==='keydown') $('tester-code').textContent=`${event.code || '未知键码'} · ${event.key===' '?'Space':event.key}`;
     if(mode!=='browser') return;
     const id=codes.get(event.code);
-    if(!id) {if(event.type==='keydown')$('tester-last').textContent=`${event.key}（布局外）`;return;}
+    if(!id) {if(event.type==='keydown')$('tester-last').textContent=zmkBoard?.ambiguous.has(event.code)?'收到重复输出，无法确定按键位置':`${event.key}（布局外）`;return;}
     const held=new Set(state.held);
     event.type==='keydown'?held.add(id):held.delete(id);
     update([...held]);
@@ -176,6 +221,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     $('tester-mode').textContent=$('tester-input-mode').value==='matrix'?'物理按键模式 · 含 MO/Fn，需连接键盘':'浏览器模式 · 不支持 MO/Fn';
     state.clear();paint();$('tester-last').textContent='等待输入';$('tester-code').textContent='—';autoStart();
   };
+  $('tester-layer').onchange=()=>{stop();testLayer=Number($('tester-layer').value);renderBoard();autoStart();};
   $('tester-toggle').onclick=()=>{
     if(active||starting){manualPaused=true;stop('已手动暂停，点击“继续检测”恢复。');}
     else {manualPaused=false;failedDevice=null;autoStart();}
@@ -189,7 +235,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     },
     refreshConnection() {
       const current=live(),changed=current!==lastDevice;lastDevice=current;
-      if((active||starting)&&device!==current)stop('连接已变化，正在等待设备就绪。');
+      if((active||starting)&&(device!==current||(zmk&&(!current||current.broken))))stop('连接已变化，正在等待设备就绪。');
       if(changed)failedDevice=null;
       if(visible&&!active&&!starting){renderBoard();autoStart();}
     },

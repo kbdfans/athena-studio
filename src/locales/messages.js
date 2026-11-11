@@ -5300,5 +5300,32 @@ export const MESSAGES={
   },
   "选择键盘名称后连接。可用功能以键盘实际固件为准。": {
     "en": "Choose your keyboard, then connect. Available features depend on its firmware."
+  },
+  "测试层": {
+    "en": "Test layer"
+  },
+  "浏览器输出测试": {
+    "en": "Browser output test"
+  },
+  "此测试按所选层匹配输出，不切换键盘实际层。请在键盘上切到相同层；虚线键不计入检测，绿色仅表示收到对应输出。": {
+    "en": "This test matches output to the selected layer; it does not switch the keyboard layer. Activate the same layer on your keyboard. Dashed keys are excluded; green means matching output was received."
+  },
+  "此功能不提供可定位的普通按键输出": {
+    "en": "This behavior has no uniquely locatable plain key output"
+  },
+  "多个位置输出相同，浏览器无法区分": {
+    "en": "Several positions share this output; the browser cannot distinguish them"
+  },
+  "收到重复输出，无法确定按键位置": {
+    "en": "Duplicate output received; key position cannot be determined"
+  },
+  "请连接并解锁键盘，读取布局后开始测试。": {
+    "en": "Connect and unlock the keyboard to read its layout before testing."
+  },
+  "正在检测当前所选层的普通按键输出。": {
+    "en": "Listening for plain key output on the selected test layer."
+  },
+  "ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能、宏及重复输出位置不计入；系统快捷键可能被拦截，输入也可能来自其他键盘。": {
+    "en": "The current ZMK firmware does not expose physical key states. Fn, layer switches, dual-function keys, macros and duplicate outputs are excluded. System shortcuts may be intercepted, and input can come from other keyboards."
   }
 };

@@ -122,13 +122,14 @@ export function setupKeymap({
   }
   function viewPage(page) {
     if (getBusy()) return;
-    if(getDevice()?.protocol==="zmk"){document.getElementById("keymap-workspace").hidden=true;return;}
-    if(!getDemo()&&(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen)))page="keymap";
+    const zmk=getDevice()?.protocol==="zmk";
+    if(zmk && page==="screen")page="keymap";
+    if(!zmk&&!getDemo()&&(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen)))page="keymap";
     const value = page === "screen";
     screen = value;
     document.body.classList.toggle("screen-open", false);
     document.body.classList.toggle("tester-open", page === "test");
-    $("keymap-workspace").hidden = false;
+    $("keymap-workspace").hidden = zmk;
     $("screen-settings").hidden = !value;
     $("keyboard-tester").hidden = page !== "test";
     modals.show(page);

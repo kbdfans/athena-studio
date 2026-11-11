@@ -22,3 +22,24 @@ Use the actual layouts reported by the device, including rotation coordinates an
 Agar Micro BLE (USB): the user confirmed correct identification and geometry; a temporary Esc-to-A assignment applied immediately, survived a USB disconnect/reconnect, and was restored to Esc. Its firmware provides one Default layout, confirmed by the user. Multi-layout switching has protocol/browser simulation coverage, but was not physically exercised on this one-layout PCB. Other ZMK models have not been hardware-accepted by this change.
 
 Sources: [Studio](https://zmk.dev/docs/features/studio), [layers](https://zmk.dev/docs/keymaps/behaviors/layers), [hold-tap](https://zmk.dev/docs/keymaps/behaviors/hold-tap), [sticky key](https://zmk.dev/docs/keymaps/behaviors/sticky-key), [Bluetooth](https://zmk.dev/docs/keymaps/behaviors/bluetooth), [native RPC client](https://github.com/zmkfirmware/zmk-studio-ts-client).
+
+### Keyboard output tester
+
+The shared Keyboard test dialog is now available for ZMK connections. It uses the
+reported physical layout (including rotations), current keymap, and a selectable
+test layer. Opening the dialog starts testing automatically and keeps the serial
+connection open. Plain Key Press bindings with unique browser codes show held
+orange and released green; keypad codes remain distinct from the number row.
+Test-layer selection is read-only: it does not activate a layer on the keyboard.
+Returning after a remap or physical-layout change rebuilds the test mapping.
+
+This is browser **output** evidence, not physical-matrix evidence. The pinned
+ZMK Studio client 0.0.18 and the upstream
+[message definitions](https://github.com/zmkfirmware/zmk-studio-messages)
+provide keymap/settings notifications, not switch press/release reports.
+No QMK matrix commands are sent to ZMK devices. Duplicate outputs, layer-only
+keys, tap/hold behaviors, macros, transparent bindings and modified HID bindings
+are dashed/excluded rather than guessed. OS-intercepted keys may not arrive;
+input from another keyboard can also match. The selected layer must match the
+actual layer the user activates on the keyboard. A hardware test of this new
+ZMK tester remains separate from mocked browser verification.
