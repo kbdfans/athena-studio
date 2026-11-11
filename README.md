@@ -54,3 +54,18 @@ A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Si
 ## Online firmware upgrade (under device validation)
 
 The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, migrates supported legacy animations, and verifies flash before reboot. Public firmware binaries are not distributed by this release: the public write action remains unavailable until device testing and corresponding-source release preparation are complete. Synthetic transport tests and a local hardware test are distinct validation steps.
+
+## Anonymous bug reports
+
+The header and footer open an anonymous feedback form: product model, issue
+description, optional screenshots and optional previewable diagnostics. The footer
+identifies the site as built with AI assistance. GIF/image editing remains local;
+only explicit feedback submissions upload their report and selected screenshots.
+
+Both public deployments use a private inbox at `https://kbd.cool/studio/inbox.html`.
+It requires the existing kbd.cool administrator account. The new standalone Node
+service runs separately from the host website and stores reports on a persistent
+volume. See [deployment and privacy details](server/feedback/README.md).
+
+Run `npm run start:feedback` with the documented authorization and storage settings
+when self-hosting. Never expose administrator API responses anonymously.

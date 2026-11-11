@@ -573,3 +573,36 @@ USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份�
 我的键盘|My keyboard
 物理按键模式 · 含 MO/Fn，需连接键盘|Physical key mode · includes MO/Fn; connect your keyboard
 等待连接键盘，连接成功后自动检测（含 MO/Fn）。|Connect your keyboard to start physical testing, including MO/Fn.
+反馈问题|Report a bug
+本站使用 AI 辅助构建。|Built with AI assistance.
+发现问题？提交反馈 ↗|Found a bug? Send feedback ↗
+管理员收件箱|Admin inbox
+一起让它更好用。|Help make it better.
+遇到问题，告诉我们。无需登录即可提交。|Tell us what went wrong. No account needed.
+产品型号|Product model
+请选择键盘型号|Select your keyboard model
+其他型号|Other model
+型号名称|Model name
+问题描述|What went wrong?
+你做了什么？期望发生什么？实际出现了什么问题？|What did you do? What did you expect? What happened instead?
+截图（可选）|Screenshots (optional)
+添加截图|Add screenshots
+添加截图 · PNG / JPG / WebP|Add screenshots · PNG / JPG / WebP
+最多 3 张，每张不超过 12 MB；上传前自动压缩。|Up to 3 images, 12 MB each. Compressed before upload.
+附带诊断日志，帮助定位问题|Include diagnostics to help investigate
+只包含浏览器信息、功能操作与错误位置，不记录打字内容、密码或键位配置。|Includes browser details, feature actions and error locations. No typed text, passwords or key mappings.
+预览将提交的日志|Preview diagnostics
+仅在提交时发送反馈、所选截图与勾选的日志。截图中请避免包含个人敏感信息。|Only sent when you submit: your report, selected screenshots and optional diagnostics. Avoid sensitive information in screenshots.
+提交反馈|Send feedback
+反馈已收到，谢谢你。|Feedback received. Thank you.
+我们会查看问题，用于后续修复和改进。|We will review your report to help fix bugs and improve future releases.
+反馈编号|Report ID
+截图|Screenshot
+移除截图|Remove screenshot
+最多添加 3 张截图。|You can attach up to 3 screenshots.
+请选择不超过 12 MB 的 PNG、JPG 或 WebP 图片。|Choose PNG, JPG or WebP images up to 12 MB each.
+正在提交…|Submitting…
+提交较频繁，请稍后再试。|Too many submissions. Please try again later.
+提交失败，内容已保留，请检查网络后重试。|Could not send your report. Your input is preserved. Check your connection and try again.
+取消|Cancel
+完成|Done

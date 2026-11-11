@@ -16,6 +16,7 @@ export default defineConfig(({mode}) => ({
       try{const bytes=await readFile(resolve('.artifacts/firmware-web-test',name));res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',name.endsWith('.json')?'application/json':'application/octet-stream');res.end(bytes);}catch{res.statusCode=404;res.end();}
     });
   }}],
+  server: {proxy: {'/studio/api/feedback': {target:'http://127.0.0.1:8771'}}},
   base: mode === 'hosted' ? '/studio/' : '/',
   build: {rollupOptions: {input: mode === 'hosted'
     ? {studio: resolve('studio-v2.html')}

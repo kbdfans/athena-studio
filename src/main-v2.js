@@ -1,3 +1,5 @@
+import {setupFeedback} from './feedback-ui.js';
+import {startDiagnostics,recordDiagnostic} from './diagnostics.js';
 import {setupFirmwareUpgrade} from './firmware-upgrade-ui.js';
 import {connectIdentifiedKeyboard} from "./connect-keyboard.js";
 import {setupLanguages} from "./i18n.js";
@@ -21,6 +23,7 @@ import { identifyAthena } from "./device.js";
 import { setupPet } from "./pet-ui.js";
 import { setupKeymap } from "./keymap-ui.js";
 import { setupKeyboardTester } from "./keyboard-tester.js";
+startDiagnostics();
 let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI;
 let sourceId = null, sourceSettingsTimer;
 let transferStarted = 0;
@@ -57,6 +60,7 @@ let timer,
   prevTime = 0;
 let noticeTimer;
 function notice(text, error = false) {
+  if(error)recordDiagnostic("runtime.error");
   clearTimeout(noticeTimer);
   if (!error) noticeTimer = setTimeout(() => { if (!state.busy) $("notice").hidden = true; }, 6000);
   $("notice").hidden = false;
@@ -431,6 +435,7 @@ function updateSlot() {
   prepare();
 }
 async function performWrite(operation) {
+  recordDiagnostic("image.write");
   if (state.busy || !state.boot?.capabilities?.screen) return;
   const p = state.boot,
     slot = operation.slot,
@@ -481,8 +486,10 @@ async function performWrite(operation) {
       timing += ` · ${(t.bytes / 1024 / Math.max(t.dataMs / 1000, 0.001)).toFixed(1)} KB/s · 校验 ${(t.verifyMs / 1000).toFixed(1)} 秒`;
       if (t.flash) timing += ` · 设备擦除 ${(t.flash.eraseMs / 1000).toFixed(1)} 秒 · 编程 ${(t.flash.programMs / 1000).toFixed(1)} 秒`;
     }
+    recordDiagnostic("image.complete");
     writeFeedback.complete({ title: `${s.label} · 写入完成`, description: "数据校验通过。切换到此图片即可播放。", seconds: (performance.now() - transferStarted) / 1000, details: timing });
   } catch (e) {
+    recordDiagnostic("image.failed");
     writeFeedback.fail(
       `${e.message}${record ? " 原始动画已自动备份到此浏览器。" : writeStarted ? " 本次未创建备份，该图片位置可能已被覆盖，请重新写入。" : " 尚未开始擦除或写入。"}`,
     );
@@ -659,6 +666,7 @@ $("download").onclick = () => {
 };
 $("connect").onclick = $("help").onclick = showConnection;
 async function connectKeyboard() {
+  recordDiagnostic("connection.request");
   if (state.busy) return;
   if (hasLiveConnection(state.boot)) {
     $("connection-dialog").close();
@@ -682,6 +690,7 @@ async function connectKeyboard() {
       state.demo=false;
       await keymapUI.load();
       state.sessionReady=true;
+      recordDiagnostic("connection.ready");
       $("connection-dialog").close();
       writeFeedback.dismiss();
       $("notice").hidden = true;
@@ -690,6 +699,7 @@ async function connectKeyboard() {
       throw Error("这把键盘仍是旧版固件。请先完成 v2 固件升级与动画迁移，再使用此入口。");
     }
   } catch (e) {
+    recordDiagnostic("connection.failed");
     await state.boot?.close();
     state.boot = null;
     state.identity = null;
@@ -730,6 +740,7 @@ $("confirm-write").onclick = () => {
 };
 $("backups").onclick = showBackups;
 $("connection-disconnect").onclick = $("disconnect").onclick = async () => {
+  recordDiagnostic("connection.closed");
   if (state.busy) return;
   const runtime = state.boot?.isRuntime;
   await state.boot?.close();
@@ -801,5 +812,6 @@ petUI=setupPet({getDevice:()=>state.boot?.capabilities?.screen?state.boot:null,g
 demo();
 requestAnimationFrame(animate);
 
+setupFeedback({getModel:()=>state.identity?.profile?.id||state.boot?.profile?.id});
 setupLanguages();
 updateDevice();

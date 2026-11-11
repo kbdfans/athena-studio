@@ -5,8 +5,8 @@ export function setupLanguages(root=document){
  const sources=new WeakMap(),attributes=new WeakMap();let observer;
  let saved;try{saved=localStorage.getItem('athena-language');}catch{}
  setLocale(initialLocale({saved,hostname:location.hostname,browserLanguage:navigator.language}));
- function ignored(element){return !element||element.closest('script,style,textarea,[data-i18n-skip],.language-picker');}
- function text(node){if(ignored(node.parentElement))return;let r=sources.get(node);if(!r||node.nodeValue!==r.rendered)r={source:node.nodeValue};r.rendered=translate(r.source);if(node.nodeValue!==r.rendered)node.nodeValue=r.rendered;sources.set(node,r);}
+ function ignored(element){return !element||element.closest('script,style,[data-i18n-skip],.language-picker');}
+ function text(node){if(ignored(node.parentElement)||node.parentElement.closest('textarea'))return;let r=sources.get(node);if(!r||node.nodeValue!==r.rendered)r={source:node.nodeValue};r.rendered=translate(r.source);if(node.nodeValue!==r.rendered)node.nodeValue=r.rendered;sources.set(node,r);}
  function element(el){
   if(ignored(el))return;
   if(el.tagName==='OPTION'&&!el.hasAttribute('value'))el.setAttribute('value',el.textContent);

@@ -11,7 +11,8 @@
     "test:firmware": "node firmware/test.mjs",
     "test:pet": "node firmware/v2/test.mjs",
     "build:pet": "node scripts/build-scene.mjs && node scripts/build-pet.mjs",
-    "test:typing": "node firmware/v2/typing-test.mjs"
+    "test:typing": "node firmware/v2/typing-test.mjs",
+    "start:feedback": "node server/feedback/server.mjs"
   },
   "dependencies": {
     "gifuct-js": "2.1.2"

@@ -4448,5 +4448,104 @@ export const MESSAGES={
   },
   "等待连接键盘，连接成功后自动检测（含 MO/Fn）。": {
     "en": "Connect your keyboard to start physical testing, including MO/Fn."
+  },
+  "反馈问题": {
+    "en": "Report a bug"
+  },
+  "本站使用 AI 辅助构建。": {
+    "en": "Built with AI assistance."
+  },
+  "发现问题？提交反馈 ↗": {
+    "en": "Found a bug? Send feedback ↗"
+  },
+  "管理员收件箱": {
+    "en": "Admin inbox"
+  },
+  "一起让它更好用。": {
+    "en": "Help make it better."
+  },
+  "遇到问题，告诉我们。无需登录即可提交。": {
+    "en": "Tell us what went wrong. No account needed."
+  },
+  "产品型号": {
+    "en": "Product model"
+  },
+  "请选择键盘型号": {
+    "en": "Select your keyboard model"
+  },
+  "其他型号": {
+    "en": "Other model"
+  },
+  "型号名称": {
+    "en": "Model name"
+  },
+  "问题描述": {
+    "en": "What went wrong?"
+  },
+  "你做了什么？期望发生什么？实际出现了什么问题？": {
+    "en": "What did you do? What did you expect? What happened instead?"
+  },
+  "截图（可选）": {
+    "en": "Screenshots (optional)"
+  },
+  "添加截图": {
+    "en": "Add screenshots"
+  },
+  "添加截图 · PNG / JPG / WebP": {
+    "en": "Add screenshots · PNG / JPG / WebP"
+  },
+  "最多 3 张，每张不超过 12 MB；上传前自动压缩。": {
+    "en": "Up to 3 images, 12 MB each. Compressed before upload."
+  },
+  "附带诊断日志，帮助定位问题": {
+    "en": "Include diagnostics to help investigate"
+  },
+  "只包含浏览器信息、功能操作与错误位置，不记录打字内容、密码或键位配置。": {
+    "en": "Includes browser details, feature actions and error locations. No typed text, passwords or key mappings."
+  },
+  "预览将提交的日志": {
+    "en": "Preview diagnostics"
+  },
+  "仅在提交时发送反馈、所选截图与勾选的日志。截图中请避免包含个人敏感信息。": {
+    "en": "Only sent when you submit: your report, selected screenshots and optional diagnostics. Avoid sensitive information in screenshots."
+  },
+  "提交反馈": {
+    "en": "Send feedback"
+  },
+  "反馈已收到，谢谢你。": {
+    "en": "Feedback received. Thank you."
+  },
+  "我们会查看问题，用于后续修复和改进。": {
+    "en": "We will review your report to help fix bugs and improve future releases."
+  },
+  "反馈编号": {
+    "en": "Report ID"
+  },
+  "截图": {
+    "en": "Screenshot"
+  },
+  "移除截图": {
+    "en": "Remove screenshot"
+  },
+  "最多添加 3 张截图。": {
+    "en": "You can attach up to 3 screenshots."
+  },
+  "请选择不超过 12 MB 的 PNG、JPG 或 WebP 图片。": {
+    "en": "Choose PNG, JPG or WebP images up to 12 MB each."
+  },
+  "正在提交…": {
+    "en": "Submitting…"
+  },
+  "提交较频繁，请稍后再试。": {
+    "en": "Too many submissions. Please try again later."
+  },
+  "提交失败，内容已保留，请检查网络后重试。": {
+    "en": "Could not send your report. Your input is preserved. Check your connection and try again."
+  },
+  "取消": {
+    "en": "Cancel"
+  },
+  "完成": {
+    "en": "Done"
   }
 };
