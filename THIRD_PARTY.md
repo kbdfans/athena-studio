@@ -37,7 +37,7 @@ ZMK protocol codecs and framing use the official ZMK Studio TypeScript client. N
 
 - @zmkfirmware/zmk-studio-ts-client 0.0.18 — MIT; notice: `licenses/zmkfirmware-zmk-studio-ts-client-LICENSE.txt`.
 - protobufjs 7.6.6 — BSD-3-Clause; notice: `licenses/protobufjs-LICENSE.txt`.
-- long 5.3.2 — Apache-2.0; notice: `licenses/long-LICENSE.txt`.
+- long 5.3.2 is an optional protobufjs dependency installed by npm, but is excluded from the browser build. ZMK Studio uses only 32-bit fields; `src/zmk-no-long.js` disables this optional runtime. Its package license remains in the installed dependency.
 - @protobufjs/utf8 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-utf8-LICENSE.txt`.
 - @protobufjs/path 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-path-LICENSE.txt`.
 - @protobufjs/base64 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-base64-LICENSE.txt`.

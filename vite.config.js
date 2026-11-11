@@ -2,7 +2,8 @@ import {defineConfig} from 'vite';
 import {resolve} from 'node:path';
 import {readFile} from 'node:fs/promises';
 export default defineConfig(({mode}) => ({
-  plugins: [{name:'local-firmware-test',configureServer(server){
+  resolve: {alias: [{find: /^long$/, replacement: resolve('src/zmk-no-long.js')}]},
+  plugins: [{name:'no-optional-long',generateBundle(){for(const id of this.getModuleIds())if(id.includes('/node_modules/long/'))throw Error('Optional long.js must not enter the browser bundle');}}, {name:'local-firmware-test',configureServer(server){
     server.middlewares.use((req,res,next)=>{
       const path=req.url?.split('?')[0]||'/';
       if(path==='/'||path==='/index.html'||(path.startsWith('/studio-v2.html')&&path!=='/studio-v2.html')){
