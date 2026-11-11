@@ -57,6 +57,8 @@ A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Si
 
 ## ZMK Studio
 
+The keyboard-name list includes all six models in the supplied openkbd source catalog: Agar BLE, Agar Mini BLE, Tofu60 BLE 3.0, Tofu65 BLE 3.0, Tofu TKL BLE 3.0 and Tofu Pad BLE. The hardware-tested Agar Micro entry is retained separately. See [pinned source evidence and validation limits](design/zmk-model-catalog.md).
+
 Choose your keyboard name (for example, **Agar Micro** or **Tofu60 BLE 3.0**) when connecting. The website chooses the transport internally. The firmware must expose ZMK Studio RPC over USB. Basic and Advanced use native ZMK behaviors, with explanations, examples, named parameters and modifier shortcuts. Assignment applies immediately, is read back, and is automatically saved to the keyboard. Available functions and physical layouts come from the device. Single-layout firmware shows a read-only layout; additional layout variants require firmware support.
 
 Agar Micro BLE was hardware-tested: identification and geometry, immediate Esc-to-A remapping, persistence after USB reconnect, and restoring Esc all passed. Its firmware provides one layout. Multiple-layout switching is simulation-tested only. Compiled macros/hold-tap behaviors can be assigned, but their internal definitions and timing cannot be edited through this RPC. See [ZMK support and limitations](design/zmk-support.md).

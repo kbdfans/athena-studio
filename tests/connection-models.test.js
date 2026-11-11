@@ -21,3 +21,10 @@ test('revoked, duplicate, unavailable metadata or blocked storage use explicit b
  for(const ports of [[],[p,port()],[port(1,2)],[{getInfo:()=>({})}]]){const serial={getPorts:async()=>ports,requestPort:async()=>{requests++;return p}};assert.equal(await chooseSerialPort({model:'agar-micro',serial,storage:s}),p);}
  assert.equal(requests,4);const serial={requestPort:async()=>p};assert.equal(await chooseSerialPort({model:'agar-micro',serial,storage:null}),p);
 });
+test('all six source-backed catalog models route to native ZMK without replacing Agar Micro',()=>{
+ const expected=['Agar BLE','Agar Mini BLE','Tofu60 BLE 3.0','Tofu65 BLE 3.0','Tofu TKL BLE 3.0','Tofu Pad BLE'];
+ const sourced=CONNECTION_MODELS.filter(m=>m.source);assert.deepEqual(sourced.map(m=>m.name).sort(),expected.sort());
+ assert.equal(new Set(CONNECTION_MODELS.map(m=>m.id)).size,CONNECTION_MODELS.length);
+ const s=store();for(const m of sourced){assert.equal(m.protocol,'zmk');assert.match(m.source,/^https:\/\/github\.com\/openkbd\/zmk-config-/);rememberConnectionModel(m.id,s);assert.equal(readConnectionModel(s),m.id);}
+ assert.equal(connectionModel('agar-micro').name,'Agar Micro');
+});

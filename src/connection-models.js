@@ -2,8 +2,13 @@
 export const CONNECTION_MODELS=Object.freeze([
  {id:'athena75',name:'Athena75',protocol:'qmk'},
  {id:'athena1800',name:'Athena1800',protocol:'qmk'},
+ {id:'agar-ble',name:'Agar BLE',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-agar-ble'},
+ {id:'agar-mini-ble',name:'Agar Mini BLE',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-agar-mini-ble'},
  {id:'agar-micro',name:'Agar Micro',protocol:'zmk'},
- {id:'tofu60-ble',name:'Tofu60 BLE 3.0',protocol:'zmk'},
+ {id:'tofu60-ble',name:'Tofu60 BLE 3.0',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-tofu60-ble-3.0'},
+ {id:'tofu65-ble',name:'Tofu65 BLE 3.0',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-tofu65-ble-3.0'},
+ {id:'tofu-tkl-ble',name:'Tofu TKL BLE 3.0',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-tofu-tkl-ble-3.0'},
+ {id:'tofu-pad-ble',name:'Tofu Pad BLE',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-tofu-pad-ble'},
  {id:'other-compatible',name:'其他兼容键盘',protocol:'zmk'},
 ]);
 export const connectionModel=id=>CONNECTION_MODELS.find(m=>m.id===id);
