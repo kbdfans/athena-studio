@@ -5327,5 +5327,47 @@ export const MESSAGES={
   },
   "ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能、宏及重复输出位置不计入；系统快捷键可能被拦截，输入也可能来自其他键盘。": {
     "en": "The current ZMK firmware does not expose physical key states. Fn, layer switches, dual-function keys, macros and duplicate outputs are excluded. System shortcuts may be intercepted, and input can come from other keyboards."
+  },
+  "选择宠物": {
+    "en": "Choose a pet"
+  },
+  "柴犬": {
+    "en": "Shiba Inu",
+    "zh-TW": "柴犬",
+    "ja": "柴犬",
+    "ko": "시바견",
+    "de": "Shiba Inu",
+    "fr": "Shiba Inu",
+    "es": "Shiba Inu"
+  },
+  "宠物调色盘": {
+    "en": "Pet palette"
+  },
+  "像素宠物动作预览": {
+    "en": "Pixel pet animation preview"
+  },
+  "幼年": {
+    "en": "Young"
+  },
+  "成年": {
+    "en": "Adult"
+  },
+  "切换这里只预览；更新宠物外观后，键盘会换成所选伙伴，共用原成长进度。": {
+    "en": "Switching here only previews the pet. Update its appearance to use the selected companion on your keyboard, keeping the same growth progress."
+  },
+  "启用键盘中已保存的宠物": {
+    "en": "Activate the pet already stored on the keyboard"
+  },
+  "宠物已就位": {
+    "en": "Your pet is ready"
+  },
+  "请先升级宠物动作固件，再写入外观": {
+    "en": "Update the pet animation firmware before uploading an appearance"
+  },
+  "正在写入宠物外观": {
+    "en": "Writing pet appearance"
+  },
+  "未知宠物种类": {
+    "en": "Unknown pet species"
   }
 };

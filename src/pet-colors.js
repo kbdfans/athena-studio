@@ -25,9 +25,9 @@ export function customPetPalette(colors) {
   return [0, color565(c.outline), color565(c.body), color565(c.accent)];
 }
 export const PET_COLOR_STORAGE = 'athena-pet-colors-v1';
-export function readPetColors(storage, fallback, themes) {
+export function readPetColors(storage, fallback, themes, storageKey=PET_COLOR_STORAGE) {
   try {
-    const saved = JSON.parse(storage?.getItem(PET_COLOR_STORAGE));
+    const saved = JSON.parse(storage?.getItem(storageKey));
     if (!saved || ![...themes, 'custom'].includes(saved.theme)) return fallback;
     if (saved.pattern !== undefined && !Object.hasOwn(PET_PATTERNS,saved.pattern)) return fallback;
     return { theme: saved.theme, custom: normalizePetColors(saved.custom), pattern: saved.pattern || 'original' };

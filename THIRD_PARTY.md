@@ -25,7 +25,7 @@ The upstream repository supplies GNU GPL version 2 in its root LICENSE; a copy i
 
 # Original artwork
 
-The mint cat and scene were created for this project with AI-assisted artwork and code-based pixel processing; editable source and processing scripts are in `design/mint-cat-v1`, `design/mint-cat-v2`, and `design/mint-cat-v3`. These project assets are provided under GPL-2.0-only to the extent of the contributors' rights. Third-party Pet Cats Pack, Tiny Kitten, and vscode-pets reference artwork is not included in the public repository or hosted application.
+The mint cat, Shiba Inu and scene were created for this project with AI-assisted artwork and code-based pixel processing; editable source and processing scripts are in `design/mint-cat-v1`, `design/mint-cat-v2`, `design/mint-cat-v3`, and `design/shiba-v1`. These project assets are provided under GPL-2.0-only to the extent of the contributors' rights. Third-party Pet Cats Pack, Tiny Kitten, and vscode-pets reference artwork is not included in the public repository or hosted application.
 
 # License scope
 

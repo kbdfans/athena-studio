@@ -1,6 +1,8 @@
 import {applyPetPattern} from './pet-patterns.js';
 import {customPetPalette, colorHex} from './pet-colors.js';
 import {PET_ART} from './pet-art.js';
+import {SHIBA_ART} from './pet-shiba-art.js';
+export const PET_SPECIES={cat:{label:'像素小猫',theme:'mint'},shiba:{label:'柴犬',theme:'orange'}};
 import {validatePetPack as validateLegacy,petFrame as legacyFrame} from './pet-legacy.js';
 export const PET_ACTIONS=['待机','慢走','奔跑','睡眠','吃饭','开心','跳跃','醒来'];
 export const PET_STAGES=['孵化中','幼猫','成年猫'];
@@ -20,13 +22,14 @@ export function petThemeColors(theme='mint'){
  const p=PET_PALETTES[theme];if(!p)throw Error('未知宠物配色');
  return {outline:colorHex(p[1]),body:colorHex(p[2]),accent:colorHex(p[3])};
 }
-export function createPetPack(theme='mint',colors,pattern='original'){
+export function createPetPack(theme='mint',colors,pattern='original',species='cat'){
+ if(!Object.hasOwn(PET_SPECIES,species))throw Error('未知宠物种类');
  if(!PET_PALETTES[theme])throw Error('未知宠物配色');
  const p=new Uint8Array(PET_BYTES),v=new DataView(p.buffer);
  p.set([80,84,52,48,1,40,32,2,8,44]);v.setUint16(10,100,true);v.setUint32(12,PET_BYTES,true);
  (colors === undefined ? PET_PALETTES[theme] : customPetPalette(colors)).forEach((c,i)=>v.setUint16(16+2*i,c,true));
  PET_SEQUENCES.forEach((seq,a)=>{p[24+a]=seq.length;p.set(seq,32+a*8);PET_TIMINGS[a].forEach((ms,f)=>v.setUint16(96+a*16+f*2,ms,true));});
- p.set(Uint8Array.from(atob(PET_ART),c=>c.charCodeAt(0)),256);return applyPetPattern(p,pattern);
+ p.set(Uint8Array.from(atob(species==='shiba'?SHIBA_ART:PET_ART),c=>c.charCodeAt(0)),256);return applyPetPattern(p,pattern);
 }
 export function petPackSize(header){
  const n=new DataView(header.buffer,header.byteOffset,header.byteLength).getUint32(12,true);

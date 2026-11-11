@@ -423,14 +423,14 @@
             <div class="pet-stage">
               <div class="stage-topline">
                 <span class="pet-preview-badge">本地预览</span
-                ><span id="pet-preview-label">待机 · 成年猫</span>
+                ><span id="pet-preview-label">待机 · 成年</span>
               </div>
               <div class="pet-large">
                 <canvas
                   id="pet-canvas"
                   width="128"
                   height="128"
-                  aria-label="像素小猫动作预览"
+                  aria-label="像素宠物动作预览"
                 ></canvas>
               </div>
               <div class="pet-device-inset">
@@ -456,9 +456,9 @@
                 <span class="section-label">成长预览</span>
                 <div id="pet-stages" class="pet-stages">
                   <button data-stage="0">01 <span>一颗蛋</span></button
-                  ><button data-stage="1">02 <span>幼猫</span></button
+                  ><button data-stage="1">02 <span>幼年</span></button
                   ><button data-stage="2" class="selected">
-                    03 <span>成年猫</span>
+                    03 <span>成年</span>
                   </button>
                 </div>
                 <small>这里只切换预览，不改变键盘上的成长。</small>
@@ -473,7 +473,7 @@
             <div class="pet-card-title">
               <div>
                 <span class="eyebrow">YOUR LITTLE COMPANION</span>
-                <h2>像素小猫<span>。</span></h2>
+                <h2><span id="pet-character-name">像素小猫</span><span>。</span></h2>
               </div>
               <span class="pet-size">像素伙伴</span>
             </div>
@@ -502,6 +502,8 @@
               成长进度保存在键盘中。
             </p>
             <div class="pet-appearance">
+              <label for="pet-species">选择宠物</label><select id="pet-species"><option value="cat">像素小猫</option><option value="shiba">柴犬</option></select>
+              <small>切换这里只预览；更新宠物外观后，键盘会换成所选伙伴，共用原成长进度。</small>
               <div class="appearance-heading">
                 <label for="pet-theme">给它换个颜色</label><span>外观预览</span>
               </div>
@@ -512,7 +514,7 @@
                 <option value="gray">雾灰</option><option value="custom">自定义配色</option></select>
               <label class="pet-pattern-label" for="pet-pattern">花纹样式</label><select id="pet-pattern"></select>
               <fieldset class="pet-color-editor" aria-describedby="pet-color-status">
-                <legend>猫猫调色盘</legend>
+                <legend>宠物调色盘</legend>
                 <div id="pet-color-fields"></div>
                 <div class="pet-color-footer"><span>点色块选色，也可输入 HEX</span><button id="pet-color-reset" type="button">恢复默认</button></div>
               </fieldset>

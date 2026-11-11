@@ -44,3 +44,19 @@ test('every pattern preserves all 44 silhouettes, facial outlines, palette and a
  }
  assert.throws(()=>createPetPack('mint',undefined,'unknown'));
 });
+
+test('Shiba packs reuse PT40 layout and timing while preserving cat bytes and custom colors',()=>{
+ const cat=createPetPack(),shiba=createPetPack('orange',undefined,'original','shiba');
+ validatePetPack(shiba);assert.equal(shiba.length,14336);assert.deepEqual(shiba.slice(24,256),cat.slice(24,256));assert.notDeepEqual(shiba.slice(256),cat.slice(256));
+ const colors={body:'#E08C35',accent:'#FFF2DE',outline:'#352341'};
+ const custom=createPetPack('orange',colors,'original','shiba');assert.deepEqual(custom.slice(256),shiba.slice(256));
+ for(let a=0;a<8;a++)for(let f=0;f<shiba[24+a];f++){const pixels=petRgba(shiba,a,f);assert.equal(pixels.length,5120);assert.ok(pixels.filter((n,i)=>i%4===3&&n).length>100);}
+ assert.throws(()=>createPetPack('mint',undefined,'original','unknown'));
+ assert.deepEqual(createPetPack(),cat);
+});
+test('pet preferences can use a separate species storage key without changing old cat preferences',()=>{
+ const cat={theme:'gray',custom:petThemeColors('gray'),pattern:'cow'},dog={theme:'orange',custom:petThemeColors('orange'),pattern:'original'};
+ const values={'athena-pet-colors-v1':JSON.stringify(cat),'athena-pet-colors-v1-shiba':JSON.stringify(dog)},storage={getItem:k=>values[k]};
+ assert.deepEqual(readPetColors(storage,{},Object.keys(PET_PALETTES)),cat);
+ assert.deepEqual(readPetColors(storage,{},Object.keys(PET_PALETTES),'athena-pet-colors-v1-shiba'),dog);
+});
