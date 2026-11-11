@@ -1,0 +1,210 @@
+先选上方的按键，再选择屏幕功能。模式键直接切换屏幕，关闭网页后仍可使用。|Select a key above, then choose a screen function. Mode keys work even when the website is closed.
+独立模式键需要新版固件；现有左右 Shift + P / T 快捷键仍可使用。|Dedicated mode keys require updated firmware. Existing Left + Right Shift + P / T shortcuts still work.
+请先升级支持独立模式键的固件，再分配此功能。|Update the firmware to support dedicated mode keys before assigning this function.
+每一个按键，每一帧陪伴，都由你决定。|Make every key and every frame your own.
+我的 Athena75|My Athena75
+Athena75 · 层|Athena75 · Layer
+未连接 · 演示布局|Offline · demo layout
+未连接 · 演示 / 本地预览|Offline · demo / local preview
+离线仅预览 · 连接后读取键盘实际配置|Offline preview · connect to read your keyboard configuration
+点击即生效 · 自动备份与回读校验|Changes apply immediately · automatic backup and readback verification
+已连接 · 改键即时生效|Connected · key changes apply immediately
+正在应用…|Applying…
+键位尚未读取|Keymap not loaded yet
+同步未确认 · 请重新读取键盘|Sync unconfirmed · reload keyboard
+点击小屏幕设置动画|Click the display to configure animations
+选择按键功能|Choose a key function
+搜索要选择的按键|Search for a key function
+搜索名称，例如空格、回车、KC_A|Search a key, e.g. Space, Enter, KC_A
+搜索功能…|Search functions…
+搜索全部键码或功能…|Search keycodes or functions…
+搜索常用功能…|Search common functions…
+手动输入 QMK 键码|Enter a QMK keycode
+使用键码|Use keycode
+在高级模式查看更多结果|More results in Advanced mode
+透明：沿用下层按键|Transparent: use the key from the lower layer
+常用|Common
+全部|All
+小键盘|Numpad
+修饰键|Modifiers
+导航|Navigation
+媒体|Media
+层切换|Layers
+键盘布局|Keyboard layout
+左 Shift|Left Shift
+底排空格|Spacebar row
+整键 2U|Full 2U
+分裂 1U＋1U|Split 1U + 1U
+整键 2.25U|Full 2.25U
+分裂 1.25U＋1U|Split 1.25U + 1U
+按实际安装的键帽与轴体选择，保留已有键位功能。ISO、左 Shift 和底排连接后即时生效；离线时仅预览。|Choose the layout matching your installed switches and keycaps. Existing mappings are retained. ISO, left Shift and bottom-row changes apply when connected; offline changes are previews only.
+两个 1U 按键 · 当前固件仅支持离线预览，保存到键盘需升级固件|Two 1U keys · preview only on this firmware; an update is required to save it to the keyboard.
+ISO 使用竖向回车，并调整附近按键|ISO uses a tall Enter key and rearranges the nearby keys.
+分裂后为 1.25U Shift 和一个 1U 按键|Splits into a 1.25U Shift and one 1U key.
+7U 底排：1.5U＋1U＋1.5U＋7U＋1.5U|7U row: 1.5U + 1U + 1.5U + 7U + 1.5U
+恢复本次连接时的布局|Restore layout from this connection
+恢复默认预览布局|Restore default preview layout
+含 8 层按键映射。连接时导入即应用；离线时仅预览。宏和组合键保持原样。|Includes 8 keymap layers. Imports apply immediately when connected; offline imports are previews. Macros and combos are unchanged.
+下载写入前备份|Download pre-write backup
+导入并应用键位|Import and apply keymap
+导入键位预览|Import keymap preview
+按当前固件的 QMK 键码填写。|Enter a QMK keycode supported by this firmware.
+点击下方按键，选择新功能。|Choose a function from the keys below.
+按下每一颗键，看看它的回应。|Press each key and see its response.
+按键响应|Key response
+检测每个按键的响应|Test the response of every key
+Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。|F11 may trigger Show Desktop on macOS. Physical mode briefly continues sampling after focus is lost. If needed, disable Show Desktop in System Settings → Keyboard → Keyboard Shortcuts → Mission Control.
+打开即开始检测；物理模式连接键盘后自动就绪。|Testing starts on opening. Physical mode is ready automatically after connection.
+长按重复不累计|Holding a key does not add repeats
+Esc 用于测试；点击右上角关闭，检测随即暂停。|Esc is available for testing. Close with the top-right button to pause the test.
+关闭弹窗即暂停检测；Esc 用于测试，请点击右上角关闭。|Closing the dialog pauses the test. Esc is testable; use the top-right close button.
+一段喜欢的动画，一个陪你打字的小伙伴。|Your favorite animation, and a companion for every keystroke.
+图片、动画和像素小猫，住进键盘的小屏幕。|Images, animations and a pixel cat for your keyboard display.
+支持 GIF、PNG、JPG、静态 WebP|Supports GIF, PNG, JPG and static WebP
+素材仅在你的浏览器中处理|Media is processed locally in your browser
+保存在此浏览器 · 最多 12 条 / 80 MB，超出后移除最早使用的记录|Stored in this browser · up to 12 items / 80 MB; least recently used items are removed when full.
+导入 GIF 或图片后，会自动保存在这里。清除网站数据会移除记录。|Imported media is saved here automatically. Clearing site data removes these items.
+点击素材继续编辑；记录仅在此浏览器中保存。|Click an item to continue editing. History stays in this browser.
+日常循环播放的动画位置|Storage slot for a looping animation
+自动抽帧并保留播放时长。|Frames are reduced automatically while preserving duration.
+带到你的键盘上|Bring it to your keyboard
+仅切换键盘里已保存的图片；网页中的新素材需先点击“写入键盘”。|Switches only to an image already stored on the keyboard. Use Write to keyboard to upload new media.
+动画备份与恢复|Animation backup and restore
+本地预览 · 不会改变电脑输入|Local preview · does not change computer input
+每次敲击，都有回应|Every keystroke comes alive
+连接后可在键盘上启用|Connect to enable on your keyboard
+大写字母从底部中央向随机方向喷出。打得越快，喷射越强；字母相互碰撞、碰壁反弹，然后渐渐消失。|Uppercase letters launch from the bottom center in random directions. Faster typing adds power; letters collide, bounce off the edges and fade away.
+默认奶白色，可自由搭配两种颜色|Cream by default. Customize the background and grid colors.
+预览即时更新，连接新版键盘后自动生效并保存。|Preview updates instantly. On supported firmware, changes apply and save automatically.
+仅本地预览 · 连接后读取键盘实际设置|Local preview only · connect to load actual keyboard settings
+当前固件不支持外观设置，升级后才会在键盘生效。|This firmware needs an update before appearance settings can apply.
+「左右 Shift + T」切换打字弹球 / 图片；「左右 Shift + P」切换宠物 / 图片。|Left + Right Shift + T switches typing bounce / images; Left + Right Shift + P switches pet / images.
+支持英文字母、数字和常用标点。中文输入法下显示对应的字母按键；Ctrl / Cmd 等组合快捷键不生成字母。|Supports English letters, numbers and punctuation. With a Chinese IME, physical letter keys are shown. Ctrl / Cmd shortcuts do not emit letters.
+同屏最多 16 个字母，仅在运行内存短暂显示，不保存输入。关闭网页后仍可使用。打字模式下暂停宠物消耗。|Up to 16 letters appear briefly in RAM; input is not saved. Works with the website closed. Pet energy use pauses in typing mode.
+键盘屏幕 · 128 × 128|Keyboard display · 128 × 128
+你的桌面小伙伴|Your desk companion
+打字时活动，闲置时打个盹。|Active while you type, napping when you rest.
+看看它的小动作|Explore its little moves
+这里只切换预览，不改变键盘上的成长。|Changes the preview only, not your pet’s growth.
+试着敲几个字|Try typing a few keys
+点这里，再打字 · 空格跳跃|Click here, then type · Space to jump
+像素小猫|Pixel cat
+像素伙伴|Pixel companion
+未连接 · 当前仅为动作预览|Offline · animation preview only
+成长进度保存在键盘中。|Growth is saved on the keyboard.
+点色块选色，也可输入 HEX|Choose a swatch or enter a HEX color
+所有动作同步预览，写入后在键盘生效。|Preview every action. Upload to apply on the keyboard.
+连接后可更新外观，成长进度保留。|Connect to update appearance while keeping growth.
+外观直接写入并校验，成长进度保留。|Appearance is written and verified; growth is retained.
+立即保存成长进度|Save growth now
+下载上一版外观备份|Download previous appearance backup
+按住左右 Shift，再按：|Hold Left + Right Shift, then press:
+切换宠物 / 图片|Switch pet / images
+喂食 / 摸摸|Feed / pet
+切换图片 / 保存|Next image / save
+日常进度约每分钟保存，也可以手动保存后再拔线。|Progress saves about once a minute. You can also save manually before unplugging.
+连接键盘后检查玩法版本；以下规则需要新版养成固件。|Connect to check firmware. The following rules require the updated pet firmware.
+当前固件已支持以下规则，睡觉期间不扣 HP 和经验。|This firmware supports these rules. HP and XP do not decrease during sleep.
+约 30 秒不操作即入睡。睡眠、图片模式和断电期间，暂停 HP 消耗与饥饿计时；醒来继续累计清醒时间。|Sleeps after about 30 seconds of inactivity. Sleep, image mode and power-off pause HP use and hunger timers. Awake time resumes after waking.
+清醒累计 5 分钟扣 1 HP；跑步累计 60 秒额外扣 1 HP，每完成 5 次跳跃额外扣 1 HP。|Each 5 awake minutes costs 1 HP. Every 60 seconds of running or 5 completed jumps costs 1 extra HP.
+HP 为 0 时，每累计清醒 10 分钟扣 1 点经验。HP 与经验最低为 0，不会死亡。|At 0 HP, each 10 awake minutes costs 1 XP. HP and XP never go below 0. The pet does not die.
+每次恢复 20 HP（最高 100），清零饥饿计时，重新开始日常消耗计时。|Feeding restores 20 HP (max 100), clears the hunger timer and restarts the daily energy timer.
+USB 直写适用于桌面 Chrome / Edge|USB writing works in desktop Chrome / Edge
+让键盘准备好。|Get your keyboard ready.
+键盘已连接。|Keyboard connected.
+键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。|Key mapping, screen settings and testing share one connection. Switching features or closing a dialog does not disconnect the keyboard.
+连接已安装 Screen Studio v2 的 Athena75。旧固件需先升级并迁移动画；此页面不会自动改动固件或旧动画。|Connect an Athena75 running Screen Studio v2. Older firmware needs an upgrade and animation migration; this page does not do either automatically.
+连接正常模式键盘|Connect keyboard in normal mode
+首次连接需浏览器授权，连接后全部功能共用。连接过程不会写入动画。|Browser permission is required the first time. All features share the connection; connecting does not write animations.
+让喜欢的画面，|Bring your favorite image
+住进键盘。|to your keyboard.
+再看一眼，准备好就出发。|One last look before sending.
+即将写入|Ready to transfer
+128 × 128 屏幕|128 × 128 display
+写入选项|Transfer options
+其他图片与宠物保持不变|Other images and your pet are unchanged
+保留原图片的备份|Back up the existing image
+推荐|Recommended
+先备份再替换；关闭可省去备份等待时间。|Back up before replacing. Turn off to skip backup time.
+将直接覆盖此位置，不创建新备份；若无已有备份，覆盖前的动画将无法恢复。|This slot will be overwritten without a new backup. Without an existing backup, the previous animation cannot be restored.
+每次写入，都完整校验|Every transfer is fully verified
+再调整一下|Keep editing
+备份并开始写入|Back up and transfer
+动画备份|Animation backups
+备份保存在当前浏览器。清除网站数据会移除备份，建议下载留存。|Backups stay in this browser. Clearing site data deletes them; download copies to keep them.
+键位、屏幕和检测共用此连接 · 点击管理|One connection for keys, screen and testing · click to manage
+连接一次，即可使用全部功能|Connect once for all features
+请先连接 v2 键盘|Connect a v2 keyboard first
+请先升级打字弹球固件|Update typing-bounce firmware first
+打字弹球正在键盘上运行|Typing bounce is running on the keyboard
+已连接 · 可启用打字弹球|Connected · typing bounce available
+需先升级打字弹球固件|Typing-bounce firmware update required
+正在读取设备状态…|Reading device status…
+正在读取键盘设置…|Reading keyboard settings…
+预览已更新 · 等待应用…|Preview updated · waiting to apply…
+键盘存档失败，请重试。|Keyboard save failed. Please try again.
+未确认应用成功：|Application unconfirmed:
+读取失败：|Read failed:
+回车|Enter
+Backspace 退格|Backspace
+制表|Tab
+空格|Space
+减号|Minus
+等号|Equals
+左方括号|Left bracket
+右方括号|Right bracket
+反斜杠|Backslash
+非美式 #|Non-US #
+分号|Semicolon
+单引号|Quote
+反引号|Backtick
+逗号|Comma
+句号|Period
+斜杠|Slash
+Caps Lock 大写锁定|Caps Lock
+ISO 额外键|ISO extra key
+截屏|Print Screen
+滚动锁定|Scroll Lock
+插入|Insert
+行首|Home
+上一页|Page Up
+删除|Delete
+行尾|End
+下一页|Page Down
+方向右|Right arrow
+方向左|Left arrow
+方向下|Down arrow
+方向上|Up arrow
+左 Control|Left Control
+右 Control|Right Control
+右 Shift|Right Shift
+左 Alt / Option|Left Alt / Option
+右 Alt / Option|Right Alt / Option
+左 GUI / Windows / Command|Left GUI / Windows / Command
+右 GUI / Windows / Command|Right GUI / Windows / Command
+Athena 屏幕：下一张图片|Athena display: next image
+Athena 屏幕：开启 / 关闭|Athena display: on / off
+此键无动作|No action
+选择键盘层|Choose a layer
+按键功能编辑器|Key function editor
+配置器模式|Configurator mode
+搜索按键或功能|Search keys or functions
+功能分类|Function categories
+可选功能|Available functions
+87 键 TKL 功能布局|87-key TKL function layout
+撤销这个按键的修改|Undo changes to this key
+动作示意预览|Animation preview
+键盘小屏幕：打开屏幕设置|Keyboard display: open screen settings
+猫咪示意预览|Cat preview
+关闭屏幕设置|Close screen settings
+关闭键盘检测|Close keyboard test
+关闭|Close
+此型号的布局选项暂仅按设备读取展示，写入支持仍待验证。|Layout options are read from this model. Writing layout options still needs validation.
+此型号尚未支持屏幕工作室固件。|Screen Studio firmware is not yet supported on this model.
+每次敲击，都有回应。|Every keystroke comes alive.
+由层切换键启用|Activated by a layer key
+
+键位设置和键盘检测共用当前连接。此型号的网站适配尚待实机验证，屏幕功能暂未开放。|Key mapping and testing share this connection. Hardware validation for this model is pending; screen features are not available yet.
+此型号待实机验证|Hardware validation pending for this model
+宠物模式运行中|Pet mode is active
+成长进度已保存。|Growth progress saved.

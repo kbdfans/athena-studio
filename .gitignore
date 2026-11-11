@@ -1,0 +1,9 @@
+node_modules/
+dist/
+.artifacts/
+.env*
+!.env.example
+.DS_Store
+firmware/**/build/
+__pycache__/
+*.pyc

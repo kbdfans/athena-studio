@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Athena75 键盘控制台：自定义键位、屏幕动画与像素宠物。"
+    />
+    <title>Athena · Studio</title>
+  </head>
+  <body class="studio-v2 connection-required">
+    <header>
+      <a class="brand" href="./studio-v2.html">Athena<span>STUDIO</span></a>
+      <nav class="console-tabs" aria-label="控制台">
+        <button id="keymap-nav" class="selected" aria-pressed="true">
+          键位设置</button
+        ><button id="tester-nav" aria-pressed="false">键盘测试</button
+        ><button id="screen-nav" aria-pressed="false">
+          屏幕设置 <span>↗</span>
+        </button>
+      </nav>
+      <div class="header-right">
+        <button id="connect" class="outline">连接键盘 <span>↗</span></button>
+        <label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label>
+      </div>
+    </header>
+    <section id="connection-gate" class="connection-gate" aria-labelledby="gate-title">
+      <div class="gate-device" aria-hidden="true"><span>KEYBOARD STUDIO</span><div class="gate-keys">⌘<i></i><i></i><i></i><b>↗</b></div></div>
+      <span class="eyebrow">YOUR KEYBOARD, YOUR WAY</span>
+      <h1 id="gate-title">连接你的键盘。</h1>
+      <p>连接键盘后，开始设置键位、屏幕和你的像素伙伴。</p>
+      <button id="gate-connect" class="primary">连接键盘 ↗</button>
+      <small>支持 Athena75 · Athena1800，连接后自动识别型号与功能。</small>
+      <p id="gate-error" class="error" role="alert"></p>
+      <small>使用 USB 数据线连接，再从浏览器列表中选择你的键盘。</small>
+      <small><a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a> · <a href="./THIRD_PARTY.txt" target="_blank" rel="noopener noreferrer">Open-source notices</a></small>
+    </section>
+    <main id="studio-main" inert>
+      <section class="console-heading">
+        <div>
+          <div class="eyebrow">MAKE IT YOURS</div>
+          <h1>我的 Athena75<span>。</span></h1>
+          <p id="console-subtitle">每一个按键，每一帧陪伴，都由你决定。</p>
+        </div>
+      </section>
+      <section
+        id="keymap-workspace"
+        class="keymap-workspace"
+        aria-label="键位设置"
+      >
+        <div class="layer-bar">
+          <span class="section-label">Athena75 · 层</span>
+          <div
+            id="keymap-layers"
+            class="layer-chips"
+            aria-label="选择键盘层"
+          ></div>
+          <span id="layer-caption">第 0 层 · 默认输入</span
+          ><span id="keymap-state">未连接 · 演示布局</span>
+        </div>
+        <div class="keyboard-column">
+          <div class="keyboard-stage">
+            <div class="keyboard-scroll">
+              <div class="keyboard-case">
+                <div
+                  id="keyboard"
+                  class="keyboard"
+                  aria-label="Athena75 按键布局"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <aside class="key-inspector" aria-label="按键功能编辑器">
+          <div class="function-toolbar">
+            <div class="selected-key-row">
+              <span class="section-label">当前选中</span>
+              <div id="selected-keycap" class="selected-keycap">Esc</div>
+              <div class="selected-description"><h2 id="selected-name">退出</h2><p id="selected-example" hidden></p></div>
+              <span id="selected-position">第 0 层</span>
+              <p id="selected-original">当前：Esc</p>
+              <button
+                id="key-reset"
+                title="撤销这个按键的修改"
+                aria-label="撤销这个按键的修改"
+                disabled
+              >
+                ↶
+              </button>
+            </div>
+            <button id="screen-shortcut" class="text-button">
+              点击小屏幕设置动画 ↗
+            </button>
+          </div>
+          <div class="function-sidebar">
+            <div class="key-mode-switch" role="group" aria-label="配置器模式">
+              <button id="key-mode-basic" class="selected" aria-pressed="true">基础</button>
+              <button id="key-mode-advanced" aria-pressed="false">高级</button>
+            </div>
+            <label class="key-search"
+              ><span>⌕</span
+              ><input
+                id="key-search"
+                type="search"
+                placeholder="搜索功能…"
+                aria-label="搜索按键或功能"
+            /></label>
+
+            <div
+              id="key-categories"
+              class="key-categories"
+              aria-label="功能分类"
+            ></div>
+            <div class="sidebar-tools">
+              <details class="keymap-files">
+                <summary>键位文件 <span>＋</span></summary>
+                <div class="files-popover">
+                  <button id="keymap-export" class="text-button">
+                    导出当前键位 ↓</button
+                  ><button id="keymap-import" class="text-button">
+                    导入键位文件 ↑</button
+                  ><button id="keymap-backup" class="text-button">
+                    下载写入前备份 ↓</button
+                  ><button id="keymap-reload" class="text-button" disabled>
+                    重新读取键盘</button
+                  ><input
+                    id="keymap-file"
+                    type="file"
+                    accept="application/json,.json"
+                    hidden
+                  />
+                  <p>
+                    含 8 层按键映射。连接时导入即应用；离线时仅预览。宏和组合键保持原样。
+                  </p>
+                </div>
+              </details>
+              <details class="key-advanced">
+                <summary>键码</summary>
+                <div class="advanced-popover">
+                  <p>按当前固件的 QMK 键码填写。</p>
+                  <div>
+                    <input
+                      id="key-hex"
+                      placeholder="0x0004"
+                      aria-label="QMK 名称或十六进制键码"
+                      maxlength="48"
+                    /><button id="key-hex-apply" class="outline small">
+                      应用
+                    </button>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+          <div id="key-choices" class="key-choices" aria-label="可选功能"></div>
+          <p id="key-description" class="key-description">
+            点击下方按键，选择新功能。
+          </p>
+        </aside>
+        <p id="keymap-sync" class="keymap-sync" role="status" aria-live="polite">离线仅预览 · 连接后读取键盘实际配置</p>
+      </section>
+      <dialog id="tester-dialog" class="studio-modal tester-modal" aria-labelledby="tester-modal-title">
+        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO</span><h2 id="tester-modal-title">键盘检测</h2><p>按下每一颗键，看看它的回应。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button class="modal-close" data-workspace-close aria-label="关闭键盘检测">×</button></div></div>
+        <div class="modal-body">
+      <section id="keyboard-tester" class="keyboard-tester" hidden aria-label="键盘测试器">
+        <div class="tester-heading"><div><h1>按键响应</h1><p id="tester-mode">检测每个按键的响应</p></div><div class="tester-actions"><button id="tester-clear" class="outline small">清空记录</button><button id="tester-toggle" class="primary small">暂停检测</button></div></div>
+        <div class="tester-options">
+          <label>检测方式 <select id="tester-input-mode"><option value="matrix">物理按键（含 MO/Fn）</option><option value="browser">浏览器按键（不含 MO/Fn）</option></select></label>
+          <label>提示音 <select id="tester-sound"><option value="digital">电子滴答</option><option value="arcade">复古 8-bit</option><option value="soft">柔和水滴</option><option value="off">关闭提示音</option></select></label>
+          <label>音量 <input id="tester-volume" type="range" min="0" max="100" value="20" aria-label="提示音音量"/><output id="tester-volume-label">20%</output></label>
+          <button id="tester-sound-preview" class="text-button">试听 ♪</button>
+          <span id="tester-audio-status" role="status"></span>
+        </div>
+        <p class="tester-system-hint">Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。</p>
+        <div id="tester-surface" class="tester-surface" tabindex="0" aria-label="键盘测试区域">
+          <div class="keyboard-scroll"><div class="keyboard-case"><div id="tester-keyboard" class="keyboard" aria-label="测试键盘布局"></div></div></div>
+        </div>
+        <div class="tester-summary"><div><span class="tester-dot held"></span>正在按下 <strong id="tester-held">0</strong></div><div><span class="tester-dot seen"></span>已检测 <strong id="tester-count">0 / 81</strong></div><div><span class="tester-dot"></span>未检测</div><p id="tester-status" role="status">打开即开始检测；物理模式连接键盘后自动就绪。</p></div>
+        <div class="tester-details"><div><span>最近按键</span><strong id="tester-last">等待输入</strong><small id="tester-code">—</small></div><div><span>本轮按下次数</span><strong id="tester-total">0</strong><small>长按重复不累计</small></div><div><span>按键记录</span><div id="tester-history" class="tester-history">暂无记录</div></div></div>
+        <p class="tester-note">Esc 用于测试；点击右上角关闭，检测随即暂停。</p>
+        <p class="tester-note" id="tester-note">关闭弹窗即暂停检测；Esc 用于测试，请点击右上角关闭。</p>
+      </section>
+        </div><div class="modal-notices"></div>
+      </dialog>
+      <dialog id="screen-dialog" class="studio-modal screen-modal" aria-labelledby="screen-modal-title">
+        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO · 128 × 128</span><h2 id="screen-modal-title">屏幕设置</h2><p>一段喜欢的动画，一个陪你打字的小伙伴。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button id="screen-back" class="modal-close" data-workspace-close aria-label="关闭屏幕设置">×</button></div></div>
+        <div class="modal-body">
+      <section id="screen-settings" hidden aria-label="屏幕设置">
+        <div class="screen-toolbar">
+        <nav class="mode-tabs" aria-label="工作区">
+          <button id="image-tab" aria-selected="false">图片动画</button
+          ><button id="pet-tab" class="selected" aria-selected="true">
+            电子宠物
+          </button><button id="typing-tab" aria-selected="false">打字弹球</button>
+        </nav>
+        <div class="screen-primary-actions" id="write-action-dock">
+          <button id="write" class="primary" disabled hidden>写入键盘 ↗</button><button id="pet-enable" class="primary" disabled>在键盘上启用 ↗</button><button id="typing-enable" class="primary" disabled hidden>启用打字弹球 ↗</button>
+
+        </div>
+        </div>
+        <div class="steps" id="image-steps" hidden>
+          <span class="active"><b>01</b> 导入素材</span><i></i
+          ><span><b>02</b> 裁剪与优化</span><i></i
+          ><span><b>03</b> 写入键盘</span
+          ><span class="device-tag">ATHENA75 / 128 × 128</span>
+        </div>
+        <div class="workspace" id="image-workspace" hidden>
+          <section class="editor">
+            <div class="panel-top">
+              <div>
+                <span class="section-label">编辑画布</span
+                ><span id="file-name" data-i18n-skip class="filename">轨道 · 内置示例</span>
+              </div>
+              <div class="actions">
+                <button id="demo" class="text-button">使用示例</button
+                ><button id="import" class="outline small">
+                  ＋ 导入 GIF / 图片</button
+                ><input
+                  id="file"
+                  type="file"
+                  accept="image/gif,image/png,image/jpeg,image/webp"
+                  hidden
+                />
+              </div>
+            </div>
+            <div class="preview-area" id="dropzone">
+              <div class="crop-side">
+                <div class="stage-label">
+                  <span>裁剪画面</span><span id="source-size">256 × 256</span>
+                </div>
+                <div class="crop-wrap">
+                  <canvas
+                    id="crop"
+                    width="384"
+                    height="384"
+                    tabindex="0"
+                    aria-label="裁剪区域，拖动调整位置，或使用方向键移动"
+                  ></canvas>
+                  <div class="crop-grid"><i></i><i></i></div>
+                  <span class="crop-corner tl"></span
+                  ><span class="crop-corner tr"></span
+                  ><span class="crop-corner bl"></span
+                  ><span class="crop-corner br"></span
+                  ><span class="drag-hint">拖动调整画面</span>
+                </div>
+                <label class="zoom-label"
+                  >缩放
+                  <input
+                    id="zoom"
+                    type="range"
+                    min="1"
+                    max="4"
+                    step="0.01"
+                    value="1"
+                  /><output id="zoom-value">100%</output
+                  ><button id="reset-crop" class="text-button" title="重置裁剪">
+                    重置
+                  </button></label
+                >
+              </div>
+              <div class="screen-side">
+                <div class="stage-label">屏幕效果</div>
+                <div class="device-model">
+                  <div class="screw a"></div>
+                  <div class="screw b"></div>
+                  <div class="screen-bezel">
+                    <canvas
+                      id="screen"
+                      width="128"
+                      height="128"
+                      aria-label="实际 RGB565 屏幕效果"
+                    ></canvas>
+                  </div>
+                  <div class="model-label">ATHENA <span>75</span></div>
+                </div>
+                <div class="screen-meta">
+                  128 × 128 <span>真实颜色预览</span>
+                </div>
+                <span id="preview-mode" class="pill">示例预览</span>
+              </div>
+            </div>
+            <div class="timeline">
+              <div class="playback-row">
+                <button id="play" class="play-button" aria-label="暂停动画">
+                  Ⅱ</button
+                ><input
+                  id="scrub"
+                  type="range"
+                  min="0"
+                  max="23"
+                  value="0"
+                  aria-label="预览帧"
+                /><span id="frame-position">01 / 24</span>
+              </div>
+              <div class="trim-row">
+                <span>保留片段</span
+                ><label
+                  >起始帧
+                  <input id="start" type="number" min="1" value="1" /></label
+                ><span>—</span
+                ><label
+                  >结束帧
+                  <input id="end" type="number" min="1" value="24" /></label
+                ><span id="duration">2.40 秒</span>
+              </div>
+            </div>
+            <div class="editor-foot">
+              <span>支持 GIF、PNG、JPG、静态 WebP</span
+              ><span>素材仅在你的浏览器中处理</span>
+            </div>
+          </section>
+          <section class="source-history" aria-labelledby="source-history-title">
+            <div class="source-history-heading"><div><h3 id="source-history-title">最近使用的素材</h3><p>保存在此浏览器 · 最多 12 条 / 80 MB，超出后移除最早使用的记录</p></div><span id="source-history-count"></span></div>
+            <div id="source-history-list" class="source-history-list"></div>
+            <p id="source-history-status" class="muted" role="status">导入 GIF 或图片后，会自动保存在这里。清除网站数据会移除记录。</p>
+          </section>
+          <aside>
+            <section class="settings">
+              <div class="section-heading">
+                <span class="number">01</span>
+                <h2>选择动画位置</h2>
+              </div>
+              <select id="slot" aria-label="动画位置"></select>
+              <p id="slot-description" class="muted">日常循环播放的动画位置</p>
+              <div class="section-heading second">
+                <span class="number">02</span>
+                <h2>优化动画</h2>
+              </div>
+              <div class="field-label">
+                <label for="fps">目标帧率</label
+                ><output id="fps-value">15 FPS</output>
+              </div>
+              <input id="fps" type="range" min="1" max="30" value="15" />
+              <div class="range-caption">
+                <span>更小体积</span><span>更流畅</span>
+              </div>
+              <button id="optimize" class="outline full">
+                自动适配屏幕容量 <span>↗</span>
+              </button>
+              <div class="stats">
+                <div>
+                  <span>输出帧数</span
+                  ><strong id="frame-count">—<small> / 63</small></strong>
+                </div>
+                <div>
+                  <span>播放时长</span><strong id="out-duration">—</strong>
+                </div>
+              </div>
+              <div class="capacity-heading">
+                <span>动画占用</span><span id="size">—</span>
+              </div>
+              <div class="meter"><div id="capacity-bar"></div></div>
+              <p class="muted" id="optimization-note">
+                自动抽帧并保留播放时长。
+              </p>
+            </section>
+            <section class="write-panel">
+              <div class="section-heading">
+                <span class="number">03</span>
+                <h2>带到你的键盘上</h2>
+              </div>
+              <div class="connection-line">
+                <i id="connection-dot"></i
+                ><span id="connection-state">尚未连接键盘</span>
+              </div>
+              <button id="download" class="text-button full" hidden>
+                下载 UF2 文件 ↓
+              </button>
+              <button id="show-image" class="outline full" disabled>
+                播放键盘中的图片 1
+              </button>
+              <p class="write-note">仅切换键盘里已保存的图片；网页中的新素材需先点击“写入键盘”。</p>
+            </section>
+            <button id="backups" class="backup-link" hidden>
+              ↶ 动画备份与恢复 <span>→</span>
+            </button>
+          </aside>
+        </div>
+        <section id="typing-workspace" class="pet-workspace" hidden aria-label="打字弹球">
+          <div class="pet-playground">
+            <div class="typing-stage"><canvas width="128" height="128" aria-label="字母从底部中央喷出并相互碰撞的本地预览"></canvas></div>
+            <div class="pet-actions"><button data-demo type="button">播放由慢到快的示例</button><button data-type type="button">点此后打字试玩</button><button data-pause type="button" aria-pressed="false">暂停</button></div>
+            <p data-status class="pet-save-state" aria-live="polite">本地预览 · 不会改变电脑输入</p>
+          </div>
+          <aside class="pet-companion"><div class="pet-card-title"><div><span class="eyebrow">TYPE & BOUNCE</span><h2>每次敲击，都有回应<span>。</span></h2></div></div>
+            <p id="typing-connection" class="pet-connection" role="status">连接后可在键盘上启用</p>
+            <p class="typing-description">大写字母从底部中央向随机方向喷出。打得越快，喷射越强；字母相互碰撞、碰壁反弹，然后渐渐消失。</p>
+            <div id="typing-settings" class="typing-settings">
+              <div class="typing-setting-pair"><label>字体大小<select id="typing-size"><option value="0">小 · 14 px</option><option value="1" selected>中 · 18 px</option><option value="2">大 · 22 px</option></select></label><label>字体粗细<select id="typing-weight"><option value="0">常规</option><option value="1">加粗</option><option value="2" selected>特粗 · 当前效果</option></select></label></div>
+              <label>配色方式<select id="typing-color-mode"><option value="0">统一颜色</option><option value="1" selected>多彩随机</option><option value="2">按字母 / 数字 / 符号分类</option></select></label>
+              <div class="typing-color-fields">
+                <label><input type="color" id="typing-color-0" value="#ff5100"/><span>颜色 1</span></label>
+                <label><input type="color" id="typing-color-1" value="#222523"/><span>颜色 2</span></label>
+                <label><input type="color" id="typing-color-2" value="#38705b"/><span>颜色 3</span></label>
+                <label><input type="color" id="typing-color-3" value="#98623c"/><span>颜色 4</span></label>
+              </div>
+              <div class="typing-background-fields"><span class="typing-background-title">格子背景</span><div class="typing-color-fields">
+                <label><input type="color" id="typing-background" value="#fff8e8" aria-label="背景底色"/><span>底色</span></label>
+                <label><input type="color" id="typing-grid" value="#e7dece" aria-label="格线颜色"/><span>格线</span></label>
+              </div><span class="typing-background-note">默认奶白色，可自由搭配两种颜色</span></div>
+              <p id="typing-settings-status" role="status">预览即时更新，连接新版键盘后自动生效并保存。</p>
+              <button type="button" id="typing-settings-reset" class="text-button">恢复默认设置</button>
+            </div>
+            <details class="pet-details" open><summary>使用方式</summary><p>「左右 Shift + T」切换打字弹球 / 图片；「左右 Shift + P」切换宠物 / 图片。</p><p>支持英文字母、数字和常用标点。中文输入法下显示对应的字母按键；Ctrl / Cmd 等组合快捷键不生成字母。</p><p>同屏最多 16 个字母，仅在运行内存短暂显示，不保存输入。关闭网页后仍可使用。打字模式下暂停宠物消耗。</p></details>
+          </aside>
+        </section>
+        <section id="pet-workspace" class="pet-workspace" aria-label="电子宠物">
+          <div class="pet-playground">
+            <div class="pet-stage">
+              <div class="stage-topline">
+                <span class="pet-preview-badge">本地预览</span
+                ><span id="pet-preview-label">待机 · 成年猫</span>
+              </div>
+              <div class="pet-large">
+                <canvas
+                  id="pet-canvas"
+                  width="128"
+                  height="128"
+                  aria-label="像素小猫动作预览"
+                ></canvas>
+              </div>
+              <div class="pet-device-inset">
+                <canvas
+                  id="pet-screen"
+                  width="128"
+                  height="128"
+                  aria-label="128像素键盘屏幕预览"
+                ></canvas
+                ><span>键盘屏幕 · 128 × 128</span>
+              </div>
+              <div class="stage-caption">
+                <span>你的桌面小伙伴</span
+                ><small>打字时活动，闲置时打个盹。</small>
+              </div>
+            </div>
+            <div class="pet-action-bar">
+              <span class="section-label">看看它的小动作</span>
+              <div id="pet-actions" class="pet-actions"></div>
+            </div>
+            <div class="pet-explore">
+              <div class="pet-growth">
+                <span class="section-label">成长预览</span>
+                <div id="pet-stages" class="pet-stages">
+                  <button data-stage="0">01 <span>一颗蛋</span></button
+                  ><button data-stage="1">02 <span>幼猫</span></button
+                  ><button data-stage="2" class="selected">
+                    03 <span>成年猫</span>
+                  </button>
+                </div>
+                <small>这里只切换预览，不改变键盘上的成长。</small>
+              </div>
+              <button id="pet-typing" class="typing-pad">
+                <span>试着敲几个字 <b>↗</b></span
+                ><small id="pet-typing-hint">点这里，再打字 · 空格跳跃</small>
+              </button>
+            </div>
+          </div>
+          <aside class="pet-companion">
+            <div class="pet-card-title">
+              <div>
+                <span class="eyebrow">YOUR LITTLE COMPANION</span>
+                <h2>像素小猫<span>。</span></h2>
+              </div>
+              <span class="pet-size">像素伙伴</span>
+            </div>
+            <p id="pet-connection" class="pet-connection">
+              未连接 · 当前仅为动作预览
+            </p>
+            <div class="pet-stats">
+              <div><span>成长等级</span><strong id="pet-level">—</strong></div>
+              <div><span>成长经验</span><strong id="pet-xp">—</strong></div>
+              <div>
+                <span>当前阶段</span><strong id="pet-stage-status">—</strong>
+              </div>
+            </div>
+            <div class="capacity-heading">
+              <span>HP · 体力</span><span id="pet-fullness">连接后读取</span>
+            </div>
+            <div class="meter">
+              <div id="pet-food-meter" style="width: 0"></div>
+            </div>
+            <div class="pet-buttons">
+              <button id="pet-feed" disabled><span>◡</span> 喂食</button
+              ><button id="pet-touch" disabled><span>♡</span> 摸摸</button>
+            </div>
+            
+            <p id="pet-save-state" class="pet-save-state">
+              成长进度保存在键盘中。
+            </p>
+            <div class="pet-appearance">
+              <div class="appearance-heading">
+                <label for="pet-theme">给它换个颜色</label><span>外观预览</span>
+              </div>
+              <select id="pet-theme">
+                <option value="mint">薄荷</option>
+                <option value="orange">暖橘</option>
+                <option value="cream">奶油</option>
+                <option value="gray">雾灰</option><option value="custom">自定义配色</option></select>
+              <label class="pet-pattern-label" for="pet-pattern">花纹样式</label><select id="pet-pattern"></select>
+              <fieldset class="pet-color-editor" aria-describedby="pet-color-status">
+                <legend>猫猫调色盘</legend>
+                <div id="pet-color-fields"></div>
+                <div class="pet-color-footer"><span>点色块选色，也可输入 HEX</span><button id="pet-color-reset" type="button">恢复默认</button></div>
+              </fieldset>
+              <p id="pet-color-status" class="pet-color-status" role="status">所有动作同步预览，写入后在键盘生效。</p>
+              <button id="pet-upload" class="outline full" disabled>
+                更新宠物外观 <span>↑</span></button
+              ><small id="pet-version-hint"
+                >连接后可更新外观，成长进度保留。</small
+              >
+            </div>
+            <details class="pet-details">
+              <summary>成长存档 <span>＋</span></summary>
+              <button id="pet-save" class="text-button full" disabled>
+                立即保存成长进度</button
+              ><button id="pet-backup" class="text-button full" hidden>
+                下载上一版外观备份 ↓
+              </button>
+            </details>
+            <details class="pet-details">
+              <summary>键盘快捷操作 <span>＋</span></summary>
+              <p>按住左右 Shift，再按：</p>
+              <dl>
+                <dt>P</dt>
+                <dd>切换宠物 / 图片</dd>
+                <dt>F / H</dt>
+                <dd>喂食 / 摸摸</dd>
+                <dt>G / S</dt>
+                <dd>切换图片 / 保存</dd>
+              </dl>
+              <p>日常进度约每分钟保存，也可以手动保存后再拔线。</p>
+            </details>
+            <details class="pet-details">
+              <summary>成长与睡眠规则 <span>＋</span></summary>
+              <p id="pet-care-status">连接键盘后检查玩法版本；以下规则需要新版养成固件。</p>
+              <dl>
+                <dt>睡眠保护</dt>
+                <dd>约 30 秒不操作即入睡。睡眠、图片模式和断电期间，暂停 HP 消耗与饥饿计时；醒来继续累计清醒时间。</dd>
+                <dt>日常消耗</dt>
+                <dd>清醒累计 5 分钟扣 1 HP；跑步累计 60 秒额外扣 1 HP，每完成 5 次跳跃额外扣 1 HP。</dd>
+                <dt>饥饿</dt>
+                <dd>HP 为 0 时，每累计清醒 10 分钟扣 1 点经验。HP 与经验最低为 0，不会死亡。</dd>
+                <dt>喂食</dt>
+                <dd>每次恢复 20 HP（最高 100），清零饥饿计时，重新开始日常消耗计时。</dd>
+              </dl>
+            </details>
+          </aside>
+        </section>
+      </section>
+        </div><div class="modal-notices"></div>
+      </dialog>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <footer>
+        <span>ATHENA STUDIO <b>LOCAL FIRST</b></span
+        ><span
+          >USB 直写适用于桌面 Chrome / Edge
+          <button id="help" class="text-button">连接说明</button>
+          <button id="disconnect" class="text-button" hidden>断开连接</button
+          ><button id="recover-screen" class="text-button" hidden>
+            重新初始化屏幕
+          </button></span
+        >
+      </footer>
+    </main>
+    <dialog id="transfer-dialog" aria-labelledby="transfer-title" tabindex="-1">
+      <div id="transfer-confetti" aria-hidden="true"></div>
+          <section id="progress-area" class="transfer-card" hidden aria-label="键盘写入状态" aria-busy="false">
+            <div class="transfer-card-top"><span class="transfer-kicker">ATHENA · SYNC</span><button id="transfer-dismiss" class="transfer-dismiss" aria-label="关闭写入结果" hidden>×</button></div>
+            <div class="transfer-main"><div class="transfer-emblem" aria-hidden="true"><svg viewBox="0 0 48 48"><circle class="transfer-ring" cx="24" cy="24" r="20"/><circle class="transfer-orbit" cx="24" cy="24" r="20"/><path class="transfer-check" d="m15 24 6 6 13-13"/><path class="transfer-cross" d="m18 18 12 12m0-12L18 30"/></svg><span class="transfer-pixels"><i></i><i></i><i></i></span></div><div class="transfer-heading"><h3 id="transfer-title">准备写入</h3><p id="transfer-file"></p></div></div>
+            <div class="transfer-progress-heading"><span id="transfer-phase">正在写入</span><strong id="transfer-percent">0%</strong></div>
+            <progress id="progress" value="0" max="100" aria-label="写入进度"></progress>
+            <div id="transfer-steps" class="transfer-steps"><span id="transfer-step-backup">备份</span><span id="transfer-step-write">写入</span><span id="transfer-step-verify">校验</span></div>
+            <p id="progress-text" role="status" aria-live="polite"></p>
+            <p id="transfer-error" role="alert"></p>
+            <div class="transfer-footer"><span id="transfer-footnote">请保持 USB 连接</span><span id="transfer-elapsed">0.0 秒</span></div>
+            <details id="transfer-details" hidden><summary>查看传输详情</summary><p id="transfer-timing"></p></details>
+          </section>
+    </dialog>
+    <dialog id="connection-dialog">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="eyebrow">CONNECT YOUR ATHENA</div>
+      <h2 id="connection-title">让键盘准备好。</h2>
+      <div data-connected-only hidden class="shared-connection">
+        <p id="shared-connection-copy">键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。</p>
+        <div class="connection-features"><span>✓ 键位设置</span><span id="connection-screen-feature">✓ 屏幕设置</span><span>✓ 键盘检测</span></div>
+        <button id="connection-disconnect" class="outline full">断开连接</button>
+      </div>
+      <p data-disconnected-only>
+        连接已安装 Screen Studio v2 的
+        Athena75。旧固件需先升级并迁移动画；此页面不会自动改动固件或旧动画。
+      </p>
+      <button id="identify" class="primary" data-disconnected-only>连接正常模式键盘</button>
+      <p id="identity" class="success"></p>
+      <p id="connection-error" class="error" role="alert"></p>
+      <p class="muted" data-disconnected-only>首次连接需浏览器授权，连接后全部功能共用。连接过程不会写入动画。</p>
+    </dialog>
+    <dialog id="confirm-dialog" class="write-confirmation" aria-labelledby="write-confirm-title">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="write-confirm-heading"><span class="write-confirm-kicker">FROM YOUR DESK, TO YOUR KEYS</span><h2 id="write-confirm-title">让喜欢的画面，<br>住进键盘。</h2><p>再看一眼，准备好就出发。</p></div>
+      <div class="confirm-preview write-preview-card">
+        <div class="write-device-frame"><canvas id="confirm-screen" width="128" height="128"></canvas><span>ATHENA 75</span></div>
+        <div class="write-preview-info"><span class="write-section-label">即将写入</span><div id="confirm-details"></div><span class="write-preview-badge"><i></i> 128 × 128 屏幕</span></div>
+      </div>
+      <div class="write-options-heading"><span>写入选项</span><span>其他图片与宠物保持不变</span></div>
+      <label class="write-backup-choice" for="backup-before-write">
+        <input id="backup-before-write" type="checkbox" checked aria-describedby="backup-choice-help skip-backup-note" />
+        <span><strong>保留原图片的备份 <em>推荐</em></strong><small id="backup-choice-help">先备份再替换；关闭可省去备份等待时间。</small></span><span class="write-switch" aria-hidden="true"></span>
+      </label>
+      <p id="skip-backup-note" class="write-backup-note" hidden>将直接覆盖此位置，不创建新备份；若无已有备份，覆盖前的动画将无法恢复。</p>
+      <div class="write-confirm-footer"><span class="write-verified-note"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2 3 5v5c0 4 7 8 7 8s7-4 7-8V5Z"/><path d="m6.5 9.5 2.5 2.5 4.5-5"/></svg>每次写入，都完整校验</span><div><button class="write-cancel" data-close>再调整一下</button><button id="confirm-write" class="primary">备份并开始写入 ↗</button></div></div>
+    </dialog>
+    <dialog id="backup-dialog">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="eyebrow">YOUR ORIGINALS, KEPT SAFE</div>
+      <h2>动画备份</h2>
+      <p class="muted">
+        备份保存在当前浏览器。清除网站数据会移除备份，建议下载留存。
+      </p>
+      <div id="backup-list"></div>
+      <p id="backup-error" class="error"></p>
+    </dialog>
+    <script type="module" src="/src/main-v2.js"></script>
+  </body>
+</html>

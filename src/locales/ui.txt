@@ -1,0 +1,211 @@
+# zh-CN | en | zh-TW | ja | ko | de | fr | es
+键位设置|Key mapping|鍵位設定|キー設定|키 설정|Tastenbelegung|Affectation des touches|Asignación de teclas
+键盘测试|Keyboard test|鍵盤測試|キーテスト|키보드 테스트|Tastaturtest|Test du clavier|Prueba del teclado
+键盘检测|Keyboard test|鍵盤檢測|キーテスト|키보드 테스트|Tastaturtest|Test du clavier|Prueba del teclado
+屏幕设置|Screen settings|螢幕設定|画面設定|화면 설정|Anzeige|Écran|Pantalla
+连接键盘|Connect keyboard|連接鍵盤|キーボードを接続|키보드 연결|Verbinden|Connecter|Conectar
+已连接 · Athena75|Connected · Athena75|已連接 · Athena75|接続済み · Athena75|연결됨 · Athena75|Verbunden · Athena75|Connecté · Athena75|Conectado · Athena75
+本地处理 · USB 直连|Local processing · USB|本機處理 · USB 直連|ローカル処理 · USB 接続|로컬 처리 · USB 연결|Lokal · USB|Traitement local · USB|Procesamiento local · USB
+基础|Basic|基礎|基本|기본|Basis|Base|Básico
+高级|Advanced|進階|詳細|고급|Erweitert|Avancé|Avanzado
+日常输入|Everyday typing|日常輸入|日常入力|일상 입력|Eingabe|Saisie courante|Escritura diaria
+基础按键|Basic keys|基本按鍵|基本キー|기본 키|Standardtasten|Touches de base|Teclas básicas
+数字小键盘|Numpad|數字鍵盤|テンキー|숫자 키패드|Ziffernblock|Pavé numérique|Teclado numérico
+常用控制|Everyday controls|常用控制|よく使う操作|자주 쓰는 기능|Bedienung|Commandes courantes|Controles frecuentes
+屏幕快捷键|Screen shortcuts|螢幕快捷鍵|画面ショートカット|화면 단축키|Display-Tasten|Raccourcis écran|Atajos de pantalla
+动画模式|Animation mode|動畫模式|アニメーション|애니메이션 모드|Animation|Mode animation|Modo animación
+电子宠物|Pixel pet|電子寵物|ピクセルペット|픽셀 펫|Pixel-Tier|Animal pixel|Mascota píxel
+打字弹球|Typing bounce|打字彈球|文字バウンス|타이핑 바운스|Buchstaben-Bounce|Lettres rebondissantes|Letras rebotantes
+切换到已保存的图片动画|Show saved images and animations|切換至已儲存的圖片動畫|保存した画像・アニメを表示|저장된 이미지와 애니메이션 표시|Gespeicherte Bilder anzeigen|Afficher les animations enregistrées|Mostrar animaciones guardadas
+切换到电子宠物|Show your pixel pet|切換至電子寵物|ペットを表示|픽셀 펫 표시|Pixel-Tier anzeigen|Afficher votre animal|Mostrar tu mascota
+切换到打字弹球|Show bouncing letters as you type|切換至打字彈球|入力に合わせて文字が弾む|타이핑에 맞춰 글자 표시|Buchstaben beim Tippen anzeigen|Afficher les lettres en tapant|Mostrar letras al escribir
+媒体控制|Media controls|媒體控制|メディア|미디어 제어|Medien|Multimédia|Multimedia
+常用层切换|Layer switching|常用層切換|レイヤー切替|레이어 전환|Ebenenwechsel|Changement de couche|Cambio de capa
+鼠标按键|Mouse keys|滑鼠按鍵|マウスキー|마우스 키|Maustasten|Touches souris|Teclas de ratón
+布局设置|Layout settings|配置設定|配列設定|배열 설정|Layout|Disposition|Distribución
+组合与自动化|Combinations & automation|組合與自動化|組み合わせと自動化|조합 및 자동화|Kombinationen|Combinaisons|Combinaciones
+组合快捷键|Key combinations|組合快捷鍵|キーの組み合わせ|키 조합|Tastenkombinationen|Raccourcis combinés|Combinaciones de teclas
+轻按 / 长按|Tap / hold|輕按 / 長按|タップ / 長押し|탭 / 길게 누르기|Tippen / Halten|Appui / Maintien|Toque / Mantener
+宏|Macros|巨集|マクロ|매크로|Makros|Macros|Macros
+多击动作|Tap dance|多擊動作|タップダンス|다중 탭|Mehrfach-Tippen|Appuis multiples|Toques múltiples
+Combo 组合触发|Combos|Combo 組合觸發|コンボ|콤보|Combos|Combos|Combos
+按键替换|Key overrides|按鍵替換|キー上書き|키 재정의|Tastenersetzung|Substitution de touches|Sustitución de teclas
+扩展键码|Extended keycodes|擴充鍵碼|拡張キーコード|확장 키코드|Erweiterte Keycodes|Codes étendus|Códigos ampliados
+完整层功能|All layer functions|完整層功能|全レイヤー機能|전체 레이어 기능|Alle Ebenenfunktionen|Toutes les fonctions de couche|Todas las funciones de capa
+国际 / 语言|International / language|國際 / 語言|国際 / 言語|국제 / 언어|International / Sprache|International / Langue|Internacional / Idioma
+系统功能|System functions|系統功能|システム機能|시스템 기능|Systemfunktionen|Fonctions système|Funciones del sistema
+灯光控制|Lighting|燈光控制|ライト|조명|Beleuchtung|Éclairage|Iluminación
+固件与特殊|Firmware & special|韌體與特殊|ファームウェア・特殊|펌웨어 및 특수|Firmware & Spezial|Firmware et spécial|Firmware y especiales
+全部键码|All keycodes|全部鍵碼|全キーコード|모든 키코드|Alle Keycodes|Tous les codes|Todos los códigos
+行为设置|Behavior|行為設定|動作設定|동작 설정|Verhalten|Comportement|Comportamiento
+高级参数|Advanced parameters|進階參數|詳細パラメーター|고급 매개변수|Erweiterte Parameter|Paramètres avancés|Parámetros avanzados
+当前选中|Selected|目前選取|選択中|선택됨|Ausgewählt|Sélection|Selección
+更多常用键|More keys|更多常用鍵|その他のキー|추가 키|Weitere Tasten|Autres touches|Más teclas
+键位文件|Keymap files|鍵位檔案|キーマップファイル|키맵 파일|Keymap-Dateien|Fichiers de configuration|Archivos de teclas
+导出当前键位|Export keymap|匯出目前鍵位|キーマップを書き出す|키맵 내보내기|Keymap exportieren|Exporter la configuration|Exportar teclas
+导入键位文件|Import keymap|匯入鍵位檔案|キーマップを読み込む|키맵 가져오기|Keymap importieren|Importer la configuration|Importar teclas
+重新读取键盘|Reload keyboard|重新讀取鍵盤|キーボードを再読込|키보드 다시 읽기|Tastatur neu laden|Relire le clavier|Volver a leer el teclado
+键码|Keycode|鍵碼|キーコード|키코드|Keycode|Code de touche|Código de tecla
+应用|Apply|套用|適用|적용|Anwenden|Appliquer|Aplicar
+没有找到这个功能|No matching function|找不到此功能|該当する機能がありません|일치하는 기능 없음|Keine Funktion gefunden|Aucune fonction trouvée|No se encontró la función
+搜索常用功能…|Search common functions…|搜尋常用功能…|よく使う機能を検索…|자주 쓰는 기능 검색…|Funktionen suchen…|Rechercher une fonction…|Buscar funciones…
+搜索全部功能…|Search all functions…|搜尋全部功能…|全機能を検索…|모든 기능 검색…|Alle Funktionen suchen…|Rechercher toutes les fonctions…|Buscar todas las funciones…
+退出|Escape|退出|エスケープ|이스케이프|Escape|Échap|Escape
+禁用|Disabled|停用|無効|사용 안 함|Deaktiviert|Désactivé|Desactivado
+图片|Image|圖片|画像|이미지|Bild|Image|Imagen
+屏幕|Screen|螢幕|画面|화면|Display|Écran|Pantalla
+切换图片|Next image|切換圖片|次の画像|다음 이미지|Nächstes Bild|Image suivante|Siguiente imagen
+屏幕开关|Screen on / off|螢幕開關|画面オン / オフ|화면 켜기 / 끄기|Display an / aus|Écran activé / désactivé|Encender / apagar pantalla
+图片动画|Images & GIFs|圖片動畫|画像・GIF|이미지 및 GIF|Bilder & GIFs|Images et GIF|Imágenes y GIF
+写入键盘|Write to keyboard|寫入鍵盤|キーボードに転送|키보드에 쓰기|Übertragen|Transférer au clavier|Enviar al teclado
+在键盘上启用|Enable on keyboard|在鍵盤上啟用|キーボードで有効にする|키보드에서 활성화|Auf Tastatur aktivieren|Activer sur le clavier|Activar en el teclado
+启用打字弹球|Enable typing bounce|啟用打字彈球|文字バウンスを有効にする|타이핑 바운스 활성화|Buchstaben-Bounce aktivieren|Activer les lettres|Activar letras rebotantes
+导入素材|Import|匯入素材|素材を読み込む|소재 가져오기|Importieren|Importer|Importar
+裁剪与优化|Crop & optimize|裁切與最佳化|切り抜き・最適化|자르기 및 최적화|Zuschneiden & optimieren|Recadrer et optimiser|Recortar y optimizar
+编辑画布|Editor|編輯畫布|編集キャンバス|편집 캔버스|Editor|Éditeur|Editor
+轨道 · 内置示例|Orbit · demo|軌道 · 內建範例|軌道 · サンプル|궤도 · 예제|Orbit · Beispiel|Orbite · exemple|Órbita · ejemplo
+使用示例|Use demo|使用範例|サンプルを使う|예제 사용|Beispiel laden|Utiliser l’exemple|Usar ejemplo
+导入 GIF / 图片|Import GIF / image|匯入 GIF / 圖片|GIF・画像を読み込む|GIF / 이미지 가져오기|GIF / Bild importieren|Importer un GIF / une image|Importar GIF / imagen
+裁剪画面|Crop|裁切畫面|切り抜き|자르기|Ausschnitt|Recadrage|Recorte
+拖动调整画面|Drag to reposition|拖曳調整畫面|ドラッグして調整|드래그하여 위치 조정|Zum Verschieben ziehen|Glisser pour repositionner|Arrastra para ajustar
+缩放|Zoom|縮放|ズーム|확대|Zoom|Zoom|Zoom
+重置|Reset|重設|リセット|초기화|Zurücksetzen|Réinitialiser|Restablecer
+屏幕效果|Screen preview|螢幕效果|画面プレビュー|화면 미리보기|Display-Vorschau|Aperçu écran|Vista previa
+真实颜色预览|Actual color preview|實際色彩預覽|実際の色をプレビュー|실제 색상 미리보기|Echte Farbvorschau|Aperçu des couleurs réelles|Vista de colores reales
+示例预览|Demo preview|範例預覽|サンプルプレビュー|예제 미리보기|Beispielvorschau|Aperçu de l’exemple|Vista del ejemplo
+保留片段|Selected range|保留片段|使用する範囲|선택 구간|Auswahlbereich|Plage sélectionnée|Intervalo seleccionado
+起始帧|First frame|起始影格|開始フレーム|시작 프레임|Startbild|Première image|Fotograma inicial
+结束帧|Last frame|結束影格|終了フレーム|마지막 프레임|Endbild|Dernière image|Fotograma final
+最近使用的素材|Recent media|最近使用的素材|最近の素材|최근 소재|Letzte Medien|Médias récents|Archivos recientes
+选择动画位置|Animation slot|選擇動畫位置|保存先|애니메이션 슬롯|Speicherplatz|Emplacement|Ubicación
+优化动画|Optimize animation|最佳化動畫|アニメを最適化|애니메이션 최적화|Animation optimieren|Optimiser l’animation|Optimizar animación
+目标帧率|Target frame rate|目標影格率|目標フレームレート|목표 프레임 속도|Zielbildrate|Fréquence cible|Fotogramas por segundo
+更小体积|Smaller file|更小體積|サイズ優先|작은 파일|Kleinere Datei|Fichier plus petit|Archivo más pequeño
+更流畅|Smoother motion|更流暢|滑らかさ優先|부드러운 동작|Flüssigere Bewegung|Plus fluide|Más fluido
+自动适配屏幕容量|Fit screen storage|自動適配螢幕容量|画面の容量に合わせる|화면 저장 용량에 맞추기|Speicher automatisch anpassen|Adapter à la capacité|Ajustar a la capacidad
+输出帧数|Output frames|輸出影格數|出力フレーム数|출력 프레임 수|Ausgabebilder|Images en sortie|Fotogramas de salida
+播放时长|Duration|播放時間|再生時間|재생 시간|Dauer|Durée|Duración
+动画占用|Storage used|動畫容量|使用容量|저장 용량|Speicherbedarf|Espace utilisé|Espacio usado
+尚未连接键盘|Keyboard not connected|尚未連接鍵盤|未接続|키보드 연결 안 됨|Tastatur nicht verbunden|Clavier non connecté|Teclado no conectado
+播放由慢到快的示例|Play slow-to-fast demo|播放由慢到快的範例|ゆっくりから高速のデモ|느린 속도부터 빠른 데모|Demo langsam bis schnell|Démo lente puis rapide|Demo de lento a rápido
+点此后打字试玩|Click, then type to try|點此後打字試玩|クリックして入力|클릭한 후 입력해 보기|Klicken und tippen|Cliquer puis taper|Haz clic y escribe
+暂停|Pause|暫停|一時停止|일시 정지|Pause|Pause|Pausa
+继续|Resume|繼續|再開|계속|Fortsetzen|Reprendre|Continuar
+字体大小|Font size|字體大小|文字サイズ|글꼴 크기|Schriftgröße|Taille de police|Tamaño de letra
+字体粗细|Font weight|字體粗細|文字の太さ|글꼴 두께|Schriftstärke|Graisse|Grosor de letra
+小 · 14 px|Small · 14 px|小 · 14 px|小 · 14 px|작게 · 14 px|Klein · 14 px|Petit · 14 px|Pequeño · 14 px
+中 · 18 px|Medium · 18 px|中 · 18 px|中 · 18 px|중간 · 18 px|Mittel · 18 px|Moyen · 18 px|Mediano · 18 px
+大 · 22 px|Large · 22 px|大 · 22 px|大 · 22 px|크게 · 22 px|Groß · 22 px|Grand · 22 px|Grande · 22 px
+常规|Regular|一般|標準|보통|Normal|Normal|Normal
+加粗|Bold|粗體|太字|굵게|Fett|Gras|Negrita
+特粗 · 当前效果|Extra bold|特粗 · 目前效果|極太|아주 굵게|Extrafett|Très gras|Extranegrita
+配色方式|Color mode|配色方式|配色モード|색상 모드|Farbmodus|Mode de couleur|Modo de color
+统一颜色|Single color|單一色彩|単色|단색|Einfarbig|Couleur unique|Un solo color
+多彩随机|Random palette|隨機多彩|ランダム配色|무작위 색상|Zufällige Farben|Palette aléatoire|Paleta aleatoria
+按字母 / 数字 / 符号分类|Letters / numbers / symbols|依字母 / 數字 / 符號分類|英字 / 数字 / 記号|문자 / 숫자 / 기호|Buchstaben / Zahlen / Symbole|Lettres / chiffres / symboles|Letras / números / símbolos
+字母|Letters|字母|英字|문자|Buchstaben|Lettres|Letras
+数字|Numbers|數字|数字|숫자|Zahlen|Chiffres|Números
+符号|Symbols|符號|記号|기호|Symbole|Symboles|Símbolos
+格子背景|Grid background|格子背景|グリッド背景|격자 배경|Rasterhintergrund|Fond quadrillé|Fondo cuadriculado
+底色|Background|底色|背景色|배경색|Grundfarbe|Fond|Fondo
+格线|Grid lines|格線|グリッド線|격자선|Rasterlinien|Quadrillage|Líneas
+恢复默认设置|Restore defaults|恢復預設設定|初期設定に戻す|기본값 복원|Standard wiederherstellen|Valeurs par défaut|Restaurar valores
+恢复默认|Restore defaults|恢復預設|初期設定に戻す|기본값 복원|Standard wiederherstellen|Valeurs par défaut|Restaurar valores
+使用方式|How to use|使用方式|使い方|사용 방법|Bedienung|Utilisation|Cómo usar
+本地预览|Local preview|本機預覽|ローカルプレビュー|로컬 미리보기|Lokale Vorschau|Aperçu local|Vista local
+成长预览|Growth preview|成長預覽|成長プレビュー|성장 미리보기|Wachstumsvorschau|Aperçu de croissance|Vista de crecimiento
+一颗蛋|Egg|一顆蛋|たまご|알|Ei|Œuf|Huevo
+幼猫|Kitten|幼貓|子猫|아기 고양이|Kätzchen|Chaton|Gatito
+成年猫|Adult cat|成年貓|成猫|성묘|Erwachsene Katze|Chat adulte|Gato adulto
+成长等级|Level|成長等級|レベル|레벨|Level|Niveau|Nivel
+成长经验|Experience|成長經驗|経験値|경험치|Erfahrung|Expérience|Experiencia
+当前阶段|Growth stage|目前階段|成長段階|성장 단계|Wachstumsstufe|Stade de croissance|Etapa de crecimiento
+HP · 体力|HP · energy|HP · 體力|HP · 体力|HP · 체력|HP · Energie|HP · énergie|HP · energía
+连接后读取|Read after connecting|連接後讀取|接続後に読み込み|연결 후 읽기|Nach Verbindung lesen|Lu après connexion|Se lee al conectar
+喂食|Feed|餵食|ごはん|먹이 주기|Füttern|Nourrir|Alimentar
+摸摸|Pet|摸摸|なでる|쓰다듬기|Streicheln|Caresser|Acariciar
+给它换个颜色|Choose a color|幫牠換個顏色|色を選ぶ|색상 선택|Farbe wählen|Choisir une couleur|Elegir color
+外观预览|Appearance preview|外觀預覽|見た目のプレビュー|외형 미리보기|Aussehen-Vorschau|Aperçu de l’apparence|Vista del aspecto
+薄荷|Mint|薄荷|ミント|민트|Minze|Menthe|Menta
+暖橘|Orange|暖橘|オレンジ|오렌지|Orange|Orange|Naranja
+奶油|Cream|奶油|クリーム|크림|Creme|Crème|Crema
+雾灰|Mist|霧灰|ミスト|안개색|Nebelgrau|Brume|Niebla
+自定义配色|Custom colors|自訂配色|カスタムカラー|사용자 색상|Eigene Farben|Couleurs personnalisées|Colores personalizados
+花纹样式|Coat pattern|花紋樣式|模様|무늬|Fellmuster|Motif du pelage|Patrón de pelaje
+猫猫调色盘|Cat palette|貓咪調色盤|猫のパレット|고양이 팔레트|Katzenpalette|Palette du chat|Paleta del gato
+经典双色|Classic two-tone|經典雙色|クラシック双色|클래식 투톤|Klassisch zweifarbig|Bicolore classique|Bicolor clásico
+纯色|Solid|純色|単色|단색|Einfarbig|Uni|Liso
+虎斑|Tabby|虎斑|トラ|줄무늬|Getigert|Tigré|Atigrado
+奶牛斑|Patches|乳牛斑|ぶち|얼룩|Gefleckt|Tacheté|Manchado
+重点色|Colorpoint|重點色|ポイント|포인트|Point-Zeichnung|Colourpoint|Colorpoint
+毛色|Fur|毛色|毛色|털색|Fell|Pelage|Pelaje
+浅色斑纹|Light markings|淺色斑紋|明るい模様|밝은 무늬|Helle Flecken|Marques claires|Manchas claras
+轮廓与五官|Outline & face|輪廓與五官|輪郭・顔|윤곽과 얼굴|Kontur & Gesicht|Contour et visage|Contorno y cara
+更新宠物外观|Update pet appearance|更新寵物外觀|ペットの見た目を更新|펫 외형 업데이트|Aussehen aktualisieren|Mettre à jour l’animal|Actualizar aspecto
+成长存档|Growth save|成長存檔|成長データ|성장 저장|Wachstum speichern|Sauvegarde de croissance|Guardar crecimiento
+键盘快捷操作|Keyboard shortcuts|鍵盤快捷操作|キーボードショートカット|키보드 단축키|Tastenkürzel|Raccourcis clavier|Atajos de teclado
+成长与睡眠规则|Growth & sleep rules|成長與睡眠規則|成長・睡眠のルール|성장 및 수면 규칙|Wachstum & Schlaf|Croissance et sommeil|Crecimiento y sueño
+睡眠保护|Sleep protection|睡眠保護|睡眠保護|수면 보호|Schlafschutz|Protection du sommeil|Protección del sueño
+日常消耗|Daily energy use|日常消耗|日常の消費|일상 소모|Energieverbrauch|Dépense quotidienne|Consumo diario
+饥饿|Hunger|飢餓|空腹|배고픔|Hunger|Faim|Hambre
+待机|Idle|待機|待機|대기|Ruhe|Repos|Reposo
+慢走|Walk|慢走|歩く|걷기|Gehen|Marche|Caminar
+奔跑|Run|奔跑|走る|달리기|Laufen|Course|Correr
+睡眠|Sleep|睡眠|眠る|잠자기|Schlafen|Sommeil|Dormir
+吃饭|Eat|吃飯|食べる|먹기|Essen|Repas|Comer
+开心|Happy|開心|喜ぶ|기쁨|Fröhlich|Heureux|Feliz
+跳跃|Jump|跳躍|ジャンプ|점프|Springen|Saut|Saltar
+醒来|Wake|醒來|起きる|깨어나기|Aufwachen|Réveil|Despertar
+清空记录|Clear history|清除紀錄|履歴を消去|기록 지우기|Verlauf löschen|Effacer l’historique|Borrar historial
+暂停检测|Pause test|暫停檢測|テストを一時停止|테스트 일시 정지|Test pausieren|Suspendre le test|Pausar prueba
+继续检测|Resume test|繼續檢測|テストを再開|테스트 계속|Test fortsetzen|Reprendre le test|Reanudar prueba
+检测方式|Test method|檢測方式|テスト方式|테스트 방식|Testmethode|Méthode de test|Método de prueba
+物理按键（含 MO/Fn）|Physical keys (incl. MO/Fn)|實體按鍵（含 MO/Fn）|物理キー（MO/Fn 対応）|물리 키 (MO/Fn 포함)|Physisch (inkl. MO/Fn)|Touches physiques (MO/Fn inclus)|Teclas físicas (incl. MO/Fn)
+浏览器按键（不含 MO/Fn）|Browser keys (no MO/Fn)|瀏覽器按鍵（不含 MO/Fn）|ブラウザー（MO/Fn 非対応）|브라우저 키 (MO/Fn 제외)|Browser (ohne MO/Fn)|Touches navigateur (sans MO/Fn)|Teclas del navegador (sin MO/Fn)
+提示音|Sound|提示音|効果音|효과음|Ton|Son|Sonido
+电子滴答|Electronic click|電子滴答|電子クリック|전자 클릭|Elektronischer Klick|Clic électronique|Clic electrónico
+复古 8-bit|Retro 8-bit|復古 8-bit|レトロ 8-bit|레트로 8-bit|Retro 8-Bit|Rétro 8 bits|Retro 8 bits
+柔和水滴|Soft drop|柔和水滴|水滴|부드러운 물방울|Sanfter Tropfen|Goutte douce|Gota suave
+关闭提示音|Mute|關閉提示音|ミュート|음소거|Stumm|Muet|Silenciar
+音量|Volume|音量|音量|음량|Lautstärke|Volume|Volumen
+试听|Preview sound|試聽|試聴|소리 듣기|Ton testen|Écouter|Escuchar
+正在按下|Pressed|正在按下|押下中|누르는 중|Gedrückt|Enfoncée|Pulsada
+已检测|Tested|已檢測|テスト済み|테스트됨|Getestet|Testée|Probada
+未检测|Untested|未檢測|未テスト|미테스트|Ungetestet|Non testée|Sin probar
+最近按键|Recent key|最近按鍵|最近のキー|최근 키|Letzte Taste|Dernière touche|Última tecla
+等待输入|Waiting for input|等待輸入|入力待ち|입력 대기|Warte auf Eingabe|En attente|Esperando entrada
+本轮按下次数|Press count|本輪按下次數|押下回数|누른 횟수|Anschläge|Nombre d’appuis|Pulsaciones
+按键记录|Key history|按鍵紀錄|キー履歴|키 기록|Tastenverlauf|Historique des touches|Historial de teclas
+暂无记录|No records yet|尚無紀錄|履歴なし|기록 없음|Noch kein Verlauf|Aucun historique|Sin registros
+断开连接|Disconnect|中斷連接|切断|연결 해제|Trennen|Déconnecter|Desconectar
+重新初始化屏幕|Reinitialize screen|重新初始化螢幕|画面を再初期化|화면 재초기화|Display initialisieren|Réinitialiser l’écran|Reinicializar pantalla
+准备写入|Preparing transfer|準備寫入|転送の準備中|전송 준비 중|Übertragung vorbereiten|Préparation du transfert|Preparando envío
+正在写入|Writing|正在寫入|転送中|쓰는 중|Übertragung läuft|Transfert en cours|Enviando
+备份|Backup|備份|バックアップ|백업|Sicherung|Sauvegarde|Copia de seguridad
+写入|Write|寫入|転送|쓰기|Übertragen|Transférer|Enviar
+校验|Verify|驗證|検証|검증|Prüfen|Vérifier|Verificar
+请保持 USB 连接|Keep USB connected|請保持 USB 連接|USB を接続したままにしてください|USB 연결을 유지하세요|USB-Verbindung beibehalten|Gardez l’USB connecté|Mantén el USB conectado
+查看传输详情|Transfer details|查看傳輸詳情|転送の詳細|전송 세부 정보|Übertragungsdetails|Détails du transfert|Detalles del envío
+写入成功|Transfer complete|寫入成功|転送完了|전송 완료|Übertragung abgeschlossen|Transfert terminé|Envío completado
+连接说明|Connection help|連接說明|接続ガイド|연결 안내|Verbindungshilfe|Aide à la connexion|Ayuda de conexión
+语言|Language|語言|言語|언어|Sprache|Langue|Idioma
+未连接 · 当前为本地预览|Offline · local preview|未連接 · 目前為本機預覽|未接続 · ローカルプレビュー|연결 안 됨 · 로컬 미리보기|Offline · lokale Vorschau|Hors ligne · aperçu local|Sin conexión · vista local
+已读取键盘设置 · 修改后自动生效|Settings loaded · changes apply automatically|已讀取設定 · 修改後自動生效|読込済み · 変更は自動適用|설정 읽음 · 변경 자동 적용|Geladen · Änderungen automatisch|Réglages chargés · application automatique|Ajustes cargados · aplicación automática
+已生效并保存到键盘|Applied and saved to keyboard|已套用並儲存至鍵盤|適用・保存済み|적용 및 저장 완료|Angewendet und gespeichert|Appliqué et enregistré|Aplicado y guardado
+正在应用到键盘…|Applying to keyboard…|正在套用至鍵盤…|キーボードに適用中…|키보드에 적용 중…|Wird angewendet…|Application au clavier…|Aplicando al teclado…
+已生效 · 正在保存到键盘…|Applied · saving…|已套用 · 正在儲存…|適用済み · 保存中…|적용됨 · 저장 중…|Angewendet · wird gespeichert…|Appliqué · enregistrement…|Aplicado · guardando…
+连接你的 Athena75。|Connect your Athena75.|連接你的 Athena75。|Athena75 を接続。|Athena75를 연결하세요.|Verbinde deine Athena75.|Connectez votre Athena75.|Conecta tu Athena75.
+连接键盘后，开始设置键位、屏幕和你的像素伙伴。|Connect to customize your keys, display and pixel companion.|連接鍵盤後，開始設定鍵位、螢幕和你的像素伙伴。|接続してキー、画面、ペットを設定しましょう。|연결 후 키, 화면, 픽셀 친구를 설정하세요.|Verbinde die Tastatur, um Tasten, Display und Pixel-Tier einzurichten.|Connectez le clavier pour personnaliser les touches, l’écran et votre animal.|Conecta el teclado para personalizar teclas, pantalla y mascota.
+使用 USB 数据线连接，再从浏览器列表中选择 Athena75。|Connect via USB, then select Athena75 in the browser device list.|使用 USB 傳輸線連接，再從瀏覽器清單中選擇 Athena75。|USB 接続後、ブラウザーの一覧で Athena75 を選択してください。|USB로 연결한 후 브라우저 목록에서 Athena75를 선택하세요.|Per USB verbinden und Athena75 in der Geräteliste auswählen.|Branchez en USB, puis choisissez Athena75 dans la liste du navigateur.|Conecta por USB y selecciona Athena75 en la lista del navegador.
+正在连接…|Connecting…|正在連接…|接続中…|연결 중…|Verbindung wird hergestellt…|Connexion…|Conectando…
+请使用桌面版 Chrome 或 Edge，并通过 USB 连接 Athena75。|Use desktop Chrome or Edge and connect Athena75 via USB.|請使用桌面版 Chrome 或 Edge，並透過 USB 連接 Athena75。|PC 版 Chrome または Edge で USB 接続してください。|데스크톱 Chrome 또는 Edge에서 USB로 연결하세요.|Bitte Desktop-Chrome oder Edge verwenden und per USB verbinden.|Utilisez Chrome ou Edge sur ordinateur et branchez en USB.|Usa Chrome o Edge de escritorio y conecta por USB.
+先选上方的按键，再选择屏幕功能。模式键直接切换屏幕，关闭网页后仍可使用。|Select a key above, then choose a screen function. Mode keys work even when the website is closed.|先選上方按鍵，再選螢幕功能。模式鍵可直接切換，關閉網頁後仍可使用。|上のキーを選び、画面機能を割り当てます。ページを閉じても使えます。|위의 키를 선택한 뒤 화면 기능을 고르세요. 웹페이지를 닫아도 작동합니다.|Oben eine Taste wählen, dann eine Display-Funktion. Funktioniert auch ohne geöffnete Website.|Sélectionnez une touche puis une fonction écran. Elle fonctionne même sans le site ouvert.|Selecciona una tecla y una función de pantalla. Funciona incluso con la web cerrada.
+独立模式键需要新版固件；现有左右 Shift + P / T 快捷键仍可使用。|Dedicated mode keys require updated firmware. Existing Left + Right Shift + P / T shortcuts still work.|獨立模式鍵需要新版韌體；左右 Shift + P / T 快捷鍵仍可使用。|専用モードキーには更新が必要です。左右 Shift + P / T も使えます。|전용 모드 키는 펌웨어 업데이트가 필요합니다. 양쪽 Shift + P / T도 사용 가능합니다.|Modustasten benötigen neue Firmware. Links + Rechts Shift + P / T bleiben verfügbar.|Les touches de mode nécessitent le nouveau firmware. Les raccourcis Shift gauche + droit + P / T restent actifs.|Las teclas de modo requieren firmware nuevo. Siguen funcionando Shift izquierdo + derecho + P / T.
+请先升级支持独立模式键的固件，再分配此功能。|Update the firmware to support dedicated mode keys before assigning this function.|請先更新支援獨立模式鍵的韌體，再指派此功能。|この機能を割り当てる前にファームウェアを更新してください。|이 기능을 지정하기 전에 펌웨어를 업데이트하세요.|Vor dem Zuweisen bitte die Firmware aktualisieren.|Mettez le firmware à jour avant d’affecter cette fonction.|Actualiza el firmware antes de asignar esta función.
+连接你的键盘。|Connect your keyboard.|連接你的鍵盤。|キーボードを接続。|키보드를 연결하세요.|Verbinde deine Tastatur.|Connectez votre clavier.|Conecta tu teclado.
+使用 USB 数据线连接，再从浏览器列表中选择你的键盘。|Connect via USB, then select your keyboard from the browser list.|使用 USB 傳輸線連接，再從瀏覽器清單中選擇你的鍵盤。|USB 接続後、ブラウザーの一覧でキーボードを選択してください。|USB로 연결한 후 브라우저 목록에서 키보드를 선택하세요.|Per USB verbinden und die Tastatur in der Browserliste auswählen.|Branchez en USB puis choisissez votre clavier dans la liste.|Conecta por USB y elige tu teclado en la lista del navegador.
+支持 Athena75 · Athena1800，连接后自动识别型号与功能。|Athena75 · Athena1800 — model and features detected on connection.|支援 Athena75 · Athena1800，連接後自動辨識型號與功能。|Athena75 · Athena1800 対応。接続後にモデルと機能を検出します。|Athena75 · Athena1800 지원. 연결 후 모델과 기능을 확인합니다.|Athena75 · Athena1800 — Modell und Funktionen werden erkannt.|Athena75 · Athena1800 — modèle et fonctions détectés à la connexion.|Athena75 · Athena1800: modelo y funciones detectados al conectar.
+请使用桌面版 Chrome 或 Edge，并通过 USB 连接键盘。|Use desktop Chrome or Edge and connect your keyboard via USB.|請使用桌面版 Chrome 或 Edge，並透過 USB 連接鍵盤。|PC 版 Chrome または Edge で USB 接続してください。|데스크톱 Chrome 또는 Edge에서 USB로 연결하세요.|Bitte Desktop-Chrome oder Edge verwenden und per USB verbinden.|Utilisez Chrome ou Edge sur ordinateur et branchez en USB.|Usa Chrome o Edge de escritorio y conecta por USB.
+已连接|Connected|已連接|接続済み|연결됨|Verbunden|Connecté|Conectado
+默认输入|Default typing|預設輸入|標準入力|기본 입력|Standardeingabe|Saisie par défaut|Entrada predeterminada
+此型号的宠物与弹球需要单独适配固件。当前可分配原有图片切换和屏幕开关。|Pet and typing bounce need firmware adapted for this model. Existing image and display controls can be assigned.|此型號的寵物與彈球需個別適配韌體。目前可指派原有圖片切換及螢幕開關。|ペットと文字バウンスは専用ファームウェアが必要です。既存の画像切替と画面電源は割り当てできます。|펫과 타이핑 바운스는 전용 펌웨어가 필요합니다. 기존 이미지 전환 및 화면 전원은 지정 가능합니다.|Tier und Bounce benötigen angepasste Firmware. Bildwechsel und Display-Schalter sind verfügbar.|L’animal et les lettres nécessitent un firmware adapté. Image suivante et écran restent disponibles.|La mascota y las letras necesitan firmware adaptado. El cambio de imagen y la pantalla están disponibles.

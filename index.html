@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="为 Athena75 裁剪和优化屏幕动画，通过 USB 直接写入键盘。图片只在本地处理。"
+    />
+    <title>Athena · Screen Studio</title>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">Athena<span>SCREEN STUDIO</span></a>
+      <div class="header-right">
+        <span class="local"><i></i> 本地处理 · 不上传图片</span
+        ><button id="connect" class="outline">连接键盘 <span>↗</span></button>
+      </div>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <div class="eyebrow">A LITTLE SCREEN. ENDLESS POSSIBILITIES.</div>
+          <h1>让小屏幕，播放你的灵感<span>。</span></h1>
+          <p>把喜欢的画面，变成键盘上的日常。</p>
+        </div>
+        <button id="help" class="text-button">使用指南 ↗</button>
+      </section>
+      <div class="steps">
+        <span class="active"><b>01</b> 导入素材</span><i></i
+        ><span><b>02</b> 裁剪与优化</span><i></i><span><b>03</b> 写入键盘</span
+        ><span class="device-tag">ATHENA75 / 128 × 128</span>
+      </div>
+      <div class="workspace">
+        <section class="editor">
+          <div class="panel-top">
+            <div>
+              <span class="section-label">编辑画布</span
+              ><span id="file-name" class="filename">轨道 · 内置示例</span>
+            </div>
+            <div class="actions">
+              <button id="demo" class="text-button">使用示例</button
+              ><button id="import" class="outline small">
+                ＋ 导入 GIF / 图片</button
+              ><input
+                id="file"
+                type="file"
+                accept="image/gif,image/png,image/jpeg,image/webp"
+                hidden
+              />
+            </div>
+          </div>
+          <div class="preview-area" id="dropzone">
+            <div class="crop-side">
+              <div class="stage-label">
+                <span>裁剪画面</span><span id="source-size">256 × 256</span>
+              </div>
+              <div class="crop-wrap">
+                <canvas
+                  id="crop"
+                  width="384"
+                  height="384"
+                  tabindex="0"
+                  aria-label="裁剪区域，拖动调整位置，或使用方向键移动"
+                ></canvas>
+                <div class="crop-grid"><i></i><i></i></div>
+                <span class="crop-corner tl"></span
+                ><span class="crop-corner tr"></span
+                ><span class="crop-corner bl"></span
+                ><span class="crop-corner br"></span
+                ><span class="drag-hint">拖动调整画面</span>
+              </div>
+              <label class="zoom-label"
+                >缩放
+                <input
+                  id="zoom"
+                  type="range"
+                  min="1"
+                  max="4"
+                  step="0.01"
+                  value="1"
+                /><output id="zoom-value">100%</output
+                ><button id="reset-crop" class="text-button" title="重置裁剪">
+                  重置
+                </button></label
+              >
+            </div>
+            <div class="screen-side">
+              <div class="stage-label">屏幕效果</div>
+              <div class="device-model">
+                <div class="screw a"></div>
+                <div class="screw b"></div>
+                <div class="screen-bezel">
+                  <canvas
+                    id="screen"
+                    width="128"
+                    height="128"
+                    aria-label="实际 RGB565 屏幕效果"
+                  ></canvas>
+                </div>
+                <div class="model-label">ATHENA <span>75</span></div>
+              </div>
+              <div class="screen-meta">128 × 128 <span>真实颜色预览</span></div>
+              <span id="preview-mode" class="pill">示例预览</span>
+            </div>
+          </div>
+          <div class="timeline">
+            <div class="playback-row">
+              <button id="play" class="play-button" aria-label="暂停动画">
+                Ⅱ</button
+              ><input
+                id="scrub"
+                type="range"
+                min="0"
+                max="23"
+                value="0"
+                aria-label="预览帧"
+              /><span id="frame-position">01 / 24</span>
+            </div>
+            <div class="trim-row">
+              <span>保留片段</span
+              ><label
+                >起始帧
+                <input id="start" type="number" min="1" value="1" /></label
+              ><span>—</span
+              ><label
+                >结束帧
+                <input id="end" type="number" min="1" value="24" /></label
+              ><span id="duration">2.40 秒</span>
+            </div>
+          </div>
+          <div class="editor-foot">
+            <span>支持 GIF、PNG、JPG、静态 WebP</span
+            ><span>素材仅在你的浏览器中处理</span>
+          </div>
+        </section>
+        <aside>
+          <section class="settings">
+            <div class="section-heading">
+              <span class="number">01</span>
+              <h2>选择动画位置</h2>
+            </div>
+            <select id="slot" aria-label="动画位置"></select>
+            <p id="slot-description" class="muted">日常循环播放的动画位置</p>
+            <div class="section-heading second">
+              <span class="number">02</span>
+              <h2>优化动画</h2>
+            </div>
+            <div class="field-label">
+              <label for="fps">目标帧率</label
+              ><output id="fps-value">15 FPS</output>
+            </div>
+            <input id="fps" type="range" min="1" max="30" value="15" />
+            <div class="range-caption">
+              <span>更小体积</span><span>更流畅</span>
+            </div>
+            <button id="optimize" class="outline full">
+              自动适配屏幕容量 <span>↗</span>
+            </button>
+            <div class="stats">
+              <div>
+                <span>输出帧数</span
+                ><strong id="frame-count">—<small> / 63</small></strong>
+              </div>
+              <div>
+                <span>播放时长</span><strong id="out-duration">—</strong>
+              </div>
+            </div>
+            <div class="capacity-heading">
+              <span>动画占用</span><span id="size">—</span>
+            </div>
+            <div class="meter"><div id="capacity-bar"></div></div>
+            <p class="muted" id="optimization-note">自动抽帧并保留播放时长。</p>
+          </section>
+          <section class="write-panel">
+            <div class="section-heading">
+              <span class="number">03</span>
+              <h2>带到你的键盘上</h2>
+            </div>
+            <div class="connection-line">
+              <i id="connection-dot"></i
+              ><span id="connection-state">尚未连接键盘</span>
+            </div>
+            <button id="write" class="primary full" disabled>
+              写入键盘 <span>↗</span></button
+            ><button id="download" class="text-button full">
+              下载 UF2 文件 ↓
+            </button>
+            <div id="progress-area" hidden>
+              <progress id="progress" value="0" max="100"></progress>
+              <p id="progress-text" role="status"></p>
+            </div>
+            <p class="write-note">写入前自动备份 · 写入后回读校验</p>
+          </section>
+          <button id="backups" class="backup-link">
+            ↶ 动画备份与恢复 <span>→</span>
+          </button>
+        </aside>
+      </div>
+      <div id="notice" class="notice" role="status" hidden></div>
+      <footer>
+        <span>ATHENA SCREEN STUDIO <b>LOCAL PREVIEW</b></span
+        ><span
+          >USB 直写适用于桌面 Chrome / Edge
+          <button id="disconnect" class="text-button" hidden>断开连接</button
+          ><button id="recover-screen" class="text-button" hidden>
+            重新初始化屏幕
+          </button></span
+        >
+      </footer>
+    </main>
+    <dialog id="connection-dialog">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="eyebrow">CONNECT YOUR ATHENA</div>
+      <h2>让键盘准备好。</h2>
+      <ol class="connect-steps">
+        <li>
+          <b>1</b>
+          <div>
+            <h3>识别 Athena75</h3>
+            <p>
+              用 USB
+              线连接键盘。支持直传的固件连接后即可写入，其他固件使用下方升级模式。
+            </p>
+            <button id="identify" class="outline">连接正常模式键盘</button>
+            <p id="identity" class="success"></p>
+          </div>
+        </li>
+        <li>
+          <b>2</b>
+          <div>
+            <h3>进入升级模式</h3>
+            <p>在 Athena75 上同时按下：</p>
+            <div class="keys">
+              <kbd>左 Shift</kbd> + <kbd>右 Shift</kbd> + <kbd>左 Ctrl</kbd> +
+              <kbd>B</kbd>
+            </div>
+            <p>看到 RPI-RP2 U 盘后继续，请保持连接同一把键盘。</p>
+          </div>
+        </li>
+        <li>
+          <b>3</b>
+          <div>
+            <h3>连接升级设备</h3>
+            <p>在浏览器选择框中选择 RP2 Boot。</p>
+            <button id="boot" class="primary" disabled>连接升级设备</button>
+          </div>
+        </li>
+      </ol>
+      <p id="connection-error" class="error" role="alert"></p>
+      <p class="muted">第一次连接需要浏览器授权。连接过程不会写入动画。</p>
+    </dialog>
+    <dialog id="confirm-dialog">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="eyebrow">READY TO PLAY</div>
+      <h2>把这段动画带到键盘上。</h2>
+      <div class="confirm-preview">
+        <canvas id="confirm-screen" width="128" height="128"></canvas>
+        <div id="confirm-details"></div>
+      </div>
+      <p>将先保存该位置的完整备份，再写入并校验。其他动画位置保持不变。</p>
+      <button id="confirm-write" class="primary full">备份并开始写入</button>
+    </dialog>
+    <dialog id="backup-dialog">
+      <button class="dialog-close" data-close aria-label="关闭">×</button>
+      <div class="eyebrow">YOUR ORIGINALS, KEPT SAFE</div>
+      <h2>动画备份</h2>
+      <p class="muted">
+        备份保存在当前浏览器。清除网站数据会移除备份，建议下载留存。
+      </p>
+      <div id="backup-list"></div>
+      <p id="backup-error" class="error"></p>
+    </dialog>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
