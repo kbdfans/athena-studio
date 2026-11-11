@@ -1,10 +1,10 @@
 import {scenePixel,overlayPixel} from './pet-scene.js';
 import {petFrame,petPixelOffset,isPet40,petLift,createPetPack,petDuration} from './pet-pack.js';
 // Same full-screen scan region and nearest-neighbour scaling as the firmware renderer.
-export function petPreview(pack,action,elapsed,stage=2,jump=0,stats={level:1,xp:0,fullness:80},groundOffset=0){
+export function petPreview(pack,action,elapsed,stage=2,jump=null,stats={level:1,xp:0,fullness:80},groundOffset=0){
   const frame=petFrame(pack,action,elapsed),v=new DataView(pack.buffer,pack.byteOffset),out=new Uint8ClampedArray(128*128*4);
   const sourceWidth=isPet40(pack)?40:32,width=stage===0?64:isPet40(pack)?80:96,height=stage===0?64:isPet40(pack)?64:96;
-  jump=petLift(pack,action,elapsed);
+  jump??=petLift(pack,action,elapsed);
   const left=(128-width)/2,top=104-height-jump;
   for(let y=0;y<128;y++)for(let x=0;x<128;x++){
     let color=scenePixel(x,y,groundOffset);
@@ -21,18 +21,47 @@ export function petPreview(pack,action,elapsed,stage=2,jump=0,stats={level:1,xp:
   return out;
 }
 export class PetMotion {
-  constructor(now=0){this.pack=createPetPack();this.activity=0;this.clock=now;this.lastKey=now;this.action=0;this.started=now;}
+  constructor(now=0,pack=createPetPack()){this.pack=pack;this.activity=0;this.clock=now;this.lastKey=now;this.action=0;this.started=now;this.gait=0;this.jumpTiming=null;}
   decay(now){const steps=Math.floor((now-this.clock)/100);if(steps>0){this.activity=Math.max(0,this.activity-steps);this.clock+=steps*100;}}
+  duration(){return this.action===6&&this.jumpTiming?this.jumpTiming.duration:petDuration(this.pack,this.action);}
   key(now,space=false){
     this.decay(now);this.activity=Math.min(40,this.activity+4);this.lastKey=now;
-    if(this.action>=4&&now-this.started<petDuration(this.pack,this.action))return;
-    if(this.action===3||space){this.action=this.action===3?7:6;this.started=now;}
+    if(this.action>=4&&now-this.started<this.duration())return;
+    if(this.action===3){this.action=7;this.started=now;return;}
+    if(space){
+      this.gait=this.action===1||this.action===2?this.action:0;
+      const lift=petLift(this.pack,this.action,now-this.started);
+      this.jumpTiming=null;
+      if(this.gait&&isPet40(this.pack)){
+        const v=new DataView(this.pack.buffer,this.pack.byteOffset),times=Array.from({length:8},(_,i)=>v.getUint16(96+6*16+i*2,true));
+        const takeoff=times[0]+times[1],landing=times.slice(0,6).reduce((a,b)=>a+b,0);
+        this.jumpTiming={takeoff,landing,total:petDuration(this.pack,6),duration:80+landing-takeoff+90,lift};
+      }
+      this.action=6;this.started=now;
+    }
   }
   tick(now){
-    this.decay(now);const idle=now-this.lastKey;
+    this.decay(now);const idle=now-this.lastKey,previous=this.action;
     let next=this.action;
-    if(this.action<4||now-this.started>=petDuration(this.pack,this.action))next=idle>=30000?3:idle<900&&this.activity?(this.activity>=(this.action===2?10:16)?2:1):0;
-    if(next!==this.action){this.action=next;this.started=now;}
-    return{action:this.action,elapsed:now-this.started,jump:petLift(this.pack,this.action,now-this.started)};
+    if(this.action<4||now-this.started>=this.duration()){
+      const running=this.action===2||(this.action===6&&this.gait===2);
+      next=idle>=30000?3:idle<900&&this.activity?(this.activity>=(running?10:16)?2:1):0;
+    }
+    if(next!==this.action){
+      this.action=next;this.started=now;
+      // Resume the running cycle on a grounded footfall, not an airborne pose.
+      if(previous===6&&next===2&&isPet40(this.pack)){
+        const v=new DataView(this.pack.buffer,this.pack.byteOffset);
+        this.started-=v.getUint16(128,true)+v.getUint16(130,true)+v.getUint16(132,true);
+      }
+    }
+    let elapsed=now-this.started,lift;
+    if(this.action===6&&this.jumpTiming){
+      const j=this.jumpTiming,flight=j.landing-j.takeoff,t=elapsed;
+      elapsed=t<80?j.takeoff*t/80:t<80+flight?j.takeoff+t-80:j.landing+(j.total-j.landing)*(t-80-flight)/90;
+      lift=petLift(this.pack,6,elapsed);
+      if(t<80)lift=Math.round(lift+j.lift*(1-t/80));
+    }
+    return{action:this.action,elapsed,jump:lift??petLift(this.pack,this.action,elapsed)};
   }
 }

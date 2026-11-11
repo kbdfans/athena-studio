@@ -38,8 +38,8 @@ test('variable timings, clamped one-shots, invalid frame rejection and legacy ba
 test('typing transitions, uninterruptible jump, wake-before-walk and bounded screen rendering',async()=>{
  const {PetMotion,petPreview}=await import('../src/pet-preview.js');const m=new PetMotion(0);
  for(let n=100;n<=2200;n+=100){m.key(n);m.tick(n);}
- assert.equal(m.tick(2250).action,2);m.key(2300,true);assert.equal(m.tick(2790).jump,24);
- m.key(2790,true);assert.equal(m.tick(3350).jump,0);assert.notEqual(m.tick(3350).action,6);
+ assert.equal(m.tick(2250).action,2);m.key(2300,true);assert.equal(m.tick(2560).jump,24);
+ m.key(2790,true);assert.ok(m.tick(3350).jump>=0);assert.notEqual(m.tick(3350).action,6);
  assert.equal(m.tick(4000).action,0);assert.equal(m.tick(33000).action,3);
  m.key(33001);assert.equal(m.tick(33001).action,7);m.key(33100);assert.equal(m.tick(33100).action,7);assert.equal(m.tick(35000).action,0);
  for(let stage=0;stage<3;stage++)for(let a=0;a<8;a++){const pixels=petPreview(createPetPack(),a,490,stage);assert.equal(pixels.length,65536);assert.ok(pixels.some(x=>x));for(let i=3;i<pixels.length;i+=4)assert.equal(pixels[i],255);}

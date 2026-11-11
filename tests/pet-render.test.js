@@ -52,7 +52,7 @@ int main(int argc,char **argv){assert(argc==5);FILE *f=fopen(argv[1],"rb");asser
   const pack=createPetPack(theme,undefined,'original',species);writeFileSync(join(dir,'pet.bin'),pack);
   const actual=execFileSync(join(dir,'render'),[join(dir,'pet.bin'),String(stats.level),String(stats.xp),String(stats.fullness)],{maxBuffer:16*1024*1024});let offset=0;const ground=new PetGroundMotion();
   for(let stage=0;stage<3;stage++)for(let a=0;a<8;a++){let elapsed=0;for(const ms of PET_TIMINGS[a]){
-   const rgba=petPreview(pack,a,elapsed+Math.floor(ms/2),stage,0,stats,ground.tick(elapsed+Math.floor(ms/2),a,stage)),expected=Buffer.alloc(32768);
+   const rgba=petPreview(pack,a,elapsed+Math.floor(ms/2),stage,null,stats,ground.tick(elapsed+Math.floor(ms/2),a,stage)),expected=Buffer.alloc(32768);
    for(let i=0;i<16384;i++){const j=i*4,c=rgba[j+3]?((Math.round(rgba[j]*31/255)<<11)|(Math.round(rgba[j+1]*63/255)<<5)|Math.round(rgba[j+2]*31/255)):0;expected.writeUInt16BE(c,i*2);}
    assert.deepEqual(actual.subarray(offset,offset+32768),expected,`${species} ${theme} stage ${stage} action ${a} time ${elapsed}`);offset+=32768;elapsed+=ms;
   }}assert.equal(offset,actual.length);

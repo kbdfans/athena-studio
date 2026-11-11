@@ -22,3 +22,11 @@ test('hidden tab gaps and egg stage do not jump the ground; clock wrap is bounde
 test('sky and overlay region stay fixed while grass moves',()=>{
  for(let y=0;y<98;y++)for(let x=0;x<128;x++)assert.equal(scenePixel(x,y,57),scenePixel(x,y,0));
 });
+
+test('jump keeps walking/running ground speed and standing jumps also scroll',()=>{
+ for(const action of [0,1,2]){
+  const m=new PetGroundMotion();advance(m,0,500,action);const start=m.tick(500,6);
+  const end=advance(m,550,1000,6);assert.equal(end-start,action===2?24:8);
+  m.tick(1000,0);assert.equal(advance(m,1050,1500,0),end);
+ }
+});

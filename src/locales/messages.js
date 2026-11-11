@@ -5370,7 +5370,7 @@ export const MESSAGES={
   "未知宠物种类": {
     "en": "Unknown pet species"
   },
-  "草地随走跑向后移动，奔跑速度为慢走的 3 倍。目前仅网页预览；键盘端需要后续固件升级。": {
-    "en": "Grass scrolls backward while walking or running, three times faster when running. This is currently a web preview; keyboard playback needs a future firmware update."
+  "草地随走跑向后移动，奔跑速度为慢走的 3 倍；跳跃延续起跳速度，落地接回走跑。目前仅网页预览；键盘端需要后续固件升级。": {
+    "en": "Grass scrolls while walking or running (3× faster). Jumps keep the takeoff speed and flow back into walking or running. Web preview only; keyboard playback needs a future firmware update."
   }
 };

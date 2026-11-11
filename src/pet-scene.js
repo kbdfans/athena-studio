@@ -17,7 +17,7 @@ export class PetGroundMotion {
   const dt=this.ready?(now-this.clock)>>>0:0;
   if(dt<=250)this.units=(this.units+dt*this.speed)%128000;
   this.clock=now;this.ready=true;
-  this.speed=stage===0?0:action===1?GROUND_SPEED.walk:action===2?GROUND_SPEED.run:0;
+  this.speed=stage===0?0:action===1?GROUND_SPEED.walk:action===2?GROUND_SPEED.run:action===6?(this.speed||GROUND_SPEED.walk):0;
   return Math.floor(this.units/1000);
  }
 }

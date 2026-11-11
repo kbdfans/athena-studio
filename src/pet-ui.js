@@ -59,7 +59,7 @@ export function setupPet({getDevice,getBusy,setBusy,notice,getImage,feedback}){
     feedback?.complete({title:'新外观已写入',description:'独立回读校验通过，成长进度保持不变。',buttonLabel:'在键盘上启用 ↗'});
   },true);};
   function selectAction(){actionAt=performance.now();Array.from($('pet-actions').children).forEach((b,i)=>{b.classList.toggle('selected',i===action);b.setAttribute('aria-pressed',String(i===action));});$('pet-preview-label').textContent=`${PET_ACTIONS[action]} · ${['孵化中','幼年','成年'][stage]}`;}
-  PET_ACTIONS.forEach((name,i)=>{const b=document.createElement('button');b.textContent=name;b.onclick=()=>{action=i;simulating=false;selectAction();};$('pet-actions').append(b);});selectAction();
+  PET_ACTIONS.forEach((name,i)=>{const b=document.createElement('button');b.textContent=name;b.onclick=()=>{if(i===6){beginInteraction();motion.key(performance.now(),true);action=motion.action;}else{action=i;simulating=false;}selectAction();};$('pet-actions').append(b);});selectAction();
   function tab(mode){if(getBusy())return;feedback?.dismiss();
     $('write').hidden=mode!=='image';$('pet-enable').hidden=mode!=='pet';$('typing-enable').hidden=mode!=='typing';
     for(const name of ['image','pet','typing']){const selected=name===mode;$(name+'-workspace').hidden=!selected;$(name+'-tab').classList.toggle('selected',selected);$(name+'-tab').setAttribute('aria-selected',String(selected));}
@@ -68,19 +68,20 @@ export function setupPet({getDevice,getBusy,setBusy,notice,getImage,feedback}){
   for(const name of ['image','pet','typing'])$(name+'-tab').onclick=()=>tab(name);
   setInterval(async()=>{const d=getDevice();if(!d||d.broken||!d.device.opened||d.pending||getBusy())return;try{status=await d.petCommand();refreshConnection();}catch(e){notice(e.message,true);refreshConnection();}},1500);
   for(const b of $('pet-stages').children)b.onclick=()=>{stage=Number(b.dataset.stage);for(const c of $('pet-stages').children){c.classList.toggle('selected',c===b);c.setAttribute('aria-pressed',String(c===b));}selectAction();};
-  $('pet-typing').onclick=()=>{simulating=true;motion=new PetMotion(performance.now());$('pet-typing-hint').textContent='开始打字，空格跳跃 · 不记录输入内容';};
+  function beginInteraction(){if(simulating)return;const now=performance.now();motion=new PetMotion(now,pack);motion.action=action<4?action:0;motion.started=actionAt;motion.activity=action===2?24:action===1?8:0;simulating=true;}
+  $('pet-typing').onclick=()=>{beginInteraction();$('pet-typing-hint').textContent='开始打字，空格跳跃 · 不记录输入内容';};
   $('pet-typing').onkeydown=e=>{
     if(e.key==='Tab'||e.metaKey||e.ctrlKey||e.altKey||e.isComposing)return;
     if(e.key.length!==1&&e.key!=='Backspace'&&e.key!=='Enter')return;
     e.preventDefault();if(e.repeat)return;
-    if(!simulating){simulating=true;motion=new PetMotion(performance.now());}
+    beginInteraction();
     motion.key(performance.now(),e.code==='Space');$('pet-typing-hint').textContent='正在互动 · 空格跳跃 · Tab 退出';
   };
   $('pet-typing').onblur=()=>{$('pet-typing-hint').textContent='点这里，再打字 · 空格跳跃';};
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   function draw(){
     if($('pet-workspace').hidden||$('screen-settings')?.hidden||document.hidden)return;
-    const now=performance.now();let elapsed=now-actionAt,jump=0;
+    const now=performance.now();let elapsed=now-actionAt,jump=null;
     if(simulating){const m=motion.tick(now);if(action!==m.action){action=m.action;selectAction();}elapsed=m.elapsed;jump=m.jump;}
     const groundOffset=ground.tick(now,reduce?0:action,stage);
     const pixels=new ImageData(petPreview(pack,action,reduce?0:elapsed,stage,reduce?0:jump,status||{level:2,xp:308,fullness:80},groundOffset),128,128);

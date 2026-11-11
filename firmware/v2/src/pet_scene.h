@@ -22,7 +22,7 @@ static uint8_t scene_ground_tick(scene_ground_t *s,uint32_t now,uint8_t action,u
  uint32_t dt=s->ready?now-s->clock:0;
  if(dt<=250)s->units=(s->units+dt*s->speed)%128000u;
  s->clock=now;s->ready=true;
- s->speed=!stage?0:action==1?16:action==2?48:0;
+ s->speed=!stage?0:action==1?16:action==2?48:action==6?(s->speed?s->speed:16):0;
  return s->units/1000u;
 }
 static uint16_t scene_pixel(int x,int y,uint8_t ground_offset){
