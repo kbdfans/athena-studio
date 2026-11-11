@@ -16,37 +16,41 @@ export function setupFirmwareUpgrade({getIdentity,getBusy,releaseConnection,onFi
     <span class="upgrade-model" id="upgrade-model"></span>
     <p class="upgrade-subtitle" id="upgrade-intro">先识别键盘型号，再按下图进入刷机模式。</p>
     <div id="upgrade-guide">${bootloaderGuide()}</div>
-    <div id="upgrade-detection" class="upgrade-detection" role="status" aria-live="polite"><span id="upgrade-detection-text"></span><button type="button" id="upgrade-detect" class="outline small">检测 / 授权升级设备</button></div>
+    <div id="upgrade-detection" class="upgrade-detection" role="status" aria-live="polite"><span id="upgrade-detection-text"></span><button type="button" id="upgrade-detect" class="primary">授权 RP2 Boot</button></div>
     <label class="upgrade-reset-choice"><input id="upgrade-clear-confirm" type="checkbox"><span><strong>我确认：升级将清除全部图片和动画</strong><small>升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。</small></span></label>
     <progress id="upgrade-progress" max="100" value="0" hidden></progress>
     <p id="upgrade-status" role="status" aria-live="polite"></p><p id="upgrade-error" class="error" role="alert"></p>
+    <p id="upgrade-blocker" class="upgrade-blocker" role="status" aria-live="polite"></p>
     <div class="upgrade-footer"><button type="button" class="upgrade-download" id="upgrade-recovery" hidden>下载恢复文件</button><button type="button" class="outline" id="upgrade-back">返回</button><button type="button" class="primary" id="upgrade-start" disabled>开始升级</button></div>`;
   document.body.append(dialog);
   const $=id=>dialog.querySelector('#'+id);
-  let identity=null,release=null,uf2=null,running=false,backup=null,boot=null,generation=0,detecting=false,done=false,deviceState={kind:'waiting',device:null};
+  let identity=null,release=null,uf2=null,running=false,backup=null,boot=null,generation=0,detecting=false,done=false,packageState='idle',deviceState={kind:'waiting',device:null};
   const monitor=createBootloaderMonitor({onChange:value=>{deviceState=value;renderDetection();}});
   function renderDetection(){
     if(running||done)return;
     const ready=deviceState.kind==='ready';
     $('upgrade-detection').classList.toggle('ready',ready);
+    $('upgrade-detection').classList.toggle('needs-authorization',!ready);
     $('upgrade-detection-text').textContent=ready
-      ? !identity?'已检测到 RPI-RP2。仍需先在正常模式识别键盘型号。':release?'已进入 RPI-RP2，设备已准备好，可以开始升级。':'已进入 RPI-RP2，正在等待此型号的可用升级包。'
+      ? !identity?'已检测到 RPI-RP2。仍需先在正常模式识别键盘型号。':release?'已授权 · RPI-RP2 已连接，升级设备已就绪。':'已授权 · RPI-RP2 已连接，正在等待此型号的升级包。'
       : deviceState.kind==='multiple'?'发现多个 RP2 Boot，请选择要升级的那一把键盘。'
       : deviceState.kind==='unsupported'?'此浏览器不支持升级设备检测，请使用桌面版 Chrome 或 Edge。'
       : deviceState.kind==='unavailable'?'暂时无法检测设备，请点击授权后重试。'
-      :'等待 RPI-RP2。按住 Esc 插入 USB；首次使用请点击检测 / 授权。';
+      :'首次使用需要授权：按住 Esc 插入 USB，再点击右侧按钮，在浏览器列表中选择 RP2 Boot。已授权的设备会自动识别。';
     $('upgrade-detect').disabled=detecting||!navigator.usb;
-    $('upgrade-detect').textContent=ready?'重新选择设备':'检测 / 授权升级设备';
+    $('upgrade-detect').textContent=detecting?'请在浏览器中选择 RP2 Boot':ready?'重新选择设备':'授权 RP2 Boot';
+    $('upgrade-detect').className=ready?'outline':'primary';
+    $('upgrade-blocker').textContent=!identity?'请先在正常模式连接键盘，确认型号。':!release?(packageState==='loading'?'正在准备此型号的升级文件，请稍候。':'此型号的升级文件尚未就绪，暂不能开始升级。'):!ready?'需要授权并连接 RP2 Boot 后才能开始升级。':!$('upgrade-clear-confirm').checked?'请勾选清除图片和动画的确认项。':'升级条件已齐备，可以开始。';
     $('upgrade-start').disabled=!ready||!identity||!release||detecting||!$('upgrade-clear-confirm').checked;
   }
   $('upgrade-clear-confirm').onchange=()=>renderDetection();
   function stopWaiting(){monitor.stop();onStateChange?.();}
   $('upgrade-detect').onclick=async()=>{
-    if(running||done||detecting)return;detecting=true;renderDetection();$('upgrade-error').textContent='';
+    if(running||done||detecting)return;detecting=true;renderDetection();
     try{await monitor.choose();}catch(e){if(e.name==='NotFoundError')$('upgrade-status').textContent='尚未选择升级设备，可以重试。';else $('upgrade-error').textContent='无法连接升级设备，请确认已按住 Esc 插线，并选择 RP2 Boot。';}
     finally{detecting=false;renderDetection();}
   };
-  function lock(value){running=value;dialog.setAttribute('aria-busy',String(value));$('upgrade-close').disabled=$('upgrade-back').disabled=value;$('upgrade-start').disabled=value;$('upgrade-detect').disabled=value;$('upgrade-clear-confirm').disabled=value;if(!value)renderDetection();}
+  function lock(value){running=value;$('upgrade-blocker').hidden=value||done;dialog.setAttribute('aria-busy',String(value));$('upgrade-close').disabled=$('upgrade-back').disabled=value;$('upgrade-start').disabled=value;$('upgrade-detect').disabled=value;$('upgrade-clear-confirm').disabled=value;if(!value)renderDetection();}
   function status(label,pct){$('upgrade-status').textContent=label;$('upgrade-progress').hidden=false;$('upgrade-progress').value=pct;}
   function close(){if(!running){generation++;dialog.close();stopWaiting();}}
   $('upgrade-close').onclick=$('upgrade-back').onclick=close;
@@ -59,7 +63,7 @@ export function setupFirmwareUpgrade({getIdentity,getBusy,releaseConnection,onFi
   };
   async function open(){
     if(getBusy()||running)return;
-    identity=getIdentity();release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
+    identity=getIdentity();packageState='loading';release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
     $('upgrade-model').textContent=identity?.profile?.name||'Athena';
     $('upgrade-clear-confirm').checked=false;$('upgrade-error').textContent='';$('upgrade-status').textContent='';$('upgrade-guide').hidden=false;$('upgrade-progress').hidden=true;$('upgrade-recovery').hidden=true;
     $('upgrade-start').textContent='开始升级';$('upgrade-detection').hidden=false;$('upgrade-start').hidden=false;lock(false);
@@ -82,11 +86,11 @@ export function setupFirmwareUpgrade({getIdentity,getBusy,releaseConnection,onFi
       const bytes=new Uint8Array(await file.arrayBuffer());if(ticket!==generation)return;
       if(await digest(bytes)!==selected.sha256)throw Error('固件下载校验失败');
       if(ticket!==generation)return;
-      release=selected;uf2=bytes;
+      release=selected;uf2=bytes;packageState='ready';
       $('upgrade-intro').textContent='拔插时会保留当前型号和升级步骤。进入 RPI-RP2 后点击开始升级，网页会备份、写入、校验并重启。';
       $('upgrade-status').textContent='本次升级会清除全部旧图片和动画，不迁移旧素材。请确认下方提示后开始。';
       lock(false);
-    }catch(e){if(ticket===generation)$('upgrade-error').textContent=e.message;}
+    }catch(e){if(ticket===generation){packageState='unavailable';$('upgrade-error').textContent=e.message;renderDetection();}}
   }
   $('upgrade-start').onclick=async()=>{
     if(running||!release||!identity||!monitor.getDevice()||!$('upgrade-clear-confirm').checked)return;

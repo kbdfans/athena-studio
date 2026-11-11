@@ -23,3 +23,7 @@
 .upgrade-reset-choice{display:flex;gap:11px;align-items:flex-start;background:#fff2e9;border:1px solid #efc9af;border-radius:12px;padding:14px 16px;margin:18px 0;color:#8b431d;cursor:pointer}
 .upgrade-reset-choice input{margin-top:3px;accent-color:#ff4d00;flex:none;width:16px;height:16px}
 .upgrade-reset-choice strong{display:block;font-size:13px;line-height:1.6}.upgrade-reset-choice small{display:block;font-size:11px;line-height:1.8;margin-top:4px;color:#8d6e5b}
+.upgrade-detection.needs-authorization{border-color:#f1be9f;background:#fff1e6;color:#713c20}
+#upgrade-detect{min-height:48px;min-width:176px;padding:12px 20px;font-size:14px;font-weight:700;white-space:normal}
+.upgrade-blocker{font-size:12px;line-height:1.7;margin:14px 0 0;color:#686d60}
+@media(max-width:560px){#upgrade-detect{width:100%;min-height:50px}.upgrade-detection{padding:16px}}

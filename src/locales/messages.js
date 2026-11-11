@@ -4598,5 +4598,38 @@ export const MESSAGES={
   },
   "升级与校验完成，图片已清空，键盘已重启。重新连接后上传新图片，或启用电子宠物。": {
     "en": "Upgrade verified, images cleared and keyboard restarted. Reconnect to upload new images or enable the pixel pet."
+  },
+  "授权 RP2 Boot": {
+    "en": "Authorize RP2 Boot"
+  },
+  "请在浏览器中选择 RP2 Boot": {
+    "en": "Select RP2 Boot in your browser"
+  },
+  "已授权 · RPI-RP2 已连接，升级设备已就绪。": {
+    "en": "Authorized · RPI-RP2 is connected and ready."
+  },
+  "已授权 · RPI-RP2 已连接，正在等待此型号的升级包。": {
+    "en": "Authorized · RPI-RP2 is connected. Waiting for this model's firmware package."
+  },
+  "首次使用需要授权：按住 Esc 插入 USB，再点击右侧按钮，在浏览器列表中选择 RP2 Boot。已授权的设备会自动识别。": {
+    "en": "Authorization is required on first use. Hold Esc while connecting USB, click Authorize RP2 Boot, then select RP2 Boot in your browser. Authorized devices are detected automatically."
+  },
+  "请先在正常模式连接键盘，确认型号。": {
+    "en": "Connect the keyboard in normal mode first to identify its model."
+  },
+  "正在准备此型号的升级文件，请稍候。": {
+    "en": "Preparing firmware for this model. Please wait."
+  },
+  "此型号的升级文件尚未就绪，暂不能开始升级。": {
+    "en": "Firmware for this model is not ready. Upgrading is not available yet."
+  },
+  "需要授权并连接 RP2 Boot 后才能开始升级。": {
+    "en": "Authorize and connect RP2 Boot before starting the upgrade."
+  },
+  "请勾选清除图片和动画的确认项。": {
+    "en": "Confirm that all images and animations will be cleared."
+  },
+  "升级条件已齐备，可以开始。": {
+    "en": "All requirements are met. You can start the upgrade."
   }
 };

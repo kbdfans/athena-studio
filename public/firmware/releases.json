@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "releases": [
+    {
+      "model": "athena75",
+      "pid": 9491,
+      "version": "display-r4",
+      "channel": "preview",
+      "url": "firmware/athena75-display-r4.uf2",
+      "sha256": "7f59e53ca95be152eceae99f784ab55827de475f74ce185836dadb44db589b17",
+      "sources": [
+        {
+          "layout": "legacy",
+          "length": 2031616,
+          "sha256": "4365dba2c26a97a39cf0b0150f4d340802f3fcbbb2ed80cc2b30f50295574156"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "0c5fc9e3b8854215daa70570b9aa2052246c75094cd23641f82b39b57308d213"
+        },
+        {
+          "layout": "legacy",
+          "length": 126976,
+          "sha256": "138c601e2cc08c39ff31dd99e3a8ffc45d384bc8ac96c276c1c554c79f5f33e0"
+        },
+        {
+          "layout": "v2",
+          "length": 151552,
+          "sha256": "807932dd88100cd50aff607acefb8237729ae492e48448d618759ede6c762dd1"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "97de99b57ba849cb30000f581882eac41f34c8cea097befc8f77fd69366731ef"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "53c01f3a726e1282aee0550daee33b1dfba7fe5660b543a66e9a08504c27db9d"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "ea9c2766223a15eaf5e9fa1ec24444c04b70cd214300b4813bf93c1efb53ffdc"
+        },
+        {
+          "layout": "v2",
+          "length": 147456,
+          "sha256": "eef730762acb93b819cb502984d03e8fe32af0ebb58663ee7f31921c87f8e994"
+        },
+        {
+          "layout": "v2",
+          "length": 147456,
+          "sha256": "49d9b61fab71ce12a0bf13aa31a16080f45ee599439d2b0339a1c91fca876cfd"
+        },
+        {
+          "layout": "v2",
+          "length": 147456,
+          "sha256": "815eef47f2e49a76fc62de19523915c786d8c68240972c7b007705d46a6392ab"
+        },
+        {
+          "layout": "v2",
+          "length": 139264,
+          "sha256": "02f503f1712504be907862c5ff76c9e64b89af85347447ac9ca34710c1925045"
+        },
+        {
+          "layout": "v2",
+          "length": 139264,
+          "sha256": "d48ea76480a911256c309ba5ca44f8b28c7c4c6f42326236d404edfe81cc17dc"
+        },
+        {
+          "layout": "v2",
+          "length": 147456,
+          "sha256": "b4a845b237ad081f6dc134f5f35140f7fb59b209c6b751cfecb9c7aa0f6d8949"
+        },
+        {
+          "layout": "v2",
+          "length": 147456,
+          "sha256": "9365df10a85df7a6a03b2dd724dba6da60372458aad430cbbaeca7eb1d37f841"
+        },
+        {
+          "layout": "v2",
+          "length": 163840,
+          "sha256": "8445399fac1fc22740f52255bc4299445dfa542d789c2046dd3a23a865f49e14"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "a9bed90774c8046686e969356613755c3a30c2acaa44eba085359b08d52280ec"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "41826b4c14258d27726390a9f7e71ddb43cabb0b35a3b6478ef21b1865a7e767"
+        }
+      ],
+      "source": {
+        "url": "https://github.com/kbdfans/athena-studio/releases/download/firmware-preview-20261111/athena-firmware-source-20261111.tar.gz",
+        "sha256": "89417b0644565c3e542ace2c7b0837192716a870e0b6258853f11f2eb60f91a9",
+        "license": "GPL-2.0-only",
+        "upstream": "be6d662bf0412c784f586e68e919547e715fbdba"
+      },
+      "validation": {
+        "reproducedByteForByte": true,
+        "physicalInstallAndReadback": true,
+        "webResetFlow": "awaiting user device acceptance"
+      }
+    },
+    {
+      "model": "athena1800",
+      "pid": 16640,
+      "version": "screen-r2",
+      "channel": "preview",
+      "url": "firmware/athena1800-screen-r2.uf2",
+      "sha256": "b8752815469c4553bfced1e37ee647ffe8a9f6c1d55d41d199a9edfbf9bcb525",
+      "sources": [
+        {
+          "layout": "legacy",
+          "length": 2031616,
+          "sha256": "52b8bf0c7e2a2aface075d106c238d7392b960be12838baca600c50319bb9b11"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "c2b3c94704f9fd7ce9ada631f80c513519fb2e9d7630913b5cc1f4b6404161be"
+        }
+      ],
+      "source": {
+        "url": "https://github.com/kbdfans/athena-studio/releases/download/firmware-preview-20261111/athena-firmware-source-20261111.tar.gz",
+        "sha256": "89417b0644565c3e542ace2c7b0837192716a870e0b6258853f11f2eb60f91a9",
+        "license": "GPL-2.0-only",
+        "upstream": "be6d662bf0412c784f586e68e919547e715fbdba"
+      },
+      "validation": {
+        "reproducedByteForByte": true,
+        "physicalInstallAndReadback": true,
+        "webResetFlow": "awaiting user device acceptance"
+      }
+    }
+  ]
+}

@@ -13,7 +13,7 @@ Immediate key remapping, layers, advanced QMK functions, physical keyboard testi
 
 Athena75 and Athena1800 have separate matrix definitions and VID/PID checks. Original supported Vial firmware supports key mapping; screen upload, pets and typing mode require the matching Screen Studio firmware. This website does not automatically flash firmware. Do not flash Athena75 firmware onto Athena1800.
 
-Athena1800 screen playback, pets, typing mode and keyboard input have passed initial hardware checks. Athena75 has an intermittent black-screen issue under investigation; a host reboot restored the latest reported occurrence, but the root cause is not established. Included firmware source/adapters are experimental development material, not a general firmware-upgrade release. No device Flash backups or prebuilt firmware are distributed here.
+Athena1800 screen playback, pets, typing mode and keyboard input have passed initial hardware checks. Athena75 has an intermittent black-screen issue under investigation; a host reboot restored the latest reported occurrence, but the root cause is not established. Model-specific preview firmware is available in `public/firmware`; complete corresponding source is linked in `public/firmware/SOURCES.md`. No device Flash backups or private configuration data are distributed.
 
 ## Development
 
@@ -39,7 +39,7 @@ docker run --rm -p 8080:80 athena-studio
 
 The original mint-cat artwork, intermediate sprite sheets and processing scripts are in `design/mint-cat-v1`, `mint-cat-v2`, and `mint-cat-v3`; these were created with AI assistance. `npm run build:pet` rebuilds packed cat/scene resources. Rasterized Inter glyphs can be regenerated with Pillow and `scripts/build-typing-font.py`; see THIRD_PARTY.md for the font source and hash.
 
-Experimental firmware adapters target `openkbd/vial-qmk-v6` commit `be6d662bf0412c784f586e68e919547e715fbdba`. They require that upstream source tree and its QMK toolchain/submodules. Hardware migration and device-specific recovery are intentionally not automated by this public web release. The native model tests can be run with `npm run test:pet` and `npm run test:typing` using a C compiler.
+Experimental firmware adapters target `openkbd/vial-qmk-v6` commit `be6d662bf0412c784f586e68e919547e715fbdba`. They require that upstream source tree and its QMK toolchain/submodules. The complete release-source archive includes the pinned upstream tree and library submodules. Both preview binaries were reproduced byte-for-byte with Arm GNU 13.2.rel1. The native model tests can be run with `npm run test:pet` and `npm run test:typing` using a C compiler.
 
 ## License
 
@@ -53,7 +53,7 @@ A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Si
 
 ## Online firmware upgrade (under device validation)
 
-The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, clears all old images and animations after explicit confirmation, and verifies flash before reboot. Upgrading creates three empty image slots; users upload their images again afterward. Existing v2 pet assets and growth data are preserved. Old or damaged animation files no longer block a clean upgrade; model and firmware fingerprint checks still apply. Public firmware binaries are not distributed by this release: the public write action remains unavailable until device testing and corresponding-source release preparation are complete. Synthetic transport tests and a local hardware test are distinct validation steps.
+The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, clears all old images and animations after explicit confirmation, and verifies flash before reboot. Upgrading creates three empty image slots; users upload their images again afterward. Existing v2 pet assets and growth data are preserved. Old or damaged animation files no longer block a clean upgrade; model and firmware fingerprint checks still apply. Preview packages for Athena75 display-r4 and Athena1800 screen-r2 are now provided with complete corresponding source. Firmware installation/display tests and byte-exact rebuilds passed; browser reset-upgrade acceptance on current hardware remains a separate validation step. Unknown firmware fingerprints are refused before erasure. First-use WebUSB authorization is required; previously authorized RP2 Boot devices are automatically detected. The guide survives USB disconnects and Esc cannot dismiss it.
 
 ## Anonymous bug reports
 
