@@ -96,7 +96,7 @@ function updateDevice() {
     ? "键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。"
     : "键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。";
   for(const id of ["screen-nav","screen-shortcut"])$(id).hidden=!!state.boot&&!state.boot.capabilities?.screen;
-  const allowed=renderConnectionGate(state.boot,state.sessionReady,state.busy,document,state.demo);
+  const allowed=renderConnectionGate(state.boot,state.sessionReady,state.busy,document,state.demo,firmwareUI?.isOpenForUpgrade()||false);
   if(!allowed)testerUI?.setVisible(false);
   $("demo-banner").hidden=!state.demo;
   document.body.classList.toggle("demo-mode",state.demo);
@@ -715,6 +715,7 @@ firmwareUI=setupFirmwareUpgrade({
   getIdentity:()=>state.identity,getBusy:()=>state.busy,
   releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
   onFinished:()=>{state.identity=null;updateDevice();},
+  onStateChange:()=>updateDevice(),
 });
 $("firmware-entry").onclick=$("firmware-nav").onclick=$("gate-firmware").onclick=()=>{$("connection-dialog").close();firmwareUI.open();};
 

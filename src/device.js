@@ -65,12 +65,13 @@ export class Picoboot {
     this.broken = false;
     this.claimed = false;
   }
-  static async connect() {
+  static async connect({device: selectedDevice} = {}) {
     if (!navigator.usb)
       fail("此浏览器不支持 USB 直写，请使用桌面 Chrome 或 Edge");
-    const device = await navigator.usb.requestDevice({
+    const device = selectedDevice || await navigator.usb.requestDevice({
       filters: [{ vendorId: 0x2e8a, productId: 3 }],
     });
+    if(device.vendorId !== 0x2e8a || device.productId !== 3) fail("没有找到兼容的升级接口");
     const p = new Picoboot(device);
     try {
       await device.open();

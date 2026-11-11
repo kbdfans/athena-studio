@@ -4547,5 +4547,41 @@ export const MESSAGES={
   },
   "完成": {
     "en": "Done"
+  },
+  "开始升级": {
+    "en": "Start upgrade"
+  },
+  "检测 / 授权升级设备": {
+    "en": "Detect / authorize bootloader"
+  },
+  "重新选择设备": {
+    "en": "Select another device"
+  },
+  "已检测到 RPI-RP2。仍需先在正常模式识别键盘型号。": {
+    "en": "RPI-RP2 detected. Identify the keyboard model in normal mode first."
+  },
+  "已进入 RPI-RP2，设备已准备好，可以开始升级。": {
+    "en": "RPI-RP2 detected. The device is ready to upgrade."
+  },
+  "已进入 RPI-RP2，正在等待此型号的可用升级包。": {
+    "en": "RPI-RP2 detected. Waiting for an available firmware package for this model."
+  },
+  "发现多个 RP2 Boot，请选择要升级的那一把键盘。": {
+    "en": "Multiple RP2 Boot devices found. Select the keyboard you want to upgrade."
+  },
+  "此浏览器不支持升级设备检测，请使用桌面版 Chrome 或 Edge。": {
+    "en": "Bootloader detection requires desktop Chrome or Edge."
+  },
+  "暂时无法检测设备，请点击授权后重试。": {
+    "en": "Cannot detect the device yet. Authorize it and try again."
+  },
+  "等待 RPI-RP2。按住 Esc 插入 USB；首次使用请点击检测 / 授权。": {
+    "en": "Waiting for RPI-RP2. Hold Esc while plugging in USB. Authorize the device on first use."
+  },
+  "无法连接升级设备，请确认已按住 Esc 插线，并选择 RP2 Boot。": {
+    "en": "Could not connect. Hold Esc while plugging in USB, then select RP2 Boot."
+  },
+  "拔插时会保留当前型号和升级步骤。进入 RPI-RP2 后点击开始升级，网页会备份、写入、校验并重启。": {
+    "en": "Your model and upgrade steps stay open while reconnecting. Once RPI-RP2 is detected, click Start upgrade to back up, write, verify and restart."
   }
 };

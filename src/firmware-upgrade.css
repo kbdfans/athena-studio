@@ -16,3 +16,7 @@
 .upgrade-download{font-size:12px;text-decoration:underline;text-underline-offset:3px}
 #firmware-entry{margin:12px 0}
 @media(max-width:560px){#firmware-dialog{padding:24px 18px}.boot-guide-steps{gap:12px}.boot-guide-steps strong{font-size:12px}.boot-guide-steps span{font-size:11px}.upgrade-footer{flex-wrap:wrap}#firmware-dialog h2{font-size:23px}}
+.upgrade-detection{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0;padding:14px 16px;border:1px solid #e0dfd5;border-radius:12px;background:#efeee7;font-size:12px;line-height:1.7;color:#77786d}
+.upgrade-detection.ready{background:#edf4e6;border-color:#cedfbd;color:#496134}
+.upgrade-detection[hidden]{display:none}.upgrade-detection button{flex:none}
+@media(max-width:560px){.upgrade-detection{align-items:flex-start;flex-direction:column;gap:10px}}
