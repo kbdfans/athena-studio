@@ -5369,5 +5369,8 @@ export const MESSAGES={
   },
   "未知宠物种类": {
     "en": "Unknown pet species"
+  },
+  "草地随走跑向后移动，奔跑速度为慢走的 3 倍。目前仅网页预览；键盘端需要后续固件升级。": {
+    "en": "Grass scrolls backward while walking or running, three times faster when running. This is currently a web preview; keyboard playback needs a future firmware update."
   }
 };

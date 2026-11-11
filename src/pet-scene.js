@@ -7,11 +7,25 @@ export const FONT={
 };
 export function textPixel(text,x,y){if(x<0||y<0||y>=7)return false;const n=Math.floor(x/6),col=x%6;return col<5&&n<text.length&&!!((FONT[text[n]]?.[y]||0)&(1<<(4-col)));}
 const grassPoints=[[7,103],[21,106],[109,105],[121,102],[14,119],[44,124],[84,119],[113,125]];
-export function scenePixel(x,y){
+export const GROUND_SPEED={walk:16,run:48};
+// Milli-pixels preserve fractional motion across frames/action changes. Long gaps
+// (hidden tabs or a suspended display) pause the scene rather than jumping ahead.
+export class PetGroundMotion {
+ constructor(){this.clock=0;this.units=0;this.speed=0;this.ready=false;}
+ tick(now,action,stage=2){
+  now=Math.floor(now)>>>0;
+  const dt=this.ready?(now-this.clock)>>>0:0;
+  if(dt<=250)this.units=(this.units+dt*this.speed)%128000;
+  this.clock=now;this.ready=true;
+  this.speed=stage===0?0:action===1?GROUND_SPEED.walk:action===2?GROUND_SPEED.run:0;
+  return Math.floor(this.units/1000);
+ }
+}
+export function scenePixel(x,y,groundOffset=0){
  let c=y>=106?SCENE.grass:y>=102?SCENE.grassLight:SCENE.sky;
  // Two small stepped clouds, kept outside the cat silhouette.
  if((x>=7&&x<26&&y>=39&&y<42)||(x>=12&&x<22&&y>=36&&y<39)||(x>=104&&x<123&&y>=49&&y<52)||(x>=109&&x<119&&y>=46&&y<49))c=SCENE.cloud;
- for(const [gx,gy] of grassPoints){const dx=x-gx,dy=y-gy;if((dx===0&&dy>=-4&&dy<=0)||(dx===-2&&dy>=-2&&dy<=-1)||(dx===2&&dy>=-3&&dy<=-1)||(Math.abs(dx)===1&&dy===0))c=SCENE.grassDark;}
+ for(const [gx,gy] of grassPoints){let dx=(x+groundOffset-gx+128)%128;if(dx>64)dx-=128;const dy=y-gy;if((dx===0&&dy>=-4&&dy<=0)||(dx===-2&&dy>=-2&&dy<=-1)||(dx===2&&dy>=-3&&dy<=-1)||(Math.abs(dx)===1&&dy===0))c=SCENE.grassDark;}
  return c;
 }
 export function overlayPixel(x,y,level,xp,hp,action,elapsed){

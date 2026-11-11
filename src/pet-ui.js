@@ -1,3 +1,4 @@
+import {PetGroundMotion} from './pet-scene.js';
 import {setupTypingSettings} from './typing-settings-ui.js';
 import {setupTypingPreview} from './typing-preview.js';
 import {setupPetColors} from './pet-color-ui.js';
@@ -12,6 +13,7 @@ export function setupPet({getDevice,getBusy,setBusy,notice,getImage,feedback}){
   const typingPreview=setupTypingPreview($('typing-workspace'));
   const typingEditor=setupTypingSettings({preview:typingPreview,getDevice,getBusy,setBusy});
   let motion=new PetMotion(performance.now());
+  const ground=new PetGroundMotion();
   const draw32=document.createElement('canvas');draw32.width=draw32.height=128;const tiny=draw32.getContext('2d');
   const large=$('pet-canvas').getContext('2d'),screen=$('pet-screen').getContext('2d');screen.imageSmoothingEnabled=false;
   function refreshConnection(){
@@ -80,7 +82,8 @@ export function setupPet({getDevice,getBusy,setBusy,notice,getImage,feedback}){
     if($('pet-workspace').hidden||$('screen-settings')?.hidden||document.hidden)return;
     const now=performance.now();let elapsed=now-actionAt,jump=0;
     if(simulating){const m=motion.tick(now);if(action!==m.action){action=m.action;selectAction();}elapsed=m.elapsed;jump=m.jump;}
-    const pixels=new ImageData(petPreview(pack,action,reduce?0:elapsed,stage,reduce?0:jump,status||{level:2,xp:308,fullness:80}),128,128);
+    const groundOffset=ground.tick(now,reduce?0:action,stage);
+    const pixels=new ImageData(petPreview(pack,action,reduce?0:elapsed,stage,reduce?0:jump,status||{level:2,xp:308,fullness:80},groundOffset),128,128);
     tiny.putImageData(pixels,0,0);large.clearRect(0,0,128,128);large.drawImage(draw32,0,0);
     screen.fillStyle='#000';screen.fillRect(0,0,128,128);screen.drawImage(draw32,0,0);
 

@@ -1,13 +1,13 @@
 import {scenePixel,overlayPixel} from './pet-scene.js';
 import {petFrame,petPixelOffset,isPet40,petLift,createPetPack,petDuration} from './pet-pack.js';
 // Same full-screen scan region and nearest-neighbour scaling as the firmware renderer.
-export function petPreview(pack,action,elapsed,stage=2,jump=0,stats={level:1,xp:0,fullness:80}){
+export function petPreview(pack,action,elapsed,stage=2,jump=0,stats={level:1,xp:0,fullness:80},groundOffset=0){
   const frame=petFrame(pack,action,elapsed),v=new DataView(pack.buffer,pack.byteOffset),out=new Uint8ClampedArray(128*128*4);
   const sourceWidth=isPet40(pack)?40:32,width=stage===0?64:isPet40(pack)?80:96,height=stage===0?64:isPet40(pack)?64:96;
   jump=petLift(pack,action,elapsed);
   const left=(128-width)/2,top=104-height-jump;
   for(let y=0;y<128;y++)for(let x=0;x<128;x++){
-    let color=scenePixel(x,y);
+    let color=scenePixel(x,y,groundOffset);
     if(x>=left&&x<left+width&&y>=top&&y<top+height){
     const sx=Math.floor((x-left)*(stage?sourceWidth:32)/width),sy=Math.floor((y-top)*32/height),i=sy*sourceWidth+sx;
     let c=(pack[petPixelOffset(pack,action,frame)+(i>>2)]>>((i&3)*2))&3;
