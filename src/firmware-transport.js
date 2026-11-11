@@ -1,6 +1,8 @@
 import {BASE,FLASH_BYTES,SECTOR,MAIN_LIMIT} from './firmware-plan.js';
 import {digest} from './backup-v2.js';
 import {getFirmwareBackup,markFirmwareBackup} from './firmware-backup.js';
+import {validateResetEvidence} from './firmware-compatibility.js';
+import {DEVICE_PROFILES} from './device-profiles.js';
 function range(offset,length){
   if(!Number.isSafeInteger(offset)||!Number.isSafeInteger(length)||offset<0||length<1||offset+length>FLASH_BYTES)throw Error('固件访问地址越界');
   const a=new Uint8Array(8),v=new DataView(a.buffer);v.setUint32(0,BASE+offset,true);v.setUint32(4,length,true);return a;
@@ -17,9 +19,16 @@ export async function writeFirmwarePlan(boot,plan,backupId,onProgress=()=>{}){
   if(!backup||backup.model!==plan.model||backup.targetSha256!==plan.targetSha256||backup.sha256!==plan.originalSha256||await digest(backup.data)!==backup.sha256||await digest(plan.target)!==plan.targetSha256)throw Error('升级计划或恢复备份校验失败，未开始写入');
   if(!Number.isInteger(plan.mainBytes)||plan.mainBytes<=0||plan.mainBytes>=MAIN_LIMIT||plan.mainBytes%SECTOR)throw Error('主程序范围无效');
   if(plan.target.length!==FLASH_BYTES)throw Error('升级计划长度不正确');
+  if(plan.target.subarray(0,plan.mainBytes).every((b,i)=>b===backup.data[i]))throw Error('当前固件已是最新版本，无需升级');
+  const reset=plan.resetSettings===true&&plan.layout==='reset';
+  if(reset){
+    if(!backup.resetSettings||JSON.stringify(backup.resetEvidence)!==JSON.stringify(plan.resetEvidence)||JSON.stringify(backup.releasePolicy)!==JSON.stringify(plan.releasePolicy))throw Error('重置授权记录不一致');
+    validateResetEvidence({compatibility:plan.releasePolicy},DEVICE_PROFILES[plan.model],plan.resetEvidence);
+    if(!plan.target.subarray(MAIN_LIMIT,0x200000).every(b=>b===255)||!plan.target.subarray(0x400000,0xe00000).every(b=>b===255))throw Error('重置区域未正确初始化');
+  }
   const expected=[];
   for(let off=0;off<FLASH_BYTES;off+=SECTOR){if(backup.data.subarray(off,off+SECTOR).some((b,j)=>b!==plan.target[off+j])){
-    if(!(off<plan.mainBytes||(plan.layout==='legacy'&&off>=0x400000&&off<0xe00000)||(plan.clearImages===true&&off>=0x400000&&off<0xa00000)))throw Error('升级计划越界');expected.push(off);
+    if(!((reset&&(off<0x200000||(off>=0x400000&&off<0xe00000)))||off<plan.mainBytes||(plan.layout==='legacy'&&off>=0x400000&&off<0xe00000)||(plan.clearImages===true&&off>=0x400000&&off<0xa00000)))throw Error('升级计划越界');expected.push(off);
   }}
   if(plan.sectors.length!==expected.length||new Set(plan.sectors).size!==expected.length||plan.sectors.some(n=>!expected.includes(n)))throw Error('升级扇区列表不一致');
   // Device may have been replaced since plan creation. Read again before erase.

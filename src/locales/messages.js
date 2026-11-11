@@ -388,7 +388,7 @@ export const MESSAGES={
     "es": "Archivos de teclas"
   },
   "导出当前键位": {
-    "en": "Export keymap",
+    "en": "Export current keymap",
     "zh-TW": "匯出目前鍵位",
     "ja": "キーマップを書き出す",
     "ko": "키맵 내보내기",
@@ -406,7 +406,7 @@ export const MESSAGES={
     "es": "Importar teclas"
   },
   "重新读取键盘": {
-    "en": "Reload keyboard",
+    "en": "Read keyboard again",
     "zh-TW": "重新讀取鍵盤",
     "ja": "キーボードを再読込",
     "ko": "키보드 다시 읽기",
@@ -586,7 +586,7 @@ export const MESSAGES={
     "es": "Órbita · ejemplo"
   },
   "使用示例": {
-    "en": "Use demo",
+    "en": "Example",
     "zh-TW": "使用範例",
     "ja": "サンプルを使う",
     "ko": "예제 사용",
@@ -3775,7 +3775,7 @@ export const MESSAGES={
     "en": "Mouse down"
   },
   "鼠标与滚轮": {
-    "en": "Mouse and scroll"
+    "en": "Mouse & wheel"
   },
   "鼠标中速": {
     "en": "Mouse medium speed"
@@ -4637,5 +4637,611 @@ export const MESSAGES={
   },
   "当前固件的资源分区与已验证记录不一致，已停止升级，未擦除或写入": {
     "en": "The resource layout does not match the verified source. Upgrade stopped without erasing or writing."
+  },
+  "ZMK USB 配置需要桌面版 Chrome 或 Edge": {
+    "en": "ZMK USB configuration requires desktop Chrome or Edge."
+  },
+  "ZMK 功能列表无效": {
+    "en": "Invalid ZMK behavior list."
+  },
+  "ZMK 功能说明不完整": {
+    "en": "Incomplete ZMK behavior metadata."
+  },
+  "ZMK 层数据无效": {
+    "en": "Invalid ZMK layer data."
+  },
+  "ZMK 布局回读不一致": {
+    "en": "ZMK layout verification failed."
+  },
+  "ZMK 布局数据无效": {
+    "en": "Invalid ZMK layout data."
+  },
+  "ZMK 拒绝请求，请检查解锁状态和固件支持": {
+    "en": "ZMK rejected the request. Check the lock state and firmware support."
+  },
+  "ZMK 按键参数无效": {
+    "en": "Invalid ZMK binding parameters."
+  },
+  "ZMK 改键回读不一致": {
+    "en": "ZMK key assignment verification failed."
+  },
+  "ZMK 自动保存失败，修改尚未保存": {
+    "en": "ZMK autosave failed. Your changes have not been saved."
+  },
+  "ZMK 返回了不兼容的响应": {
+    "en": "ZMK returned an incompatible response."
+  },
+  "ZMK 连接不可用或仍在通信": {
+    "en": "ZMK is disconnected or still communicating."
+  },
+  "ZMK 连接已关闭": {
+    "en": "ZMK connection closed."
+  },
+  "ZMK 连接已断开": {
+    "en": "ZMK disconnected."
+  },
+  "ZMK 通信序号不匹配，请重新连接": {
+    "en": "ZMK response sequence mismatch. Please reconnect."
+  },
+  "ZMK 通信超时": {
+    "en": "ZMK communication timed out."
+  },
+  "ZMK 键位数量不匹配": {
+    "en": "ZMK key count mismatch."
+  },
+  "ZMK 键位设置": {
+    "en": "ZMK key mapping"
+  },
+  "ZMK 键帽尺寸无效": {
+    "en": "Invalid ZMK key geometry."
+  },
+  "← 返回功能列表": {
+    "en": "← Back to behaviors"
+  },
+  "使用此功能": {
+    "en": "Assign this behavior"
+  },
+  "保留并保存": {
+    "en": "Keep and save"
+  },
+  "修改参数后直接选择功能，网页会自动保存到键盘。": {
+    "en": "Choose the parameters and assign the behavior. Changes save automatically to your keyboard."
+  },
+  "全部功能": {
+    "en": "All behaviors"
+  },
+  "兼容升级需要正常模式型号识别和明确重置确认": {
+    "en": "Compatibility upgrade requires normal-mode identification and explicit reset confirmation."
+  },
+  "兼容升级需要额外确认重置键位和所有屏幕数据。": {
+    "en": "Confirm the additional reset of key mappings and all screen data to continue."
+  },
+  "兼容重置条件已齐备，可以开始。": {
+    "en": "Ready to start the compatibility reset."
+  },
+  "功能参数组合": {
+    "en": "Behavior parameter set"
+  },
+  "升级前键位记录与型号不匹配": {
+    "en": "The saved keymap does not match the keyboard model."
+  },
+  "同步未确认，请重新读取键盘": {
+    "en": "Sync is unverified. Read the keyboard again."
+  },
+  "尚未擦除或写入。请阅读兼容升级的数据重置说明。": {
+    "en": "Nothing has been erased or written. Review the compatibility reset details."
+  },
+  "已保存到键盘": {
+    "en": "Saved to keyboard"
+  },
+  "已是当前发布版本": {
+    "en": "Already on the current release"
+  },
+  "已生效 · 正在自动保存…": {
+    "en": "Applied · Saving automatically…"
+  },
+  "当前固件没有提供此类功能。": {
+    "en": "This firmware does not provide behaviors in this category."
+  },
+  "撤销上一次改键": {
+    "en": "Undo the last assignment"
+  },
+  "放弃未保存修改": {
+    "en": "Discard unsaved changes"
+  },
+  "无": {
+    "en": "None"
+  },
+  "无法放弃未保存的修改": {
+    "en": "Unable to discard unsaved changes."
+  },
+  "旧版固件未提供版本信息": {
+    "en": "This older firmware does not report its version"
+  },
+  "有可用更新": {
+    "en": "Update available"
+  },
+  "未列出的 ANSI、ISO 或底排组合需要该型号的多布局固件。": {
+    "en": "Unlisted ANSI, ISO, or bottom-row combinations require firmware that includes those layouts for this model."
+  },
+  "未识别到 ZMK Studio 键盘": {
+    "en": "No ZMK Studio keyboard was identified."
+  },
+  "正在同步到键盘…": {
+    "en": "Syncing to keyboard…"
+  },
+  "此固件未提供标准 Key Press 功能，请使用高级功能选择。": {
+    "en": "This firmware does not expose the standard Key Press behavior. Use Advanced to select a behavior."
+  },
+  "此布局不在固件支持范围内": {
+    "en": "This layout is not supported by the firmware."
+  },
+  "此按键功能或参数不受当前固件支持": {
+    "en": "This behavior or its parameters are not supported by the firmware."
+  },
+  "此硬件尚未开放兼容重置升级": {
+    "en": "Compatibility reset is not available for this hardware."
+  },
+  "硬件版本与升级包不匹配": {
+    "en": "The hardware revision does not match this update"
+  },
+  "缺少升级前键位记录，请返回正常模式连接键盘后重试。": {
+    "en": "No original keymap was captured. Connect the keyboard in normal mode and try again."
+  },
+  "自定义参数值": {
+    "en": "Custom parameter value"
+  },
+  "蓝牙与输出": {
+    "en": "Bluetooth & output"
+  },
+  "请按键盘固件设置的 Studio 解锁键，再点击重新读取。": {
+    "en": "Press your firmware's Studio unlock key, then read the keyboard again."
+  },
+  "连接已断开": {
+    "en": "Disconnected"
+  },
+  "连接已断开，最后的修改可能尚未保存": {
+    "en": "Disconnected. Your last changes may not have been saved."
+  },
+  "选择当前固件支持的布局，切换后立即生效并自动保存。": {
+    "en": "Choose a layout supported by this firmware. It applies immediately and saves automatically."
+  },
+  "选择物理布局": {
+    "en": "Select physical layout"
+  },
+  "重置升级与校验完成。键位和屏幕数据已恢复默认，请重新连接键盘。": {
+    "en": "Reset upgrade verified. Key mappings and screen data have been reset. Reconnect your keyboard."
+  },
+  "键盘仍有未保存的修改": {
+    "en": "The keyboard still has unsaved changes."
+  },
+  "键盘存储空间不足，修改尚未保存": {
+    "en": "The keyboard is out of storage. Your changes have not been saved."
+  },
+  "键盘已断开": {
+    "en": "Keyboard disconnected"
+  },
+  "键盘已断开，请重新连接": {
+    "en": "Keyboard disconnected. Please reconnect."
+  },
+  "键盘已锁定，请先解锁": {
+    "en": "The keyboard is locked. Unlock it first."
+  },
+  "键盘已锁定，请按固件设置的 Studio 解锁键后重新读取": {
+    "en": "The keyboard is locked. Press its Studio unlock key, then read it again."
+  },
+  "键盘拒绝了布局切换": {
+    "en": "The keyboard rejected the layout change."
+  },
+  "键盘拒绝了本次改键": {
+    "en": "The keyboard rejected this key assignment."
+  },
+  "键盘有之前未保存的修改，请先确认保留或放弃": {
+    "en": "The keyboard has existing unsaved changes. Choose whether to keep or discard them first."
+  },
+  "键盘版本比此站点更新": {
+    "en": "The keyboard firmware is newer than this site's release"
+  },
+  "需要解锁": {
+    "en": "Unlock required"
+  },
+  "音量 +": {
+    "en": "Volume +"
+  },
+  "音量 −": {
+    "en": "Volume −"
+  },
+  "这块 PCB 的固件只提供一个布局，无需切换。": {
+    "en": "This PCB's firmware provides a single layout. No switching is needed."
+  },
+  "键盘类型": {
+    "en": "Keyboard type"
+  },
+  "重试自动保存": {
+    "en": "Retry autosave"
+  },
+  "历史固件兼容升级": {
+    "en": "Upgrade older firmware"
+  },
+  "无法确认旧配置的存储格式。可以重置为本站固件；键位、宏、布局设置、全部图片、宠物外观和成长进度都会恢复默认。恢复备份会先保存在此浏览器。": {
+    "en": "The old configuration format could not be verified. A reset upgrade will reset keys, macros, layout settings, all images, pet appearance and progress to defaults. A recovery backup will first be saved in this browser."
+  },
+  "下载升级前键位文件": {
+    "en": "Download original keymap"
+  },
+  "我确认这是原版 RP2040 / 16 MB 对应型号，并同意重置以上数据。": {
+    "en": "I confirm this is the original RP2040 / 16 MB hardware for this model and agree to reset the data listed above."
+  },
+  "支持 Athena75、Athena1800 与启用 ZMK Studio 的键盘。": {
+    "en": "Supports Athena75, Athena1800 and keyboards with ZMK Studio enabled."
+  },
+  "兼容重置必须清空图片": {
+    "en": "Compatibility reset requires clearing images."
+  },
+  "Flash 容量无法确认，已停止兼容升级": {
+    "en": "Flash capacity could not be verified. Compatibility upgrade stopped."
+  },
+  "发现冲突的硬件身份，已停止升级": {
+    "en": "Conflicting hardware identities detected. Upgrade stopped."
+  },
+  "此兼容重置会同时清除键位、宏、布局设置和全部屏幕数据。请阅读下方说明。": {
+    "en": "This compatibility reset also clears key mappings, macros, layout settings and all screen data. Review the details below."
+  },
+  "支持 Athena75、Athena1800，以及启用 ZMK Studio 的 Agar / Tofu BLE。": {
+    "en": "Supports Athena75, Athena1800 and Agar / Tofu BLE keyboards with ZMK Studio enabled."
+  },
+  "当前固件已是最新版本": {
+    "en": "Your firmware is up to date"
+  },
+  "当前固件已是最新版本，无需升级": {
+    "en": "Your firmware is up to date. No upgrade is needed."
+  },
+  "普通按键 / 组合快捷键": {
+    "en": "Key press / shortcut"
+  },
+  "输入与组合": {
+    "en": "Keys & shortcuts"
+  },
+  "按下时发送按键，松开时释放；也可以同时附带 Ctrl、Shift、Option / Alt、Cmd / Win。": {
+    "en": "Sends a key while held and releases it on key-up. You can also add Ctrl, Shift, Option / Alt, and Cmd / Win."
+  },
+  "选择 C，再勾选 Ctrl，按一下此键即可发送 Ctrl+C。Mac 的复制通常使用 Cmd+C。": {
+    "en": "Choose C and check Ctrl to send Ctrl+C with one key. On Mac, Copy usually uses Cmd+C."
+  },
+  "发送的按键": {
+    "en": "Key to send"
+  },
+  "组合键由当前系统或应用解释。": {
+    "en": "Shortcuts are interpreted by the current operating system or application."
+  },
+  "按住切换层": {
+    "en": "Momentary layer"
+  },
+  "层与双功能": {
+    "en": "Layers & dual functions"
+  },
+  "按住此键启用目标层，松开后关闭该层。": {
+    "en": "Enables the target layer while held, and disables it on release."
+  },
+  "把目标层的 I / J / K / L 配成方向键；按住此键即可使用方向键。": {
+    "en": "Map I / J / K / L to arrows on the target layer. Hold this key to use those arrows."
+  },
+  "开关切换层": {
+    "en": "Toggle layer"
+  },
+  "按一下启用目标层，再按一下关闭；无需一直按住。": {
+    "en": "Tap once to enable the target layer, and again to disable it. No need to hold the key."
+  },
+  "按一次进入数字层，再按一次回到原来的输入方式。": {
+    "en": "Tap once for a number layer, then again to return to normal typing."
+  },
+  "跳转到层": {
+    "en": "Go to layer"
+  },
+  "启用目标层，并关闭默认层以外的其他层。": {
+    "en": "Enables the target layer and disables other layers except the default layer."
+  },
+  "从游戏层直接切到工作层；建议在目标层安排一个返回基础层的键。": {
+    "en": "Jump from a gaming layer to a work layer. Include a key on the target layer to return to the base layer."
+  },
+  "轻按按键 / 长按切层": {
+    "en": "Tap key / hold layer"
+  },
+  "轻按发送普通按键，长按时启用目标层。": {
+    "en": "Sends a key when tapped and enables a layer when held."
+  },
+  "轻按发送 Space；按住时启用 Fn 层，松开后回到原层。": {
+    "en": "Tap for Space. Hold for the Fn layer, and release to return."
+  },
+  "长按启用的层": {
+    "en": "Layer while held"
+  },
+  "轻按发送的按键": {
+    "en": "Key when tapped"
+  },
+  "轻按与长按的判定时间、优先策略由当前固件定义，此处只设置绑定参数。": {
+    "en": "Tap/hold timing and decision rules are defined by the firmware. This editor changes binding parameters only."
+  },
+  "轻按 / 长按双功能": {
+    "en": "Tap / hold keys"
+  },
+  "轻按发送第二个按键，长按发送第一个按键；长按通常设置为修饰键。": {
+    "en": "Sends the second key on a tap and the first key on a hold. The held key is typically a modifier."
+  },
+  "轻按发送 A；按住时作为左 Ctrl，再按 C 发送 Ctrl+C。": {
+    "en": "Tap for A. Hold for left Ctrl, then press C to send Ctrl+C."
+  },
+  "长按发送的按键": {
+    "en": "Key while held"
+  },
+  "粘滞按键": {
+    "en": "Sticky key"
+  },
+  "按一下暂时保留该按键，供后续按键组合使用，不必持续按住。": {
+    "en": "Tap to temporarily hold a key for the next key combination, without holding it physically."
+  },
+  "设为 Shift：按一下，再按 A，就能输入大写 A。": {
+    "en": "Choose Shift, tap this key, then press A to type an uppercase A."
+  },
+  "暂时保留的按键": {
+    "en": "Key to hold temporarily"
+  },
+  "释放时机和超时时间由固件决定。": {
+    "en": "Release behavior and timeout are defined by the firmware."
+  },
+  "单次使用层": {
+    "en": "Sticky layer"
+  },
+  "按一下暂时启用目标层，供后续按键使用。": {
+    "en": "Tap to temporarily enable a layer for subsequent key presses."
+  },
+  "按一下后，在符号层选择一个符号，随后继续普通输入。": {
+    "en": "Tap, choose a symbol from the symbol layer, then resume normal typing."
+  },
+  "按键保持开关": {
+    "en": "Key toggle"
+  },
+  "按一下保持按键按下，再按一下释放。": {
+    "en": "Tap once to hold the key down, and again to release it."
+  },
+  "设为 Shift：第一次按下后连续输入大写，再按一次取消。": {
+    "en": "Choose Shift. Tap once to type uppercase continuously, and tap again to release Shift."
+  },
+  "保持的按键": {
+    "en": "Key to hold"
+  },
+  "单词大写": {
+    "en": "Caps Word"
+  },
+  "连续字母自动转为大写，遇到固件规定的结束键后退出。": {
+    "en": "Capitalizes letters until a terminating key defined by the firmware is pressed."
+  },
+  "启用后输入 hello，得到 HELLO；输入空格后恢复普通输入。": {
+    "en": "Enable it and type hello to get HELLO. A space returns you to normal typing."
+  },
+  "重复上一个键": {
+    "en": "Repeat last key"
+  },
+  "再次发送最近的可重复按键。": {
+    "en": "Sends the most recent repeatable key again."
+  },
+  "先输入 A，再按此键重复 A；适合放在拇指键。": {
+    "en": "Type A, then press this key to repeat A. Useful on a thumb key."
+  },
+  "透明 / 沿用下层": {
+    "en": "Transparent / use lower layer"
+  },
+  "此位置不覆盖下层，继续查找更低层的按键功能。": {
+    "en": "Leaves this position transparent so a lower layer supplies its key binding."
+  },
+  "在 Fn 层把字母区设为透明，仍可使用基础层的字母。": {
+    "en": "Make letters transparent on the Fn layer to keep using their base-layer bindings."
+  },
+  "禁用此键": {
+    "en": "Disable this key"
+  },
+  "此位置不发送按键，也不会继续使用下层功能。": {
+    "en": "Produces no input and does not fall through to a lower layer."
+  },
+  "将容易误触的位置设为禁用，按下时不会产生输入。": {
+    "en": "Disable a position you often hit accidentally so it produces no input."
+  },
+  "蓝牙连接管理": {
+    "en": "Bluetooth profiles"
+  },
+  "无线与设备": {
+    "en": "Wireless & device"
+  },
+  "选择蓝牙配置位、切换设备或清除配对，选项由固件提供。": {
+    "en": "Select a Bluetooth profile, switch devices, or clear pairing. Available commands come from the firmware."
+  },
+  "选择配置位 0 用于电脑、配置位 1 用于平板；在两个位置之间切换。": {
+    "en": "Use profile 0 for a computer and profile 1 for a tablet, then switch between them."
+  },
+  "蓝牙操作": {
+    "en": "Bluetooth action"
+  },
+  "配置位": {
+    "en": "Profile"
+  },
+  "清除配对会解除相应设备的绑定，之后需要重新配对。": {
+    "en": "Clearing pairing removes the corresponding bond. Pair the device again to reconnect."
+  },
+  "USB / 蓝牙输出": {
+    "en": "USB / Bluetooth output"
+  },
+  "设置键盘将按键发送到 USB 还是蓝牙，或切换输出方式。": {
+    "en": "Choose whether keystrokes go to USB or Bluetooth, or toggle between them."
+  },
+  "同时插着 USB 并连接蓝牙时，可指定让按键发送到电脑或平板。": {
+    "en": "With USB and Bluetooth both connected, choose which device receives keystrokes."
+  },
+  "输出方式": {
+    "en": "Output destination"
+  },
+  "RGB 灯光": {
+    "en": "RGB underglow"
+  },
+  "灯光与电源": {
+    "en": "Lighting & power"
+  },
+  "使用固件提供的开关、亮度、颜色或效果命令。": {
+    "en": "Choose from the firmware's lighting power, brightness, color and effect commands."
+  },
+  "给常用按键分配灯光开关，按一下切换 RGB 状态。": {
+    "en": "Assign the lighting toggle to a key and tap it to switch RGB on or off."
+  },
+  "灯光操作": {
+    "en": "Lighting action"
+  },
+  "数值": {
+    "en": "Value"
+  },
+  "只有 PCB 安装并启用了相应灯光时才有效。": {
+    "en": "Requires the corresponding lighting hardware and firmware support."
+  },
+  "背光控制": {
+    "en": "Backlight"
+  },
+  "调节固件支持的键盘背光。": {
+    "en": "Adjusts the keyboard backlight supported by the firmware."
+  },
+  "选择增加亮度，按此键让背光更亮。": {
+    "en": "Choose brightness up, then press the key to make the backlight brighter."
+  },
+  "背光操作": {
+    "en": "Backlight action"
+  },
+  "外设供电": {
+    "en": "External power"
+  },
+  "切换固件控制的外设电源，例如显示屏或灯光供电。": {
+    "en": "Controls power to peripherals managed by the firmware, such as lights or a display."
+  },
+  "将外设供电设为关闭，可在不用外设时减少耗电。": {
+    "en": "Turn peripheral power off to reduce consumption when those peripherals are not in use."
+  },
+  "电源操作": {
+    "en": "Power action"
+  },
+  "软关机": {
+    "en": "Soft off"
+  },
+  "触发固件的软关机行为。": {
+    "en": "Triggers the firmware's soft-off behavior."
+  },
+  "离开前按此键关闭键盘；使用 PCB 支持的唤醒方式恢复。": {
+    "en": "Press the key to turn the keyboard off, then use the PCB's supported method to wake it."
+  },
+  "唤醒方式取决于 PCB 和固件，可能需要复位或重新接电。": {
+    "en": "Wake methods depend on the PCB and firmware. Resetting or reconnecting power may be required."
+  },
+  "维护与固件": {
+    "en": "Maintenance"
+  },
+  "按下绑定后的实体键会重启键盘。": {
+    "en": "Pressing the assigned physical key restarts the keyboard."
+  },
+  "设备连接异常时，可用此键重新启动固件。": {
+    "en": "Use this key to restart the firmware when the connection is not working normally."
+  },
+  "进入刷机模式": {
+    "en": "Enter bootloader"
+  },
+  "按下绑定后的实体键会进入该 PCB 的引导程序。": {
+    "en": "Pressing the assigned physical key enters this PCB's bootloader."
+  },
+  "需要升级 ZMK 固件时，按此键进入刷机模式。": {
+    "en": "Press the key to enter the bootloader when updating ZMK firmware."
+  },
+  "网页这里只分配快捷键，不会立即刷写固件；请使用该 PCB 对应的升级文件。": {
+    "en": "This editor only assigns the shortcut; it does not flash firmware. Use an update built for this PCB."
+  },
+  "解锁 Studio": {
+    "en": "Unlock Studio"
+  },
+  "允许 Studio 修改键位，适用于开启配置锁的固件。": {
+    "en": "Allows Studio to edit keys on firmware with configuration locking enabled."
+  },
+  "连接配置器提示已锁定时，先在键盘上按此键。": {
+    "en": "If the configurator reports that the keyboard is locked, press this physical key first."
+  },
+  "鼠标控制": {
+    "en": "Mouse control"
+  },
+  "使用固件提供的鼠标按键、移动或滚轮功能。": {
+    "en": "Uses the mouse buttons, movement or scrolling commands exposed by the firmware."
+  },
+  "给拇指键分配鼠标左键，按下即可点击。": {
+    "en": "Assign the left mouse button to a thumb key and press it to click."
+  },
+  "鼠标操作": {
+    "en": "Mouse action"
+  },
+  "固件自定义": {
+    "en": "Firmware-defined"
+  },
+  "自定义功能": {
+    "en": "Custom behavior"
+  },
+  "这是当前固件提供的自定义行为。可设置的参数以设备返回的说明为准。": {
+    "en": "A custom behavior provided by this firmware. Editable parameters follow the device's metadata."
+  },
+  "先查阅该 PCB 的行为说明，再把此功能分配给选中的按键。": {
+    "en": "Check the PCB's behavior documentation, then assign it to the selected key."
+  },
+  "行为内部动作、宏内容、组合触发条件和时间参数需要在 ZMK 固件源码中定义；当前 Studio 接口只能修改这里列出的绑定参数。": {
+    "en": "Internal actions, macro contents, combo conditions and timing must be defined in ZMK firmware source. Studio can only change the binding parameters listed here."
+  },
+  "连续轻按动作": {
+    "en": "Tap Dance"
+  },
+  "根据连续轻按次数执行固件定义的不同动作。": {
+    "en": "Runs different firmware-defined actions depending on the number of consecutive taps."
+  },
+  "固件可定义单击为 Esc、双击为 Caps；实际动作取决于该行为的定义。": {
+    "en": "Firmware can define one tap as Esc and two taps as Caps. Actual actions depend on the behavior definition."
+  },
+  "当前接口可分配此行为，不能在线编辑单击、双击动作或判定时间。": {
+    "en": "This interface can assign the behavior, but cannot edit its tap actions or timing online."
+  },
+  "修饰键条件动作": {
+    "en": "Mod-Morph"
+  },
+  "根据是否按着指定修饰键，执行不同的预设行为。": {
+    "en": "Chooses between predefined behaviors based on which modifiers are held."
+  },
+  "固件可定义普通按下发送一种按键、配合 Shift 发送另一种按键。": {
+    "en": "Firmware can define one key normally and another when Shift is held."
+  },
+  "条件修饰键和两种内部动作由固件定义，不能在此页面重写。": {
+    "en": "The modifier conditions and internal actions are defined in firmware and cannot be rewritten here."
+  },
+  "预设宏": {
+    "en": "Preset macro"
+  },
+  "执行固件中定义的一串按下、松开和延迟动作。": {
+    "en": "Runs the key presses, releases and delays defined by a firmware macro."
+  },
+  "可把固件预设的常用快捷操作分配到一个按键。": {
+    "en": "Assign a firmware-defined shortcut sequence to one key."
+  },
+  "宏步骤由固件源码定义；当前 Studio 接口不提供宏内容编辑。": {
+    "en": "Macro steps are defined in firmware source. The current Studio API cannot edit macro contents."
+  },
+  "应用到选中按键": {
+    "en": "Apply to selected key"
+  },
+  "无需参数": {
+    "en": "No parameters needed"
+  },
+  "停止播放": {
+    "en": "Stop playback"
+  },
+  "屏幕亮度 +": {
+    "en": "Display brightness +"
+  },
+  "屏幕亮度 −": {
+    "en": "Display brightness −"
   }
 };

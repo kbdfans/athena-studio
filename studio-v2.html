@@ -10,6 +10,7 @@
     <title>Athena · Studio</title>
     <!-- Load layout before first paint, independently of the application modules. -->
     <link rel="stylesheet" href="/src/firmware-upgrade.css" />
+    <link rel="stylesheet" href="/src/zmk.css" />
     <link rel="stylesheet" href="/src/style.css" />
     <link rel="stylesheet" href="/src/pet.css" />
     <link rel="stylesheet" href="/src/console.css" />
@@ -38,8 +39,9 @@
       <span class="eyebrow">YOUR KEYBOARD, YOUR WAY</span>
       <h1 id="gate-title">连接你的键盘。</h1>
       <p>连接键盘后，开始设置键位、屏幕和你的像素伙伴。</p>
+      <label class="connection-protocol">键盘类型 <select id="connection-protocol" data-connection-protocol aria-label="键盘类型"><option value="qmk">Athena · QMK / Vial</option><option value="zmk">ZMK · Agar / Tofu BLE</option></select></label>
       <div class="gate-actions"><button id="gate-connect" class="primary">连接键盘 ↗</button><button id="gate-demo" class="outline">体验演示模式</button></div>
-      <small>支持 Athena75 · Athena1800，连接后自动识别型号与功能。</small>
+      <small>支持 Athena75、Athena1800，以及启用 ZMK Studio 的 Agar / Tofu BLE。</small>
       <button id="gate-firmware" class="text-button">升级操作图示</button>
       <p id="gate-error" class="error" role="alert"></p>
       <small>使用 USB 数据线连接，再从浏览器列表中选择你的键盘。</small>
@@ -612,13 +614,14 @@
       <h2 id="connection-title">让键盘准备好。</h2>
       <div data-connected-only hidden class="shared-connection">
         <p id="shared-connection-copy">键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。</p>
-        <div class="connection-features"><span>✓ 键位设置</span><span id="connection-screen-feature">✓ 屏幕设置</span><span>✓ 键盘检测</span></div>
+        <div class="connection-features"><span>✓ 键位设置</span><span id="connection-screen-feature">✓ 屏幕设置</span><span id="connection-test-feature">✓ 键盘检测</span></div>
         <button id="firmware-entry" class="outline full" hidden>固件升级与操作图示</button>
         <button id="connection-disconnect" class="outline full">断开连接</button>
       </div>
       <p data-disconnected-only>
         连接 Athena75 或 Athena1800。旧版固件可先设置键位，屏幕功能需升级对应型号固件。
       </p>
+      <label class="connection-protocol" data-disconnected-only>键盘类型 <select data-connection-protocol aria-label="键盘类型"><option value="qmk">Athena · QMK / Vial</option><option value="zmk">ZMK · Agar / Tofu BLE</option></select></label>
       <button id="identify" class="primary" data-disconnected-only>连接正常模式键盘</button>
       <p id="identity" class="success"></p>
       <p id="connection-error" class="error" role="alert"></p>

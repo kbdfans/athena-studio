@@ -122,6 +122,7 @@ export function setupKeymap({
   }
   function viewPage(page) {
     if (getBusy()) return;
+    if(getDevice()?.protocol==="zmk"){document.getElementById("keymap-workspace").hidden=true;return;}
     if(!getDemo()&&(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen)))page="keymap";
     const value = page === "screen";
     screen = value;
@@ -151,6 +152,7 @@ export function setupKeymap({
     $(id).onclick = () => viewScreen(true);
   $("screen-back").onclick = () => viewScreen(false);
   function refreshConnection() {
+    if(getDevice()?.protocol==="zmk")return;
     advanced.refresh();
     document.querySelectorAll(".layout-controls button").forEach(b => {
       b.disabled = getBusy() || (connected() && !ready()) || syncError ||
@@ -670,6 +672,7 @@ export function setupKeymap({
     render();viewPage("keymap");
   }
   return {
+    snapshot:()=>ready()?structuredClone(baseline):null,
     previewModel,viewPage,
     refreshConnection,
     load,

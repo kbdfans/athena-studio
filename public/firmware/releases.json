@@ -4,10 +4,10 @@
     {
       "model": "athena75",
       "pid": 9491,
-      "version": "display-r4",
+      "version": "display-r5",
       "channel": "preview",
-      "url": "firmware/athena75-display-r4.uf2",
-      "sha256": "7f59e53ca95be152eceae99f784ab55827de475f74ce185836dadb44db589b17",
+      "url": "firmware/athena75-display-r5.uf2",
+      "sha256": "b40b842b44795162efbaea729319c458316718a64ee1e557a41fc3c4783881e6",
       "sources": [
         {
           "layout": "legacy",
@@ -100,19 +100,34 @@
           "sha256": "f294a73ea864f4792b9d19fbc20545f30833f0fc0500b8227b13bd17fa80ca28",
           "requiresV2Resources": true,
           "description": "Audited DQ9O program with existing v2 pet resources and unchanged logical keyboard configuration"
+        },
+        {
+          "layout": "v2",
+          "length": 249856,
+          "sha256": "2904744fe0415d769d6cf779ca85d713113b5dfca87c9f58eada3ba606779e22"
         }
       ],
       "source": {
-        "url": "https://github.com/kbdfans/athena-studio/releases/download/firmware-preview-20261111/athena-firmware-source-20261111.tar.gz",
-        "sha256": "89417b0644565c3e542ace2c7b0837192716a870e0b6258853f11f2eb60f91a9",
+        "url": "https://github.com/kbdfans/athena-studio/releases/download/firmware-preview-20261111-r5/athena-firmware-source-20261111-r5.tar.gz",
+        "sha256": "9a6aa69a9f09215ac352c95a19df2e9c0f4512ddfde2f7fdb41278b3a1555527",
         "license": "GPL-2.0-only",
         "upstream": "be6d662bf0412c784f586e68e919547e715fbdba"
       },
       "validation": {
-        "reproducedByteForByte": true,
+        "reproducedByteForByte": false,
         "physicalInstallAndReadback": true,
-        "webResetFlow": "awaiting user device acceptance"
-      }
+        "physicalDisplayAndTyping": "user confirmed 2026-11-11",
+        "normalModeVersion": "display-r5 current confirmed by user",
+        "webResetFlow": "simulated; unrecognized-history reset not physically exercised"
+      },
+      "compatibility": {
+        "mode": "athena-rp2040-reset-v1",
+        "flashBytes": 16777216,
+        "hardwareRevision": "original-rp2040-16mb"
+      },
+      "hardwareRevision": "original-rp2040-16mb",
+      "buildId": "75-261111-1",
+      "releaseSequence": 2026111101
     },
     {
       "model": "athena1800",
@@ -143,7 +158,13 @@
         "reproducedByteForByte": true,
         "physicalInstallAndReadback": true,
         "webResetFlow": "awaiting user device acceptance"
-      }
+      },
+      "compatibility": {
+        "mode": "athena-rp2040-reset-v1",
+        "flashBytes": 16777216,
+        "hardwareRevision": "original-rp2040-16mb"
+      },
+      "hardwareRevision": "original-rp2040-16mb"
     }
   ]
 }

@@ -3,6 +3,7 @@
 #include <string.h>
 #include "pet.h"
 #include "screen_crc_table.h"
+#include "studio_release.h"
 
 static const uint32_t bases[4]={0x400000,0x600000,0x800000,0xa00000};
 static uint32_t capacity(uint8_t slot){return slot==3?0x3fe000:0x200000;}
@@ -103,6 +104,16 @@ void su_receive(uint8_t p[32]){
     memset(p+5,0,27);
     if(slot>=4){p[5]=SU_RANGE;return;}
     su_task();
+    if(op==14){
+#if defined(ATHENA_RELEASE_PID)
+        memcpy(p+6,"ASF1",4);p[10]=ATHENA_RELEASE_PID&255;p[11]=ATHENA_RELEASE_PID>>8;
+        p[12]=1;p[13]=16;p[14]=1;p[15]=2;put32(p+16,ATHENA_RELEASE_SEQUENCE);
+        memcpy(p+20,ATHENA_RELEASE_BUILD,sizeof(ATHENA_RELEASE_BUILD)-1);
+#else
+        p[5]=SU_COMMAND;
+#endif
+        return;
+    }
 #ifdef ATHENA_FAST_UPLOAD
     if(op==SU_FAST_INFO){memcpy(p+6,"FST1",4);p[10]=SU_FEATURE_SIZE&255;p[11]=SU_FEATURE_SIZE>>8;p[12]=SU_BLOCK_DATA&255;p[13]=SU_BLOCK_DATA>>8;p[14]=1;return;}
     if(op==SU_BENCH){

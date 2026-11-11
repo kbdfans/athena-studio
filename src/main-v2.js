@@ -1,3 +1,6 @@
+import {ZmkRuntime} from './zmk-runtime.js';
+import {connectZmkSerial} from './zmk-serial.js';
+import {setupZmkUI} from './zmk-ui.js';
 import {setupFeedback} from './feedback-ui.js';
 import {startDiagnostics,recordDiagnostic} from './diagnostics.js';
 import {setupFirmwareUpgrade} from './firmware-upgrade-ui.js';
@@ -24,7 +27,7 @@ import { setupPet } from "./pet-ui.js";
 import { setupKeymap } from "./keymap-ui.js";
 import { setupKeyboardTester } from "./keyboard-tester.js";
 startDiagnostics();
-let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI;
+let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI, zmkUI;
 let sourceId = null, sourceSettingsTimer;
 let transferStarted = 0;
 import { saveBackup, listBackups, getBackup, digest } from "./backup-v2.js";
@@ -88,11 +91,15 @@ function progress(label, pct, phase) {
 function updateDevice() {
   const boot = hasLiveConnection(state.boot);
   renderConnectionControls(state.boot, state.busy);
-  const screenSupported = state.boot?.capabilities?.screen !== false;
+  const isZmk=state.boot?.protocol==='zmk';
+  const screenSupported = !isZmk && state.boot?.capabilities?.screen !== false;
+  for(const id of ['tester-nav','firmware-nav','connection-test-feature']){const e=$(id);if(e)e.hidden=isZmk;}
+  $('keymap-workspace').hidden=isZmk;
+  zmkUI?.refresh();
   $("connection-screen-feature").hidden = !screenSupported;
-  $("firmware-entry").hidden = !boot;
+  $("firmware-entry").hidden = !boot || isZmk;
   $("firmware-entry").textContent = screenSupported ? "固件升级与操作图示" : "升级固件，启用屏幕功能";
-  $("shared-connection-copy").textContent = screenSupported
+  $("shared-connection-copy").textContent = isZmk ? "键位设置与布局切换共用当前连接，修改后自动保存到键盘。" : screenSupported
     ? "键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。"
     : "键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。";
   for(const id of ["screen-nav","screen-shortcut"])$(id).hidden=!!state.boot&&!state.boot.capabilities?.screen;
@@ -107,8 +114,7 @@ function updateDevice() {
     : "尚未连接 v2 键盘";
   $("connection-dot").classList.toggle("connected", !!boot);
   petUI?.refreshConnection();
-  keymapUI?.refreshConnection();
-  testerUI?.refreshConnection();
+  if(!isZmk){keymapUI?.refreshConnection();testerUI?.refreshConnection();}
   $("write").disabled =
     !state.boot?.capabilities?.screen || !boot || !state.bytes || state.busy || state.preparedEpoch !== state.epoch;
   $("download").disabled = !state.bytes || state.busy;
@@ -680,6 +686,18 @@ async function connectKeyboard() {
   try {
     if (state.boot) await state.boot.close();
     state.boot = null;
+    if($('connection-protocol').value==='zmk'){
+      testerUI?.setVisible(false);
+      let runtime;
+      const rpc=await connectZmkSerial({onDisconnect:()=>{runtime?.disconnected();updateDevice();}});
+      runtime=new ZmkRuntime(rpc,{onChange:()=>zmkUI?.refresh()});
+      state.boot=runtime;
+      await runtime.initialize();
+      state.identity={profile:runtime.profile,protocol:'zmk',name:runtime.profile.name};state.demo=false;
+      zmkUI.load();state.sessionReady=true;
+      $('identity').textContent=`已识别 ${runtime.profile.name}`;
+      $('connection-dialog').close();recordDiagnostic('connection.ready');updateDevice();return;
+    }
     state.identity = await identifyAthena({ prompt: true, models:["athena75","athena1800"] });
     $("identity").textContent = `已识别 ${state.identity.profile.name}`;
     const runtime = await connectIdentifiedKeyboard(state.identity);
@@ -689,6 +707,7 @@ async function connectKeyboard() {
       state.headers = runtime.capabilities?.screen ? await runtime.headers() : null;
       state.demo=false;
       await keymapUI.load();
+      if(runtime.buildInfo)state.identity.buildInfo=await runtime.buildInfo();
       state.sessionReady=true;
       recordDiagnostic("connection.ready");
       $("connection-dialog").close();
@@ -700,7 +719,7 @@ async function connectKeyboard() {
     }
   } catch (e) {
     recordDiagnostic("connection.failed");
-    await state.boot?.close();
+    await state.boot?.close().catch(()=>{});
     state.boot = null;
     state.identity = null;
     $("identity").textContent = "";
@@ -711,8 +730,9 @@ async function connectKeyboard() {
   }
 }
 $("identify").onclick = $("gate-connect").onclick = connectKeyboard;
+for(const picker of document.querySelectorAll('[data-connection-protocol]'))picker.onchange=()=>{for(const other of document.querySelectorAll('[data-connection-protocol]'))other.value=picker.value;};
 firmwareUI=setupFirmwareUpgrade({
-  getIdentity:()=>state.identity,getBusy:()=>state.busy,
+  getIdentity:()=>state.identity,getSnapshot:()=>keymapUI.snapshot(),getBusy:()=>state.busy,
   releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
   onFinished:()=>{state.identity=null;updateDevice();},
   onStateChange:()=>updateDevice(),
@@ -744,7 +764,7 @@ $("connection-disconnect").onclick = $("disconnect").onclick = async () => {
   recordDiagnostic("connection.closed");
   if (state.busy) return;
   const runtime = state.boot?.isRuntime;
-  await state.boot?.close();
+  try{await state.boot?.close();}catch(e){notice(e.message,true);return;}
   state.boot = null;
   state.identity = null;
   $("identity").textContent = "";
@@ -799,7 +819,8 @@ navigator.usb?.addEventListener("disconnect", (e) => {
   }
 });
 document.querySelectorAll("[data-modal-connect]").forEach(b => { b.onclick = () => $("connect").click(); });
-testerUI=setupKeyboardTester({getProfile:()=>keymapUI?.getProfile(),getDevice:()=>state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
+zmkUI=setupZmkUI({getDevice:()=>state.boot,notice});
+testerUI=setupKeyboardTester({getProfile:()=>keymapUI?.getProfile(),getDevice:()=>state.boot?.protocol==='zmk'?null:state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
 keymapUI=setupKeymap({getDemo:()=>state.demo,getDevice:()=>state.boot,getBusy:()=>state.busy,setBusy:busy,notice,onView:(view)=>testerUI.setVisible(view === "test")});
 $("gate-demo").onclick=async()=>{
   if(state.busy)return;

@@ -1,6 +1,6 @@
 # Athena Studio
 
-Open-source browser configurator for KBDfans Athena75 and Athena1800.
+Open-source browser configurator for KBDfans Athena75/Athena1800 and keyboards exposing ZMK Studio over USB serial.
 
 - China: https://kbd.cool/studio/
 - International: https://v.kbd.cool/studio/
@@ -39,7 +39,7 @@ docker run --rm -p 8080:80 athena-studio
 
 The original mint-cat artwork, intermediate sprite sheets and processing scripts are in `design/mint-cat-v1`, `mint-cat-v2`, and `mint-cat-v3`; these were created with AI assistance. `npm run build:pet` rebuilds packed cat/scene resources. Rasterized Inter glyphs can be regenerated with Pillow and `scripts/build-typing-font.py`; see THIRD_PARTY.md for the font source and hash.
 
-Experimental firmware adapters target `openkbd/vial-qmk-v6` commit `be6d662bf0412c784f586e68e919547e715fbdba`. They require that upstream source tree and its QMK toolchain/submodules. The complete release-source archive includes the pinned upstream tree and library submodules. Both preview binaries were reproduced byte-for-byte with Arm GNU 13.2.rel1. The native model tests can be run with `npm run test:pet` and `npm run test:typing` using a C compiler.
+Experimental firmware adapters target `openkbd/vial-qmk-v6` commit `be6d662bf0412c784f586e68e919547e715fbdba`. They require that upstream source tree and its QMK toolchain/submodules. The complete release-source archive includes the pinned upstream tree and library submodules. The earlier display-r4 and screen-r2 binaries were reproduced byte-for-byte with Arm GNU 13.2.rel1. The display-r5 source archive is the exact build source and its install passed full Flash readback; an independent byte-identical rebuild of r5 has not been claimed. The native model tests can be run with `npm run test:pet` and `npm run test:typing` using a C compiler.
 
 ## License
 
@@ -51,9 +51,19 @@ Select **Try demo mode** to preview Athena75 or Athena1800 without connecting a 
 
 A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Simplified Chinese. Explicit language choices persist per origin. English covers the complete interface, dynamic messages, and errors; other locales use English for entries without a native translation. Translation sources are `src/locales/ui.txt`, `help-en.txt`, `site-en.txt`, and `templates-en.js`. Run `node scripts/build-locales.mjs` after editing the catalog.
 
-## Online firmware upgrade (under device validation)
+## ZMK Studio
 
-The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, clears all old images and animations after explicit confirmation, and verifies flash before reboot. Upgrading creates three empty image slots; users upload their images again afterward. Existing v2 pet assets and growth data are preserved. Old or damaged animation files no longer block a clean upgrade; model and firmware fingerprint checks still apply. Preview packages for Athena75 display-r4 and Athena1800 screen-r2 are now provided with complete corresponding source. Firmware installation/display tests and byte-exact rebuilds passed; browser reset-upgrade acceptance on current hardware remains a separate validation step. Unknown firmware fingerprints are refused before erasure. First-use WebUSB authorization is required; previously authorized RP2 Boot devices are automatically detected. The guide survives USB disconnects and Esc cannot dismiss it.
+Choose **ZMK · Agar / Tofu BLE** when connecting. The firmware must expose ZMK Studio RPC over USB. Basic and Advanced use native ZMK behaviors, with explanations, examples, named parameters and modifier shortcuts. Assignment applies immediately, is read back, and is automatically saved to the keyboard. Available functions and physical layouts come from the device. Single-layout firmware shows a read-only layout; additional layout variants require firmware support.
+
+Agar Micro BLE was hardware-tested: identification and geometry, immediate Esc-to-A remapping, persistence after USB reconnect, and restoring Esc all passed. Its firmware provides one layout. Multiple-layout switching is simulation-tested only. Compiled macros/hold-tap behaviors can be assigned, but their internal definitions and timing cannot be edited through this RPC. See [ZMK support and limitations](design/zmk-support.md).
+
+## Online firmware upgrade
+
+Disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. First-use WebUSB authorization is required; previously authorized RP2 Boot devices are automatically detected. The guide survives USB disconnects and Esc cannot dismiss it.
+
+Athena75 display-r5 and Athena1800 screen-r2 are offered with complete corresponding source. Display-r5 hardware installation, full Flash verification, display/typing and current-version identification passed. When the device reports the current release, the dialog only displays that it is up to date. Matching main-program bytes also block a repeated upgrade before erasure. Newer firmware is not downgraded.
+
+Known firmware upgrades preserve keyboard configuration, clear all old images after explicit confirmation, and preserve compatible v2 pet resources. Unknown historical firmware is not accepted by its name alone: it requires a verified normal-mode identity/keymap snapshot, Flash capacity checks and a separate explicit factory-reset consent. A full recovery backup is verified before any write; the complete Flash image is read back before reboot. The unknown-version reset path has protocol/browser simulation coverage, not customer-hardware acceptance. See [upgrade policy and validation boundaries](design/upgrade-policy.md).
 
 ## Anonymous bug reports
 

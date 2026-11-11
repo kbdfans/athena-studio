@@ -12,7 +12,7 @@ export default defineConfig(({mode}) => ({
     });
     server.middlewares.use('/__firmware-test' ,async(req,res,next)=>{
       const name=req.url?.split('?')[0]?.slice(1);
-      if(!['releases.json','athena1800-screen-r2.uf2','athena75-display-r4.uf2'].includes(name)){res.statusCode=404;res.end();return;}
+      if(!['releases.json','athena1800-screen-r2.uf2','athena75-display-r4.uf2','athena75-display-r5.uf2'].includes(name)){res.statusCode=404;res.end();return;}
       try{const bytes=await readFile(resolve('.artifacts/firmware-web-test',name));res.setHeader('Cache-Control','no-store');res.setHeader('Content-Type',name.endsWith('.json')?'application/json':'application/octet-stream');res.end(bytes);}catch{res.statusCode=404;res.end();}
     });
   }}],

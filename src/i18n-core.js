@@ -27,16 +27,20 @@ export function translate(text,locale=language){
  }
  if(!translated){
   let m;
-  if(s.includes(' — '))translated=s.split(' — ').map(p=>translate(p,locale)).join(' — ');
+  if(s.includes(' · '))translated=s.split(' · ').map(p=>translate(p,locale)).join(' · ');
+  else if(s.includes(' — '))translated=s.split(' — ').map(p=>translate(p,locale)).join(' — ');
   else if(s.startsWith('— '))translated='— '+translate(s.slice(2),locale);
   else if(s.includes(' · '))translated=s.split(' · ').map(p=>translate(p,locale)).join(' · ');
   else if(s.startsWith('· '))translated='· '+translate(s.slice(2),locale);
+  else if((m=s.match(/^当前布局：(.*)$/)))translated='Current layout: '+m[1];
+  else if((m=s.match(/^参数(?:组合)? (\d+)$/)))translated='Parameter '+m[1];
   else if((m=s.match(/^第 (\d+) 层(.*)$/)))translated=word('layer',locale)+' '+m[1]+(m[2].startsWith(' · ')?' · '+translate(m[2].slice(3),locale):translate(m[2],locale));
   else if((m=s.match(/^按键 (.+)，第 (\d+) 层，(.+)$/)))translated=word('key',locale)+' '+translate(m[1],locale)+', '+word('layer',locale)+' '+m[2]+', '+translate(m[3],locale);
   else if((m=s.match(/^赋予 (.+)$/)))translated=translate(m[1],locale);
   else if((m=s.match(/^颜色 (\d+)$/)))translated=word('color',locale)+' '+m[1];
   else if((m=s.match(/^字母 ([A-Z])$/)))translated=word('letters',locale)+' '+m[1];
   else if((m=s.match(/^数字 (\d)$/)))translated=word('numbers',locale)+' '+m[1];
+  else if((m=s.match(/^([^：]+)：(.*)$/)))translated=translate(m[1],locale)+': '+translate(m[2],locale);
   else if((m=s.match(/^(原值|当前)：(.*)$/)))translated=word('original',locale)+': '+translate(m[2],locale);
   else if((m=s.match(/^图片 (\d+)(.*)$/)))translated=translate('图片',locale)+' '+m[1]+translate(m[2],locale);
   else if((m=s.match(/^功能键 (F\d+)$/)))translated=m[1];

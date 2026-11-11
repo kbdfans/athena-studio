@@ -1,4 +1,5 @@
 import test from 'node:test';
+import {DEVICE_PROFILES} from '../src/device-profiles.js';
 import assert from 'node:assert/strict';
 import {indexedDB} from 'fake-indexeddb';
 import {FLASH_BYTES,decodeFirmwareUf2,normalizeLegacyQgf,planFirmwareUpgrade,recoveryUf2} from '../src/firmware-plan.js';
@@ -10,7 +11,7 @@ import {connectIdentifiedKeyboard} from '../src/connect-keyboard.js';
 import {createPetPack} from '../src/pet-pack.js';
 import {crc32} from '../src/crc32.js';
 globalThis.indexedDB=indexedDB;
-const profile={id:'athena1800',pid:0x4100,vid:0x9d5b};
+const profile={...DEVICE_PROFILES.athena1800};
 function firmware(pid=0x4100){const b=new Uint8Array(512),v=new DataView(b.buffer);[0x0a324655,0x9e5d5157,0x2000,0x10000000,256,0,1,0xe48bff56].forEach((n,j)=>v.setUint32(j*4,n,true));b[32]=18;b[33]=1;b[40]=0x5b;b[41]=0x9d;b[42]=pid&255;b[43]=pid>>8;v.setUint32(508,0x0ab16f30,true);return b;}
 async function fixture(layout='v2'){
  const uf2=firmware(),current=new Uint8Array(FLASH_BYTES).fill(255);current.set(decodeFirmwareUf2(uf2));current[100]=99;current.fill(0x3c,0x1f0000,0x200000);current.fill(0x77,0xe00000);
@@ -111,4 +112,32 @@ test('successful programming verifies the entire flash and never sends reboot it
 });
 test('both original keyboard models use only keymap connection, never a private screen probe',async()=>{
  for(const id of ['athena75','athena1800']){let opens=0;const device={productName:'Original keyboard',async open(){opens++;this.opened=true;},async sendReport(){throw Error('Legacy must not probe screen');}};const runtime=await connectIdentifiedKeyboard({profile:{id},device});assert.equal(opens,1);assert.equal(runtime.capabilities.screen,false);}
+});
+test('unknown history requires explicit reset consent and a matching normal-mode keymap snapshot',async()=>{
+ const {uf2,current,release}=await fixture();release.sources=[];release.compatibility={mode:'athena-rp2040-reset-v1',hardwareRevision:'original-rp2040-16mb',flashBytes:0x1000000};
+ const evidence={confirmed:true,identity:{model:profile.id,vid:profile.vid,pid:profile.pid,uid:profile.uid},keymap:{format:'athena-keymap-v1',model:profile.id,uid:profile.uid,protocol:12,layers:profile.layers,rows:profile.rows,cols:profile.cols,layoutOptions:0,keycodes:Array(profile.layers*profile.rows*profile.cols).fill(4)}};
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),{code:'COMPATIBILITY_RESET_REQUIRED'});
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true,compatibilityReset:{...evidence,confirmed:false}}));
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true,compatibilityReset:{...evidence,identity:{...evidence.identity,pid:0x2513}}}));
+ const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true,compatibilityReset:evidence});
+ assert(plan.resetSettings);assert.equal(plan.layout,'reset');assert(plan.target.subarray(0x1f0000,0x200000).every(b=>b===255));assert(plan.target.subarray(0x400000,0xe00000).every(b=>b===255));
+ assert.deepEqual(plan.target.subarray(0x200000,0x400000),current.subarray(0x200000,0x400000));assert.deepEqual(plan.target.subarray(0xe00000),current.subarray(0xe00000));
+ const record=await saveFirmwareBackup(current,plan);assert.deepEqual(record.resetEvidence,evidence);
+ let commands=0;plan.target[0x200000]^=1;plan.sectors.push(0x200000);plan.targetSha256=await digest(plan.target);const corrupt=await saveFirmwareBackup(current,plan);
+ await assert.rejects(writeFirmwarePlan({command(){commands++;}},plan,corrupt.id),/越界/);assert.equal(commands,0);
+});
+test('compatibility reset rejects aliased smaller flash even with matching model',async()=>{
+ const {uf2,current,release}=await fixture();release.sources=[];release.compatibility={mode:'athena-rp2040-reset-v1',hardwareRevision:'original-rp2040-16mb',flashBytes:0x1000000};current.set(current.subarray(0,65536),0x800000);
+ const evidence={confirmed:true,identity:{model:profile.id,vid:profile.vid,pid:profile.pid,uid:profile.uid},keymap:{format:'athena-keymap-v1',model:profile.id,uid:profile.uid,protocol:12,layers:profile.layers,rows:profile.rows,cols:profile.cols,layoutOptions:0,keycodes:Array(profile.layers*profile.rows*profile.cols).fill(4)}};
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true,compatibilityReset:evidence}),/容量/);
+});
+test('compatibility reset requires backup, clears old settings and resources, preserves other flash, and verifies everything',async()=>{
+ const {uf2,current,release}=await fixture();release.sources=[];release.compatibility={mode:'athena-rp2040-reset-v1',hardwareRevision:'original-rp2040-16mb',flashBytes:FLASH_BYTES};
+ const evidence={confirmed:true,identity:{model:profile.id,vid:profile.vid,pid:profile.pid,uid:profile.uid},keymap:{format:'athena-keymap-v1',model:profile.id,uid:profile.uid,protocol:12,layers:8,rows:14,cols:8,layoutOptions:0,keycodes:Array(8*14*8).fill(4)}};
+ const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true,compatibilityReset:evidence}),record=await saveFirmwareBackup(current,plan),memory=current.slice();let writes=0;
+ const boot={async command(code,args,size,payload){if(code===6)return;const v=new DataView(args.buffer,args.byteOffset,args.byteLength),off=v.getUint32(0,true)-0x10000000,n=v.getUint32(4,true);if(code===0x84)return memory.slice(off,off+n);if(code===3){assert(off<0x200000||off>=0x400000&&off<0xe00000);memory.fill(255,off,off+n);writes++;}else if(code===5)memory.set(payload,off);else throw Error('No automatic reboot');}};
+ await writeFirmwarePlan(boot,plan,record.id);assert(writes>0);assert.deepEqual(memory,plan.target);assert.equal((await getFirmwareBackup(record.id)).phase,'verified');
+});
+test('an already current program cannot be reinstalled even with image-clear confirmation',async()=>{
+ const {uf2,current,release}=await fixture();current.set(decodeFirmwareUf2(uf2));await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),{code:'ALREADY_CURRENT'});
 });

@@ -2,6 +2,7 @@
 import {digest} from './backup-v2.js';
 import {petPackSize,validatePetPack} from './pet-pack.js';
 import {crc32} from './crc32.js';
+import {validateResetEvidence} from './firmware-compatibility.js';
 export const FLASH_BYTES = 0x1000000, MAIN_LIMIT = 0x1f0000, SECTOR = 4096, BASE = 0x10000000;
 const assert = (ok, message) => { if (!ok) throw Error(message); };
 export function decodeFirmwareUf2(bytes) {
@@ -53,19 +54,30 @@ export function normalizeLegacyQgf(data) {
   }
   return out;
 }
-export async function planFirmwareUpgrade(current, uf2, release, profile, {clearImages=false}={}) {
+export async function planFirmwareUpgrade(current, uf2, release, profile, {clearImages=false,compatibilityReset=null}={}) {
   assert(current instanceof Uint8Array && current.length===FLASH_BYTES,'需要完整的 16 MB 读取结果');
   assert(release.model===profile.id && release.pid===profile.pid && profile.vid===0x9d5b,'键盘型号与固件不匹配');
   assert(await digest(uf2)===release.sha256,'固件下载校验失败');
   const main=decodeFirmwareUf2(uf2);
   assert(hasModelDescriptor(main,profile.pid) && hasModelDescriptor(current.subarray(0,MAIN_LIMIT),profile.pid),'固件硬件身份不匹配');
+  const otherPid=profile.pid===0x2513?0x4100:0x2513;
+  assert(!hasModelDescriptor(current.subarray(0,MAIN_LIMIT),otherPid),'发现冲突的硬件身份，已停止升级');
+  if(main.every((b,i)=>current[i]===b)){const error=Error('当前固件已是最新版本，无需升级');error.code='ALREADY_CURRENT';throw error;}
   let source;
   for(const item of release.sources){
     assert(Number.isInteger(item.length)&&item.length>0&&item.length<=MAIN_LIMIT,'固件来源记录无效');
     if(await digest(current.subarray(0,item.length))===item.sha256){source=item;break;}
   }
-  assert(source,'当前固件版本尚未验证，已停止升级，未擦除或写入');
-  assert(source.layout==='legacy'||source.layout==='v2','未知存储布局');
+  let reset=false;
+  if(!source){
+    if(compatibilityReset){
+      validateResetEvidence(release,profile,compatibilityReset);assert(clearImages,'兼容重置必须清空图片');
+      for(const offset of [0x100000,0x200000,0x400000,0x800000])assert(!current.subarray(0,65536).every((b,i)=>b===current[offset+i]),'Flash 容量无法确认，已停止兼容升级');
+      source={layout:'reset'};reset=true;
+    }
+    else {const error=Error('当前固件版本尚未验证，已停止升级，未擦除或写入');error.code='COMPATIBILITY_RESET_REQUIRED';throw error;}
+  }
+  assert(['legacy','v2','reset'].includes(source.layout),'未知存储布局');
   // Audited rollback firmware can coexist with the newer resource layout.
   // Accept only its exact program fingerprint AND valid existing v2 resources.
   if(source.requiresV2Resources){
@@ -78,7 +90,9 @@ export async function planFirmwareUpgrade(current, uf2, release, profile, {clear
     }
     assert(validAsset&&validSave,'当前固件的资源分区与已验证记录不一致，已停止升级，未擦除或写入');
   }
-  const target=current.slice();target.set(main);
+  const target=current.slice();
+  if(reset){target.fill(255,0,0x200000);target.fill(255,0x400000,0xe00000);}
+  target.set(main);
   if(clearImages){
     // The user explicitly chose a clean three-slot image area. Never parse old images.
     target.fill(255,0x400000,0xa00000);
@@ -97,12 +111,12 @@ export async function planFirmwareUpgrade(current, uf2, release, profile, {clear
   const sectors=[];
   for(let off=0;off<FLASH_BYTES;off+=SECTOR){
     if(current.subarray(off,off+SECTOR).some((b,j)=>b!==target[off+j])){
-      assert(off<main.length || (source.layout==='legacy'&&off>=0x400000&&off<0xe00000) || (clearImages&&off>=0x400000&&off<0xa00000),'升级计划越过允许区域');sectors.push(off);
+      assert((reset&&(off<0x200000||(off>=0x400000&&off<0xe00000)))||off<main.length || (source.layout==='legacy'&&off>=0x400000&&off<0xe00000) || (clearImages&&off>=0x400000&&off<0xa00000),'升级计划越过允许区域');sectors.push(off);
     }
   }
-  // Migrate resources before the main program. Configuration is never writable.
+  // Write resources first. Configuration is writable only in the explicit reset plan.
   sectors.sort((a,b)=>(a<MAIN_LIMIT)-(b<MAIN_LIMIT)||a-b);
-  return {target,sectors,mainBytes:main.length,clearImages,model:profile.id,layout:source.layout,release:release.version,originalSha256:await digest(current),targetSha256:await digest(target)};
+  return {target,sectors,mainBytes:main.length,clearImages,model:profile.id,layout:source.layout,resetSettings:reset,resetEvidence:reset?compatibilityReset:null,releasePolicy:reset?release.compatibility:null,release:release.version,originalSha256:await digest(current),targetSha256:await digest(target)};
 }
 export function recoveryUf2(flash) {
   assert(flash.length===FLASH_BYTES,'恢复数据长度不正确');

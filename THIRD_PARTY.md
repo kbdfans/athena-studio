@@ -30,3 +30,22 @@ The mint cat and scene were created for this project with AI-assisted artwork an
 # License scope
 
 The application is distributed under GPL-2.0-only (`LICENSE`). Existing per-file notices remain intact; Inter glyph assets retain SIL OFL-1.1, and bundled MIT dependencies retain their notices. KBDfans and Athena names/logos are identifiers, not a grant of trademark rights. User-imported GIFs and device backups are not part of this distribution.
+
+# ZMK Studio protocol dependencies
+
+ZMK protocol codecs and framing use the official ZMK Studio TypeScript client. Native behavior IDs and parameters are retained; the transport lifecycle and autosave queue are implemented by this project.
+
+- @zmkfirmware/zmk-studio-ts-client 0.0.18 — MIT; notice: `licenses/zmkfirmware-zmk-studio-ts-client-LICENSE.txt`.
+- protobufjs 7.6.6 — BSD-3-Clause; notice: `licenses/protobufjs-LICENSE.txt`.
+- long 5.3.2 — Apache-2.0; notice: `licenses/long-LICENSE.txt`.
+- @protobufjs/utf8 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-utf8-LICENSE.txt`.
+- @protobufjs/path 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-path-LICENSE.txt`.
+- @protobufjs/base64 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-base64-LICENSE.txt`.
+- @protobufjs/codegen 2.0.5 — BSD-3-Clause; notice: `licenses/protobufjs-codegen-LICENSE.txt`.
+- @protobufjs/fetch 1.1.1 — BSD-3-Clause; notice: `licenses/protobufjs-fetch-LICENSE.txt`.
+- @protobufjs/float 1.0.2 — BSD-3-Clause; notice: `licenses/protobufjs-float-LICENSE.txt`.
+- @protobufjs/aspromise 1.1.2 — BSD-3-Clause; notice: `licenses/protobufjs-aspromise-LICENSE.txt`.
+- @protobufjs/pool 1.1.0 — BSD-3-Clause; notice: `licenses/protobufjs-pool-LICENSE.txt`.
+- @protobufjs/eventemitter 1.1.1 — BSD-3-Clause; notice: `licenses/protobufjs-eventemitter-LICENSE.txt`.
+
+Protocol source: https://github.com/zmkfirmware/zmk-studio-ts-client (0.0.18). Build-only run-script-os is pinned to resolve its upstream postinstall dependency; it is not shipped in the browser bundle.

@@ -4,6 +4,7 @@ import { ATHENA_UID } from "./device.js";
 import { SLOTS, inspectQgf } from "./format-v2.js";
 import { hidWindow } from "./hid-window.js";
 import { crc32 } from "./crc32.js";
+import {decodeBuildInfo} from './firmware-compatibility.js';
 export { crc32 } from "./crc32.js";
 import { hasFeatureTransport, featureBlock, FEATURE_SIZE, BLOCK_DATA } from "./feature-block.js";
 
@@ -129,6 +130,10 @@ export class RuntimeV2 {
       heartbeat: v.getUint16(28, true),
       uploading: !!r[11],
     };
+  }
+  async buildInfo(){
+    try{return decodeBuildInfo(await this.command(14,0));}
+    catch(e){if(this.broken)throw e;if(e.message===errors[1])return null;throw e;}
   }
   async read(slot, address, length, onProgress = () => {}) {
     assertRange(slot, address, length);

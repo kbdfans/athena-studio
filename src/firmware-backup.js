@@ -7,7 +7,7 @@ async function transaction(mode, action){
 }
 export async function saveFirmwareBackup(data,plan,deviceSerial=''){
   if(data.length!==FLASH_BYTES || await digest(data)!==plan.originalSha256)throw Error('升级备份与读取结果不一致');
-  const record={id:crypto.randomUUID(),created:new Date().toISOString(),model:plan.model,release:plan.release,sha256:plan.originalSha256,targetSha256:plan.targetSha256,deviceSerial,data,phase:'prepared'};
+  const record={id:crypto.randomUUID(),created:new Date().toISOString(),model:plan.model,release:plan.release,sha256:plan.originalSha256,targetSha256:plan.targetSha256,deviceSerial,data,phase:'prepared',resetSettings:plan.resetSettings===true,resetEvidence:plan.resetEvidence||null,releasePolicy:plan.releasePolicy||null};
   await transaction('readwrite',s=>s.put(record));
   const saved=await getFirmwareBackup(record.id);
   if(!saved || await digest(saved.data)!==record.sha256)throw Error('恢复备份校验失败，未开始写入');

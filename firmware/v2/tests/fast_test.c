@@ -1,4 +1,5 @@
 #include "screen_upload.h"
+#include "studio_release.h"
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
@@ -22,6 +23,14 @@ static void begin(unsigned size,bool corrupt_crc){memset(packet,0,32);packet[2]=
 static uint8_t *stage(unsigned offset,unsigned n){uint8_t *b=su_feature_buffer();assert(b);memset(b,0,SU_FEATURE_SIZE);b[0]=0xfd;b[1]=0xa8;b[2]=1;put32(b+4,offset);b[8]=n&255;b[9]=n>>8;memcpy(b+16,image+offset,n);put32(b+12,crc(b+16,n));su_feature_received();assert(!su_feature_buffer());return b;}
 static void send_image(unsigned size){for(unsigned off=0;off<size;off+=SU_BLOCK_DATA){unsigned n=size-off>SU_BLOCK_DATA?SU_BLOCK_DATA:size-off;stage(off,n);assert(command(SU_BLOCK,0,off)==SU_OK);}}
 int main(int argc,char **argv){
+
+#ifdef ATHENA_RELEASE_PID
+ assert(command(14,0,0)==SU_OK);assert(!memcmp(packet+6,"ASF1",4));
+ assert((packet[10]|(packet[11]<<8))==ATHENA_RELEASE_PID);assert(packet[12]==1&&packet[13]==16&&packet[14]==1&&packet[15]==2);
+ assert(!strcmp((char *)packet+20,ATHENA_RELEASE_BUILD));assert(!writes&&!erases);
+#else
+ assert(command(14,0,0)==SU_COMMAND);assert(!writes&&!erases);
+#endif
  assert(argc==3);FILE *f=fopen(argv[1],"rb");assert(f);unsigned size=fread(image,1,sizeof image,f);fclose(f);assert(size>SU_FEATURE_SIZE);
  assert(crc((const uint8_t *)"123456789",9)==0xcbf43926u);assert(crc(image,size)==strtoul(argv[2],NULL,10));
  memset(flash,255,sizeof flash);

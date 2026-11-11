@@ -21,4 +21,8 @@ try {
  writeFileSync(large,encodeQgf(Array.from({length:63},()=>({data:new Uint16Array(16384).fill(0xf800),delay:100})),0));
  execFileSync(fast,[image,String(crc32(readFileSync(image)))],{stdio:'inherit'});
  execFileSync(fast,[large,String(crc32(readFileSync(large)))],{stdio:'inherit'});
+ for(const pid of ['0x2513','0x4100']){
+  execFileSync('cc',['-std=c11','-Wall','-Wextra','-Werror','-fsanitize=undefined','-DATHENA_FAST_UPLOAD','-DPRODUCT_ID='+pid,'-I',resolve('firmware/v2/src'),resolve('firmware/v2/src/screen_upload.c'),resolve('firmware/v2/src/pet.c'),resolve('firmware/v2/src/typing.c'),resolve('firmware/v2/tests/fast_test.c'),'-o',fast],{stdio:'inherit'});
+  execFileSync(fast,[image,String(crc32(readFileSync(image)))],{stdio:'inherit'});
+ }
 }finally{rmSync(dir,{recursive:true,force:true});}

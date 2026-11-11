@@ -27,3 +27,6 @@
 #upgrade-detect{min-height:48px;min-width:176px;padding:12px 20px;font-size:14px;font-weight:700;white-space:normal}
 .upgrade-blocker{font-size:12px;line-height:1.7;margin:14px 0 0;color:#686d60}
 @media(max-width:560px){#upgrade-detect{width:100%;min-height:50px}.upgrade-detection{padding:16px}}
+
+.upgrade-version{font-size:12px;color:#666e5e;padding:8px 0}.upgrade-compatibility{border:1px solid #efbda0;background:#fff0e7;padding:18px;border-radius:12px;margin-top:18px}.upgrade-compatibility[hidden]{display:none}.upgrade-compatibility h3{font-size:16px;margin:0 0 8px}.upgrade-compatibility p,.upgrade-compatibility label{font-size:13px;line-height:1.8}.upgrade-compatibility label{display:flex;align-items:flex-start;gap:9px;margin-top:12px}.upgrade-compatibility input{accent-color:#f50;flex:none;margin-top:5px}
+.upgrade-reset-choice[hidden]{display:none}#firmware-dialog.version-only{width:460px;padding:32px}#firmware-dialog.version-only h2{font-size:24px}#firmware-dialog.version-only .upgrade-version{font-size:13px;margin:8px 0 24px}#firmware-dialog.version-only .upgrade-model{margin-bottom:8px}

@@ -15,7 +15,9 @@
     "start:feedback": "node server/feedback/server.mjs"
   },
   "dependencies": {
-    "gifuct-js": "2.1.2"
+    "@zmkfirmware/zmk-studio-ts-client": "0.0.18",
+    "gifuct-js": "2.1.2",
+    "run-script-os": "1.1.6"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.8",
