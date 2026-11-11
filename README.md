@@ -44,3 +44,13 @@ Experimental firmware adapters target `openkbd/vial-qmk-v6` commit `be6d662bf041
 ## License
 
 GPL-2.0-only; see [LICENSE](LICENSE). Preserve the original per-file and dependency licenses. MIT dependency notices and SIL OFL-1.1 for Inter glyph assets are in [THIRD_PARTY.md](THIRD_PARTY.md) and `licenses/`. User-provided media is not licensed by this project. KBDfans/Athena identifiers do not grant trademark rights.
+
+## Demo and language defaults
+
+Select **Try demo mode** to preview Athena75 or Athena1800 without connecting a device. Keymap edits stay in memory, screen modes can be previewed, and hardware write actions remain disabled. Connecting a real keyboard reads its configuration; demo edits are never replayed.
+
+A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Simplified Chinese. Explicit language choices persist per origin. English covers the complete interface, dynamic messages, and errors; other locales use English for entries without a native translation. Translation sources are `src/locales/ui.txt`, `help-en.txt`, `site-en.txt`, and `templates-en.js`. Run `node scripts/build-locales.mjs` after editing the catalog.
+
+## Online firmware upgrade (under device validation)
+
+The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, migrates supported legacy animations, and verifies flash before reboot. Public firmware binaries are not distributed by this release: the public write action remains unavailable until device testing and corresponding-source release preparation are complete. Synthetic transport tests and a local hardware test are distinct validation steps.

@@ -18,3 +18,28 @@ test('localized search finds stable screen keycodes, firmware capability is requ
 test('connection gate requires a verified ready open runtime; disconnection cannot keep access',()=>{
  const r={isRuntime:true,broken:false,device:{opened:true}};assert(canEnterStudio(r,true));assert(!canEnterStudio(r,false));assert(!canEnterStudio(null,true));assert(!canEnterStudio({...r,broken:true},true));assert(!canEnterStudio({...r,device:{opened:false}},true));assert(!canEnterStudio({...r,isRuntime:false},true));
 });
+
+test('site defaults are host-specific; a deliberate language choice takes priority',async()=>{
+ const {initialLocale}=await import('../src/i18n-core.js');
+ assert.equal(initialLocale({hostname:'v.kbd.cool',browserLanguage:'zh-CN'}),'en');
+ assert.equal(initialLocale({hostname:'kbd.cool',browserLanguage:'en-US'}),'zh-CN');
+ assert.equal(initialLocale({hostname:'www.kbd.cool',browserLanguage:'en-US'}),'zh-CN');
+ assert.equal(initialLocale({hostname:'v.kbd.cool',saved:'ja'}),'ja');
+ assert.equal(initialLocale({hostname:'kbd.cool',saved:'invalid',browserLanguage:'en-US'}),'zh-CN');
+ assert.equal(initialLocale({hostname:'127.0.0.1',browserLanguage:'de-DE'}),'de');
+});
+test('every key title, layer example and QMK setting is translated to English',async()=>{
+ const {layerExample}=await import('../src/keycodes.js');const {QMK_SETTINGS}=await import('../src/qmk-settings.js');
+ const texts=[...KEYCODES.flatMap(k=>[k.label,k.title,layerExample(k.code)]),...QMK_SETTINGS.flatMap(s=>[s.label,...(s.bits||[])])];
+ for(const text of texts.filter(s=>typeof s==='string'))assert(!/[\u3400-\u9fff]/.test(translate(text,'en')),text);
+});
+test('demo gate opens without fabricating a connection; regular gate still requires a verified session',()=>{
+ assert(canEnterStudio(null,false,true));assert(!canEnterStudio(null,false,false));
+});
+test('dynamic help preserves layer numbers, key names and progress values',()=>{
+ assert.equal(translate('轻按 Space，按住第 3 层','en'),'Tap Space; hold for layer 3');
+ assert.equal(translate('Athena1800 按键布局','en'),'Athena1800 key layout');
+ assert.equal(translate('喷射力度 76% · 同屏 5 / 16 · 碰撞反弹','en'),'Launch force 76% · On screen 5 / 16 · Collision and bounce');
+ assert.equal(translate('＋ · 数字小键盘 · ＋ · KC_KP_PLUS','en'),'＋ · Numpad · ＋ · KC_KP_PLUS');
+ assert.equal(translate('Scroll up · 滚轮 ↑','en'),'Scroll up · Scroll up');
+});

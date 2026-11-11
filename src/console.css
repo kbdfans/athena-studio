@@ -1344,3 +1344,4 @@ body.connection-required > header .header-right { grid-column: 2; }
   opacity: 1;
   color: inherit;
 }
+.gate-actions{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}.gate-actions .outline{min-height:48px;padding:12px 24px}.demo-banner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 14px;margin:0 0 12px;background:#eeeee6;border:1px solid #dfdfd4;border-radius:10px;font-size:12px;color:#73776a}.demo-banner[hidden]{display:none}.demo-banner>div{display:flex;align-items:center;gap:12px}.demo-banner strong{color:#4b5d3e;white-space:nowrap}.demo-banner select{width:auto;padding:6px 10px;font-size:12px}.demo-banner button{white-space:nowrap;font-size:12px}.demo-banner span{line-height:1.6}@media(max-width:600px){.demo-banner,.demo-banner>div:first-child{align-items:flex-start;flex-direction:column;gap:6px}.demo-banner>div:last-child{width:100%;justify-content:space-between}}

@@ -30,13 +30,14 @@
       <span class="eyebrow">YOUR KEYBOARD, YOUR WAY</span>
       <h1 id="gate-title">连接你的键盘。</h1>
       <p>连接键盘后，开始设置键位、屏幕和你的像素伙伴。</p>
-      <button id="gate-connect" class="primary">连接键盘 ↗</button>
+      <div class="gate-actions"><button id="gate-connect" class="primary">连接键盘 ↗</button><button id="gate-demo" class="outline">体验演示模式</button></div>
       <small>支持 Athena75 · Athena1800，连接后自动识别型号与功能。</small>
       <p id="gate-error" class="error" role="alert"></p>
       <small>使用 USB 数据线连接，再从浏览器列表中选择你的键盘。</small>
       <small><a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a> · <a href="./THIRD_PARTY.txt" target="_blank" rel="noopener noreferrer">Open-source notices</a></small>
     </section>
     <main id="studio-main" inert>
+      <div id="demo-banner" class="demo-banner" hidden><div><strong>演示模式</strong><span>仅本地预览，不会连接或写入键盘。</span></div><div><select id="demo-model" aria-label="演示键盘型号"><option value="athena75">Athena75</option><option value="athena1800">Athena1800</option></select><button id="demo-exit" class="text-button">退出演示</button></div></div>
       <section class="console-heading">
         <div>
           <div class="eyebrow">MAKE IT YOURS</div>
@@ -584,11 +585,11 @@
       <div data-connected-only hidden class="shared-connection">
         <p id="shared-connection-copy">键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。</p>
         <div class="connection-features"><span>✓ 键位设置</span><span id="connection-screen-feature">✓ 屏幕设置</span><span>✓ 键盘检测</span></div>
+        <button id="firmware-entry" class="outline full" hidden>固件升级与操作图示</button>
         <button id="connection-disconnect" class="outline full">断开连接</button>
       </div>
       <p data-disconnected-only>
-        连接已安装 Screen Studio v2 的
-        Athena75。旧固件需先升级并迁移动画；此页面不会自动改动固件或旧动画。
+        连接 Athena75 或 Athena1800。旧版固件可先设置键位，屏幕功能需升级对应型号固件。
       </p>
       <button id="identify" class="primary" data-disconnected-only>连接正常模式键盘</button>
       <p id="identity" class="success"></p>

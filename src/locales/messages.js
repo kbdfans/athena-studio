@@ -1890,6 +1890,159 @@ export const MESSAGES={
     "fr": "L’animal et les lettres nécessitent un firmware adapté. Image suivante et écran restent disponibles.",
     "es": "La mascota y las letras necesitan firmware adaptado. El cambio de imagen y la pantalla están disponibles."
   },
+  "按住 Esc，再连接键盘。": {
+    "en": "Hold Esc, then connect your keyboard.",
+    "zh-TW": "按住 Esc，再連接鍵盤。",
+    "ja": "Esc を押しながらキーボードを接続",
+    "ko": "Esc를 누른 채 키보드를 연결하세요.",
+    "de": "Esc halten, dann Tastatur verbinden.",
+    "fr": "Maintenez Échap, puis connectez le clavier.",
+    "es": "Mantén Esc y conecta el teclado."
+  },
+  "拔掉 USB": {
+    "en": "Unplug USB",
+    "zh-TW": "拔掉 USB",
+    "ja": "USB を抜く",
+    "ko": "USB 분리",
+    "de": "USB abziehen",
+    "fr": "Débranchez l’USB",
+    "es": "Desconecta el USB"
+  },
+  "先断开键盘的数据线。": {
+    "en": "Disconnect the keyboard’s USB cable first.",
+    "zh-TW": "先拔掉鍵盤的資料線。",
+    "ja": "先にキーボードの USB ケーブルを抜きます。",
+    "ko": "먼저 키보드 USB 케이블을 분리하세요.",
+    "de": "Zuerst das USB-Kabel der Tastatur abziehen.",
+    "fr": "Débranchez d’abord le câble USB du clavier.",
+    "es": "Primero desconecta el cable USB del teclado."
+  },
+  "按住 Esc，插入 USB": {
+    "en": "Hold Esc and plug in USB",
+    "zh-TW": "按住 Esc，插入 USB",
+    "ja": "Esc を押したまま USB を接続",
+    "ko": "Esc를 누른 채 USB 연결",
+    "de": "Esc halten und USB einstecken",
+    "fr": "Maintenez Échap et branchez l’USB",
+    "es": "Mantén Esc y conecta el USB"
+  },
+  "一直按住左上角 Esc，再插入数据线。": {
+    "en": "Keep the top-left Esc key held while plugging in USB.",
+    "zh-TW": "持續按住左上角 Esc，再插入資料線。",
+    "ja": "左上の Esc を押したまま USB を接続します。",
+    "ko": "왼쪽 위 Esc 키를 계속 누른 채 USB를 연결하세요.",
+    "de": "Esc oben links gedrückt halten und USB einstecken.",
+    "fr": "Gardez Échap en haut à gauche enfoncée en branchant l’USB.",
+    "es": "Mantén pulsada Esc, arriba a la izquierda, mientras conectas el USB."
+  },
+  "出现 RPI-RP2 后松手": {
+    "en": "Release Esc when RPI-RP2 appears",
+    "zh-TW": "出現 RPI-RP2 後鬆手",
+    "ja": "RPI-RP2 が表示されたら離す",
+    "ko": "RPI-RP2가 나타나면 Esc 놓기",
+    "de": "Bei RPI-RP2 Esc loslassen",
+    "fr": "Relâchez Échap quand RPI-RP2 apparaît",
+    "es": "Suelta Esc cuando aparezca RPI-RP2"
+  },
+  "看到升级盘后松开 Esc，保持 USB 连接。": {
+    "en": "Release Esc when the boot drive appears. Keep USB connected.",
+    "zh-TW": "看到升級磁碟後鬆開 Esc，保持 USB 連接。",
+    "ja": "ドライブが表示されたら Esc を離し、USB は接続したままにします。",
+    "ko": "업데이트 드라이브가 나타나면 Esc를 놓고 USB는 연결 상태로 두세요.",
+    "de": "Sobald das Laufwerk erscheint, Esc loslassen. USB verbunden lassen.",
+    "fr": "Relâchez Échap quand le lecteur apparaît. Gardez l’USB connecté.",
+    "es": "Suelta Esc cuando aparezca la unidad. Mantén el USB conectado."
+  },
+  "随后在浏览器设备列表中选择 RP2 Boot；无需下载或拖拽固件文件。": {
+    "en": "Next, select RP2 Boot in the browser’s device list. No firmware download or drag-and-drop needed.",
+    "zh-TW": "接著在瀏覽器裝置清單選擇 RP2 Boot；無需下載或拖曳韌體檔案。",
+    "ja": "次にブラウザーの一覧で RP2 Boot を選択。ファイルのダウンロードやドラッグは不要です。",
+    "ko": "다음으로 브라우저 장치 목록에서 RP2 Boot를 선택하세요. 펌웨어 파일 다운로드나 드래그는 필요 없습니다.",
+    "de": "Danach RP2 Boot im Browser auswählen. Kein Download oder Verschieben einer Firmwaredatei nötig.",
+    "fr": "Sélectionnez ensuite RP2 Boot dans le navigateur. Aucun fichier à télécharger ni à déplacer.",
+    "es": "Después selecciona RP2 Boot en el navegador. No necesitas descargar ni arrastrar archivos."
+  },
+  "选择设备并升级": {
+    "en": "Select device and upgrade",
+    "zh-TW": "選擇裝置並升級",
+    "ja": "デバイスを選んで更新",
+    "ko": "장치 선택 및 업데이트",
+    "de": "Gerät wählen und aktualisieren",
+    "fr": "Choisir l’appareil et mettre à jour",
+    "es": "Seleccionar dispositivo y actualizar"
+  },
+  "固件升级与操作图示": {
+    "en": "Firmware upgrade and guide",
+    "zh-TW": "韌體升級與操作圖示",
+    "ja": "ファームウェア更新ガイド",
+    "ko": "펌웨어 업데이트 및 안내",
+    "de": "Firmware-Update und Anleitung",
+    "fr": "Mise à jour et guide",
+    "es": "Actualización y guía"
+  },
+  "升级固件，启用屏幕功能": {
+    "en": "Upgrade firmware to enable screen features",
+    "zh-TW": "升級韌體，啟用螢幕功能",
+    "ja": "更新して画面機能を有効にする",
+    "ko": "펌웨어 업데이트로 화면 기능 활성화",
+    "de": "Firmware für Displayfunktionen aktualisieren",
+    "fr": "Mettre à jour pour activer l’écran",
+    "es": "Actualizar para activar la pantalla"
+  },
+  "体验演示模式": {
+    "en": "Try demo mode",
+    "zh-TW": "體驗示範模式",
+    "ja": "デモを試す",
+    "ko": "데모 체험",
+    "de": "Demo ausprobieren",
+    "fr": "Essayer la démo",
+    "es": "Probar la demo"
+  },
+  "演示模式": {
+    "en": "Demo mode",
+    "zh-TW": "示範模式",
+    "ja": "デモモード",
+    "ko": "데모 모드",
+    "de": "Demomodus",
+    "fr": "Mode démo",
+    "es": "Modo demo"
+  },
+  "仅本地预览，不会连接或写入键盘。": {
+    "en": "Local preview only. No keyboard connection or writes.",
+    "zh-TW": "僅本機預覽，不會連接或寫入鍵盤。",
+    "ja": "ローカルプレビューのみ。キーボードへの接続・書き込みは行いません。",
+    "ko": "로컬 미리보기입니다. 키보드에 연결하거나 쓰지 않습니다.",
+    "de": "Nur lokale Vorschau. Keine Verbindung oder Schreibzugriffe auf die Tastatur.",
+    "fr": "Aperçu local uniquement. Aucune connexion ni écriture sur le clavier.",
+    "es": "Solo vista previa local. Sin conexión ni escritura al teclado."
+  },
+  "退出演示": {
+    "en": "Exit demo",
+    "zh-TW": "退出示範",
+    "ja": "デモを終了",
+    "ko": "데모 종료",
+    "de": "Demo beenden",
+    "fr": "Quitter la démo",
+    "es": "Salir de la demo"
+  },
+  "演示键盘型号": {
+    "en": "Demo keyboard model",
+    "zh-TW": "示範鍵盤型號",
+    "ja": "デモのキーボード機種",
+    "ko": "데모 키보드 모델",
+    "de": "Demo-Tastaturmodell",
+    "fr": "Modèle de clavier de démo",
+    "es": "Modelo de teclado de la demo"
+  },
+  "返回": {
+    "en": "Back",
+    "zh-TW": "返回",
+    "ja": "戻る",
+    "ko": "뒤로",
+    "de": "Zurück",
+    "fr": "Retour",
+    "es": "Volver"
+  },
   "每一个按键，每一帧陪伴，都由你决定。": {
     "en": "Make every key and every frame your own."
   },
@@ -2491,7 +2644,7 @@ export const MESSAGES={
     "en": "Every keystroke comes alive."
   },
   "由层切换键启用": {
-    "en": "Activated by a layer key"
+    "en": "Enabled by a layer-switch key"
   },
   "键位设置和键盘检测共用当前连接。此型号的网站适配尚待实机验证，屏幕功能暂未开放。": {
     "en": "Key mapping and testing share this connection. Hardware validation for this model is pending; screen features are not available yet."
@@ -2504,5 +2657,1769 @@ export const MESSAGES={
   },
   "成长进度已保存。": {
     "en": "Growth progress saved."
+  },
+  "进入刷机模式的操作步骤": {
+    "en": "Steps to enter firmware update mode"
+  },
+  "先拔掉 USB；按住左上角 Esc 再插入数据线；出现 RPI-RP2 后松开 Esc。": {
+    "en": "Unplug USB. Hold the top-left Esc key while reconnecting USB. Release Esc when RPI-RP2 appears."
+  },
+  "先识别键盘型号，再按下图进入刷机模式。": {
+    "en": "Identify your keyboard first, then follow the illustrated steps to enter update mode."
+  },
+  "请先在正常打字模式连接键盘，以确认升级型号。": {
+    "en": "Connect your keyboard in normal typing mode first so its model can be identified."
+  },
+  "在线升级需要桌面版 Chrome 或 Edge。": {
+    "en": "Online firmware updates require desktop Chrome or Edge."
+  },
+  "此型号的在线升级包正在验证，暂未开放写入。可以先查看操作图示。": {
+    "en": "The online update for this model is still being validated. You can view the instructions for now."
+  },
+  "使用刚刚识别的这把键盘。进入升级模式后，选择 RP2 Boot，网页会自动备份、写入、校验并重启。": {
+    "en": "Use the keyboard just identified. Enter update mode and select RP2 Boot. The browser will back up, write, verify, and restart it."
+  },
+  "旧版升级保留前三组日常动画；其余动画保存在恢复文件中。已有新版会保留图片、键位和宠物数据。": {
+    "en": "Legacy upgrades keep the first three daily animations; the others remain in the recovery file. Up-to-date layouts retain images, key mappings, and pet data."
+  },
+  "读取键盘，检查升级条件…": {
+    "en": "Reading keyboard and checking compatibility…"
+  },
+  "核对型号与动画布局…": {
+    "en": "Checking model and animation layout…"
+  },
+  "保存完整恢复备份…": {
+    "en": "Saving a complete recovery backup…"
+  },
+  "下载恢复文件": {
+    "en": "Download recovery file"
+  },
+  "当前已是此版本，正在回读校验…": {
+    "en": "Already on this version; verifying a second read…"
+  },
+  "升级完成，键盘已重启。重新连接即可使用。": {
+    "en": "Upgrade complete. The keyboard has restarted. Reconnect to use it."
+  },
+  "已是此版本，备份与完整回读校验通过，未重复刷写。键盘已重启。": {
+    "en": "Already on this version. Backup and full readback verified; no rewrite was needed. The keyboard has restarted."
+  },
+  "尚未选择升级设备，可以重试。": {
+    "en": "No upgrade device selected. You can try again."
+  },
+  "如升级中断，请下载恢复文件，在 RPI-RP2 中拖入恢复后再重试。": {
+    "en": "If the upgrade was interrupted, download the recovery file and copy it to RPI-RP2 to restore the keyboard before retrying."
+  },
+  "连接 Athena75 或 Athena1800。旧版固件可先设置键位，屏幕功能需升级对应型号固件。": {
+    "en": "Connect Athena75 or Athena1800. Legacy firmware supports key mapping; screen features require the matching firmware upgrade."
+  },
+  "1 · 选择动作": {
+    "en": "1 · Choose an action"
+  },
+  "2 · 选择按键": {
+    "en": "2 · Choose a key"
+  },
+  "3 · 搭配修饰键（可多选）": {
+    "en": "3 · Add modifiers (select multiple)"
+  },
+  "Alt 强制 Esc": {
+    "en": "Alt forces Esc"
+  },
+  "Ctrl 强制 Esc": {
+    "en": "Ctrl forces Esc"
+  },
+  "GUI 强制 Esc": {
+    "en": "GUI forces Esc"
+  },
+  "Shift 强制 Esc": {
+    "en": "Shift forces Esc"
+  },
+  "Caps 双功能轻按持续时间（ms）": {
+    "en": "Caps dual-role tap duration (ms)"
+  },
+  "Caps 改为 Ctrl": {
+    "en": "Caps becomes Ctrl"
+  },
+  "Esc / Shift+波浪号": {
+    "en": "Esc / Shift + tilde"
+  },
+  "Esc / 波浪号例外": {
+    "en": "Esc / tilde exceptions"
+  },
+  "NKRO 全键无冲": {
+    "en": "NKRO (full key rollover)"
+  },
+  "TT 锁层连按次数": {
+    "en": "Tap count to toggle a TT layer"
+  },
+  "一次性修饰键锁定连按次数": {
+    "en": "Tap count to lock one-shot modifiers"
+  },
+  "一次性按键超时（ms）": {
+    "en": "One-shot key timeout (ms)"
+  },
+  "上一首": {
+    "en": "Previous track"
+  },
+  "下一首": {
+    "en": "Next track"
+  },
+  "下载原始备份": {
+    "en": "Download original backup"
+  },
+  "不能按住": {
+    "en": "Must not be held"
+  },
+  "不重发原键": {
+    "en": "Do not resend original key"
+  },
+  "交换 Ctrl / Caps": {
+    "en": "Swap Ctrl / Caps"
+  },
+  "交换 Grave / Esc": {
+    "en": "Swap Grave / Esc"
+  },
+  "交换反斜杠 / 退格": {
+    "en": "Swap backslash / Backspace"
+  },
+  "交换右 Alt / GUI": {
+    "en": "Swap right Alt / GUI"
+  },
+  "交换右 Ctrl / GUI": {
+    "en": "Swap right Ctrl / GUI"
+  },
+  "交换左 Alt / GUI": {
+    "en": "Swap left Alt / GUI"
+  },
+  "交换左 Ctrl / GUI": {
+    "en": "Swap left Ctrl / GUI"
+  },
+  "亮度＋": {
+    "en": "Brightness +"
+  },
+  "亮度－": {
+    "en": "Brightness −"
+  },
+  "仅物理模式可检测": {
+    "en": "Physical mode only"
+  },
+  "任一必需修饰键即可": {
+    "en": "Any required modifier"
+  },
+  "任务视图": {
+    "en": "Task view"
+  },
+  "传输与回读校验完成": {
+    "en": "Transfer and readback verified"
+  },
+  "传输完成，正在核对键盘内的数据": {
+    "en": "Transfer complete; verifying data on the keyboard"
+  },
+  "例如：GUI / Cmd + C 在 Mac 复制，Ctrl + C 在 Windows 复制。": {
+    "en": "Example: GUI / Cmd + C copies on Mac; Ctrl + C copies on Windows."
+  },
+  "例如：轻按输入空格，按住使用第 1 层；松开后恢复。": {
+    "en": "Example: tap for Space; hold for layer 1; release to return."
+  },
+  "例如：轻按输入空格，按住变成 Ctrl。判定时间可在「高级参数」调整。": {
+    "en": "Example: tap for Space; hold for Ctrl. Adjust the timing in Advanced settings."
+  },
+  "保存请求已发送，请等到状态显示“成长进度已保存”后再拔线。": {
+    "en": "Save requested. Wait for “Growth saved” before unplugging."
+  },
+  "保留位": {
+    "en": "Reserved bit"
+  },
+  "修饰键只对下一键生效": {
+    "en": "Modifiers apply to the next key only"
+  },
+  "停止": {
+    "en": "Stop"
+  },
+  "允许修饰键": {
+    "en": "Allow modifiers"
+  },
+  "允许重复": {
+    "en": "Allow repeat"
+  },
+  "先读取键盘配置，再编辑需要调整的项目。": {
+    "en": "Read the keyboard configuration first, then edit the desired items."
+  },
+  "全部高级配置已读取并导出": {
+    "en": "All advanced settings read and exported"
+  },
+  "关闭按键选择器": {
+    "en": "Close key picker"
+  },
+  "其他键不取消": {
+    "en": "Other keys do not cancel"
+  },
+  "再次写入": {
+    "en": "Write again"
+  },
+  "写入动画": {
+    "en": "Write animation"
+  },
+  "写入固件": {
+    "en": "Write firmware"
+  },
+  "判定时间（ms）": {
+    "en": "Tapping term (ms)"
+  },
+  "刷新": {
+    "en": "Refresh"
+  },
+  "前进": {
+    "en": "Forward"
+  },
+  "动画已重新加载，未进入升级模式": {
+    "en": "Animation reloaded without entering update mode"
+  },
+  "助手": {
+    "en": "Assistant"
+  },
+  "升级设备已连接": {
+    "en": "Update device connected"
+  },
+  "升级设备已连接。选择动画位置，预览后点击写入。": {
+    "en": "Update device connected. Choose an animation slot, preview, and write."
+  },
+  "原值": {
+    "en": "Original"
+  },
+  "原始备份已保存并校验，开始写入…": {
+    "en": "Original backed up and verified. Starting write…"
+  },
+  "原始备份已保存，正在写入动画": {
+    "en": "Original backed up. Writing animation"
+  },
+  "原始宏不可解码，保持原样；可先导出备份后清空此宏。": {
+    "en": "This macro cannot be decoded and is unchanged. Export a backup before clearing it."
+  },
+  "原按键": {
+    "en": "Original key"
+  },
+  "双击": {
+    "en": "Double tap"
+  },
+  "双击后按住": {
+    "en": "Double tap and hold"
+  },
+  "双功能键": {
+    "en": "Dual-role keys"
+  },
+  "双功能键行为": {
+    "en": "Dual-role key behavior"
+  },
+  "只读检测物理按键，不修改键位。短按过快可能漏采，可再次按下确认；离页暂停，返回自动继续；系统快捷键导致失焦时短暂完成采样后暂停。": {
+    "en": "Reads physical keys without changing mappings. Very short taps may be missed; press again to confirm. Testing pauses when you leave and resumes on return. After a system shortcut takes focus, sampling finishes briefly before pausing."
+  },
+  "可以继续使用键盘了": {
+    "en": "Your keyboard is ready to use"
+  },
+  "可输入字母、数字和标点 · Tab 退出 · 不保存输入": {
+    "en": "Type letters, numbers, and punctuation · Tab to exit · Input is not saved"
+  },
+  "右": {
+    "en": "Right"
+  },
+  "右侧": {
+    "en": "Right side"
+  },
+  "吃东西": {
+    "en": "Eating"
+  },
+  "同一键可分别设置轻按、长按、双击、双击后按住。应用后再赋予 TD 键。": {
+    "en": "Set tap, hold, double-tap, and double-tap-hold actions for one key. Apply the rule, then assign its TD keycode."
+  },
+  "同时按下 2–4 个键码触发另一个功能，无需占用额外键位。": {
+    "en": "Press 2–4 keys together to trigger another function without using an extra key."
+  },
+  "同时按下多个键": {
+    "en": "Press multiple keys together"
+  },
+  "后退": {
+    "en": "Back"
+  },
+  "启动台": {
+    "en": "Launchpad"
+  },
+  "启用": {
+    "en": "Enable"
+  },
+  "启用宠物": {
+    "en": "Enable pet"
+  },
+  "启用此规则": {
+    "en": "Enable this rule"
+  },
+  "启用键盘中已保存的猫猫": {
+    "en": "Enable the cat saved on your keyboard"
+  },
+  "唤醒系统": {
+    "en": "Wake system"
+  },
+  "国际键": {
+    "en": "International keys"
+  },
+  "备份与恢复": {
+    "en": "Backup and recovery"
+  },
+  "备份原内容": {
+    "en": "Back up original content"
+  },
+  "备份已恢复并回读确认；请重新读取编辑项": {
+    "en": "Backup restored and verified. Reload the item before editing."
+  },
+  "备用颜色": {
+    "en": "Fallback color"
+  },
+  "大写锁定": {
+    "en": "Caps Lock"
+  },
+  "大写锁定时显示": {
+    "en": "Shown when Caps Lock is on"
+  },
+  "媒体上一首": {
+    "en": "Previous media track"
+  },
+  "媒体下一首": {
+    "en": "Next media track"
+  },
+  "媒体停止": {
+    "en": "Stop media"
+  },
+  "媒体播放或暂停": {
+    "en": "Play / pause media"
+  },
+  "存档失败，进度暂未保存。": {
+    "en": "Save failed. Progress has not been saved."
+  },
+  "孵化中": {
+    "en": "Hatching"
+  },
+  "宏 · 按顺序执行": {
+    "en": "Macro · sequential actions"
+  },
+  "宏编号": {
+    "en": "Macro number"
+  },
+  "宠物外观": {
+    "en": "Pet appearance"
+  },
+  "宠物模式已开启，试着打字和它互动吧。": {
+    "en": "Pet mode is on. Type to interact with your companion."
+  },
+  "宽容长按 Permissive Hold": {
+    "en": "Permissive Hold"
+  },
+  "导出全部高级配置": {
+    "en": "Export all advanced settings"
+  },
+  "导出最近自动备份": {
+    "en": "Export latest automatic backup"
+  },
+  "尚无可用备份": {
+    "en": "No backup available"
+  },
+  "尚未读取": {
+    "en": "Not read yet"
+  },
+  "尚未连接 v2 键盘": {
+    "en": "No v2 keyboard connected"
+  },
+  "层": {
+    "en": "Layer"
+  },
+  "层与一次性按键": {
+    "en": "Layers and one-shot keys"
+  },
+  "屏幕亮度增加": {
+    "en": "Increase display brightness"
+  },
+  "屏幕亮度降低": {
+    "en": "Decrease display brightness"
+  },
+  "左": {
+    "en": "Left"
+  },
+  "左侧": {
+    "en": "Left side"
+  },
+  "左右侧": {
+    "en": "Both sides"
+  },
+  "已与键盘同步": {
+    "en": "Synced with keyboard"
+  },
+  "已启用": {
+    "en": "Enabled"
+  },
+  "已完成": {
+    "en": "Complete"
+  },
+  "已导出上一版宠物外观。": {
+    "en": "Previous pet appearance exported."
+  },
+  "已应用，但存档失败，请重试。": {
+    "en": "Applied, but saving failed. Please retry."
+  },
+  "已手动暂停，点击“继续检测”恢复。": {
+    "en": "Paused manually. Select Resume testing to continue."
+  },
+  "已自动匹配该位置的容量：保留片段时长，减少冗余帧。": {
+    "en": "Fitted to the slot capacity by reducing redundant frames while retaining duration."
+  },
+  "已请求重新初始化屏幕，请观察键盘显示。此操作不覆盖动画，也不重刷固件。": {
+    "en": "Display reinitialization requested. Check the screen. Animations and firmware are unchanged."
+  },
+  "已连接 · 图片模式": {
+    "en": "Connected · image mode"
+  },
+  "已连接正常模式，可直接上传。首次完整备份与传输需要一些时间，请保持 USB 连接。": {
+    "en": "Connected in normal mode. Upload is available. Keep USB connected during backup and transfer."
+  },
+  "已适配 · RGB565": {
+    "en": "Optimized · RGB565"
+  },
+  "已重新读取 8 层键位。": {
+    "en": "All 8 keymap layers reloaded."
+  },
+  "应用此宏": {
+    "en": "Apply macro"
+  },
+  "应用此条规则": {
+    "en": "Apply rule"
+  },
+  "应用此项": {
+    "en": "Apply setting"
+  },
+  "延迟 ms": {
+    "en": "Delay (ms)"
+  },
+  "开始打字，空格跳跃 · 不记录输入内容": {
+    "en": "Start typing; Space to jump · Input is not recorded"
+  },
+  "弹出": {
+    "en": "Eject"
+  },
+  "当前固件未提供此功能": {
+    "en": "This feature is unavailable in the current firmware"
+  },
+  "当前固件需要先升级，才能显示草地、LV / HP 和睡眠动画。": {
+    "en": "Update the firmware to enable the grass background, LV / HP, and sleep animation."
+  },
+  "当前按键": {
+    "en": "Current key"
+  },
+  "当前键盘仍使用旧版玩法；升级养成固件后，以下规则才会生效。": {
+    "en": "This keyboard uses the older pet rules. Update the firmware to use the rules below."
+  },
+  "当前预览配色": {
+    "en": "Preview colors"
+  },
+  "必须按住": {
+    "en": "Must be held"
+  },
+  "快捷组合": {
+    "en": "Shortcuts"
+  },
+  "快进": {
+    "en": "Fast forward"
+  },
+  "快退": {
+    "en": "Rewind"
+  },
+  "忽略其他键按下": {
+    "en": "Ignore other key presses"
+  },
+  "恢复到键盘": {
+    "en": "Restore to keyboard"
+  },
+  "恢复单项备份": {
+    "en": "Restore an item backup"
+  },
+  "恢复已保存的动画": {
+    "en": "Restore saved animation"
+  },
+  "成功": {
+    "en": "Success"
+  },
+  "我的电脑": {
+    "en": "My Computer"
+  },
+  "所有动作同步预览 · 配色已记在此浏览器，写入后在键盘生效。": {
+    "en": "Preview all actions · Colors are saved in this browser; upload to apply on the keyboard."
+  },
+  "手动键码": {
+    "en": "Manual keycode"
+  },
+  "打字动画": {
+    "en": "Typing animation"
+  },
+  "打字弹球运行中": {
+    "en": "Typing bounce is running"
+  },
+  "打字时显示": {
+    "en": "Shown while typing"
+  },
+  "打开计算器": {
+    "en": "Open calculator"
+  },
+  "把常用的组合操作，放到一个按键上。": {
+    "en": "Assign a frequently used shortcut to a single key."
+  },
+  "按一下此键后，A 持续调高音量；需用其他层切换键返回。": {
+    "en": "Press this key, then A raises the volume. Use another layer-switch key to return."
+  },
+  "按下": {
+    "en": "Press"
+  },
+  "按住指定修饰键时，将一个按键替换为另一个功能。": {
+    "en": "Replace a key’s function while holding the specified modifiers."
+  },
+  "按住时启用层和修饰键": {
+    "en": "Hold to enable a layer and modifiers"
+  },
+  "按住此键再按 A 调高音量；松开此键恢复。": {
+    "en": "Hold this key and press A to raise the volume. Release this key to return."
+  },
+  "按住此键再按 A 调高音量；连按达到高级参数中的次数后锁定该层。": {
+    "en": "Hold this key and press A to raise the volume. Tap the configured number of times to lock the layer."
+  },
+  "按住此键，同时启用目标层和所选修饰键；松开恢复。": {
+    "en": "Hold this key to enable the target layer and selected modifiers. Release to return."
+  },
+  "按修饰键时触发": {
+    "en": "Trigger on modifier press"
+  },
+  "按原键时触发": {
+    "en": "Trigger on original key press"
+  },
+  "按键": {
+    "en": "Key"
+  },
+  "按键搜索结果": {
+    "en": "Key search results"
+  },
+  "排除字母": {
+    "en": "Exclude letters"
+  },
+  "排除数字": {
+    "en": "Exclude numbers"
+  },
+  "排除符号": {
+    "en": "Exclude symbols"
+  },
+  "控制轻按／长按、自动 Shift、一次性按键、鼠标与系统修饰键。每一项单独应用并保存在键盘。": {
+    "en": "Configure tap/hold timing, Auto Shift, one-shot keys, mouse keys, and system modifiers. Each setting is applied and saved separately."
+  },
+  "控制面板": {
+    "en": "Control Panel"
+  },
+  "提示音不可用，可继续无声测试。": {
+    "en": "Audio is unavailable. Testing can continue without sound."
+  },
+  "搜索全部键码…": {
+    "en": "Search all keycodes…"
+  },
+  "撤销编辑": {
+    "en": "Discard edits"
+  },
+  "播放 / 暂停": {
+    "en": "Play / pause"
+  },
+  "播放动画": {
+    "en": "Play animation"
+  },
+  "操作未完成，请查看提示": {
+    "en": "Operation incomplete. Check the message."
+  },
+  "收藏夹": {
+    "en": "Favorites"
+  },
+  "数字小键盘 ·": {
+    "en": "Numpad ·"
+  },
+  "数据已写入并通过校验": {
+    "en": "Data written and verified"
+  },
+  "数据校验通过。切换到此图片即可播放。": {
+    "en": "Data verified. Switch to this image to play it."
+  },
+  "文字": {
+    "en": "Text"
+  },
+  "新外观已写入": {
+    "en": "New appearance uploaded"
+  },
+  "无法读取备份：": {
+    "en": "Unable to read backup:"
+  },
+  "暂停动画": {
+    "en": "Pause animation"
+  },
+  "暂时没有备份。写入时勾选备份即可保存。": {
+    "en": "No backups yet. Enable backup before writing to keep a copy."
+  },
+  "暂时没有备份。首次写入前会自动保存。": {
+    "en": "No backups yet. One will be saved before the first write."
+  },
+  "更多触发条件": {
+    "en": "More trigger conditions"
+  },
+  "替换输出": {
+    "en": "Replacement output"
+  },
+  "有新进度，等待保存…": {
+    "en": "New progress; waiting to save…"
+  },
+  "有未应用修改": {
+    "en": "Unapplied changes"
+  },
+  "有未应用参数，请先应用或撤销编辑": {
+    "en": "Settings have unapplied changes. Apply or discard them first."
+  },
+  "未找到按键。可在下方输入 QMK 名称或十六进制键码。": {
+    "en": "No keys found. Enter a QMK name or hexadecimal keycode below."
+  },
+  "本次操作未完成": {
+    "en": "Operation incomplete"
+  },
+  "本次跳过备份": {
+    "en": "Backup skipped"
+  },
+  "本次跳过备份，准备写入…": {
+    "en": "Backup skipped. Preparing to write…"
+  },
+  "校验完整内容": {
+    "en": "Verify all contents"
+  },
+  "校验数据": {
+    "en": "Verify data"
+  },
+  "检测已暂停，返回此页自动继续。": {
+    "en": "Testing paused. It resumes when you return."
+  },
+  "模拟轻按持续时间（ms）": {
+    "en": "Simulated tap duration (ms)"
+  },
+  "正在互动 · 空格跳跃 · Tab 退出": {
+    "en": "Interacting · Space to jump · Tab to exit"
+  },
+  "正在传输动画数据": {
+    "en": "Transferring animation data"
+  },
+  "正在保存原内容": {
+    "en": "Saving original content"
+  },
+  "正在写入…": {
+    "en": "Writing…"
+  },
+  "正在写入新配色": {
+    "en": "Writing new colors"
+  },
+  "正在写入键盘": {
+    "en": "Writing to keyboard"
+  },
+  "正在准备测试…": {
+    "en": "Preparing test…"
+  },
+  "正在切换屏幕模式": {
+    "en": "Switching display mode"
+  },
+  "正在启用…": {
+    "en": "Enabling…"
+  },
+  "正在备份…": {
+    "en": "Backing up…"
+  },
+  "正在备份此位置的原始内容…": {
+    "en": "Backing up this slot’s original content…"
+  },
+  "正在本地解析素材…": {
+    "en": "Decoding media locally…"
+  },
+  "正在校验…": {
+    "en": "Verifying…"
+  },
+  "正在校验写入结果": {
+    "en": "Verifying written data"
+  },
+  "正在校验宠物外观": {
+    "en": "Verifying pet appearance"
+  },
+  "正在检测浏览器按键；MO/Fn 不会发送系统键码，因此不计入此模式。": {
+    "en": "Testing browser key events. MO/Fn sends no system keycode and is excluded from this mode."
+  },
+  "正在独立回读外观数据": {
+    "en": "Reading back appearance data independently"
+  },
+  "正在直接写入动画": {
+    "en": "Writing animation directly"
+  },
+  "正在读取物理矩阵，MO/Fn 也应对应高亮。": {
+    "en": "Reading the physical matrix. MO/Fn should also highlight."
+  },
+  "正在通过高速通道传输": {
+    "en": "Transferring over the high-speed channel"
+  },
+  "正常模式已连接 · 无需升级模式": {
+    "en": "Normal mode connected · no bootloader needed"
+  },
+  "此宏为空，添加第一步。": {
+    "en": "This macro is empty. Add its first step."
+  },
+  "此宏有未应用修改，请先应用或撤销编辑": {
+    "en": "This macro has unapplied changes. Apply or discard them first."
+  },
+  "此条有未应用修改，请先应用或撤销编辑": {
+    "en": "This rule has unapplied changes. Apply or discard them first."
+  },
+  "测试已暂停，记录已保留。": {
+    "en": "Testing paused. Results are retained."
+  },
+  "浏览器主页": {
+    "en": "Browser home"
+  },
+  "浏览器暂时无法保存素材记录，当前画布仍可继续使用。": {
+    "en": "The browser cannot save media history right now. You can continue using the canvas."
+  },
+  "浏览器模式 · 不支持 MO/Fn": {
+    "en": "Browser mode · MO/Fn unavailable"
+  },
+  "浏览器模式 · 检测系统收到的按键": {
+    "en": "Browser mode · tests system key events"
+  },
+  "浏览器模式可接收任意键盘输入，不能区分设备。Fn、屏幕功能键及系统截获的快捷键可能不触发；改键后按系统收到的键码显示。": {
+    "en": "Browser mode receives input from any keyboard and cannot distinguish devices. Fn, display keys, and system shortcuts may not appear. Remapped keys show their received keycodes."
+  },
+  "添加文字、按下、释放、轻按与延迟。英文文本按 US 布局发送；应用后将 M 编号赋予一个按键。": {
+    "en": "Add text, press, release, tap, and delay steps. Text uses the US layout. Apply the macro, then assign its M number to a key."
+  },
+  "清空": {
+    "en": "Clear"
+  },
+  "清空此宏": {
+    "en": "Clear macro"
+  },
+  "清空此条": {
+    "en": "Clear rule"
+  },
+  "清空键盘配置（会重置）": {
+    "en": "Reset keyboard configuration"
+  },
+  "滚轮 ←": {
+    "en": "Scroll left"
+  },
+  "滚轮 ↑": {
+    "en": "Scroll up"
+  },
+  "滚轮 →": {
+    "en": "Scroll right"
+  },
+  "滚轮 ↓": {
+    "en": "Scroll down"
+  },
+  "滚轮加速步数": {
+    "en": "Scroll acceleration steps"
+  },
+  "滚轮启动延迟（10ms 单位）": {
+    "en": "Scroll start delay (10 ms units)"
+  },
+  "滚轮最高速度": {
+    "en": "Maximum scroll speed"
+  },
+  "滚轮间隔（ms）": {
+    "en": "Scroll interval (ms)"
+  },
+  "灯光": {
+    "en": "Lighting"
+  },
+  "点击素材继续编辑；记录仅在此浏览器中保存，清除网站数据会移除记录。": {
+    "en": "Select media to continue editing. History is stored in this browser and is removed when site data is cleared."
+  },
+  "物理按键模式 · 含 MO/Fn，需连接 Athena75": {
+    "en": "Physical key mode · includes MO/Fn; connect your Athena keyboard"
+  },
+  "物理矩阵不可读取；浏览器模式不能检测 MO/Fn。": {
+    "en": "Physical matrix unavailable. Browser mode cannot detect MO/Fn."
+  },
+  "特殊": {
+    "en": "Special"
+  },
+  "独立回读校验通过，成长进度保持不变。": {
+    "en": "Independent readback verified. Growth is unchanged."
+  },
+  "独立图片位置 · 2 MB": {
+    "en": "Independent image slot · 2 MB"
+  },
+  "猫猫已就位": {
+    "en": "Your cat is ready"
+  },
+  "现有自定义功能（原样保留）": {
+    "en": "Existing custom function (preserved)"
+  },
+  "生效层": {
+    "en": "Active layers"
+  },
+  "目前为空": {
+    "en": "Currently empty"
+  },
+  "目标层": {
+    "en": "Target layer"
+  },
+  "直接写入": {
+    "en": "Write directly"
+  },
+  "睡觉": {
+    "en": "Sleeping"
+  },
+  "确认设备": {
+    "en": "Confirm device"
+  },
+  "示例由慢到快 · 底部中央喷射 · 字母相互碰撞、碰壁反弹后淡出": {
+    "en": "Demo speeds up · Letters launch from the bottom center, collide, bounce, and fade"
+  },
+  "禁用 GUI": {
+    "en": "Disable GUI"
+  },
+  "禁用快速连按 Quick Tap": {
+    "en": "Disable Quick Tap"
+  },
+  "禁用自动重复": {
+    "en": "Disable auto repeat"
+  },
+  "等待连接": {
+    "en": "Waiting for connection"
+  },
+  "等待连接 Athena75，连接成功后自动检测（含 MO/Fn）。": {
+    "en": "Connect your Athena keyboard to start physical testing, including MO/Fn."
+  },
+  "系统": {
+    "en": "System"
+  },
+  "系统修饰键": {
+    "en": "System modifiers"
+  },
+  "系统修饰键配置": {
+    "en": "System modifier settings"
+  },
+  "系统关机": {
+    "en": "Shut down system"
+  },
+  "系统已启用减少动态效果 · 静态预览": {
+    "en": "Reduced motion is enabled · static preview"
+  },
+  "系统睡眠": {
+    "en": "System sleep"
+  },
+  "组合触发": {
+    "en": "Combos"
+  },
+  "组合触发 · Combo": {
+    "en": "Combos"
+  },
+  "组合触发等待时间（ms）": {
+    "en": "Combo timeout (ms)"
+  },
+  "给同一个键设置两种动作，按住与轻按各司其职。": {
+    "en": "Give one key two actions: one for tapping, another for holding."
+  },
+  "网页停止": {
+    "en": "Stop loading page"
+  },
+  "网页搜索": {
+    "en": "Web search"
+  },
+  "网页连接已断开。键盘仍在升级模式，拔插 USB 线可恢复正常使用。": {
+    "en": "Disconnected from the website. The keyboard is still in bootloader mode. Reconnect USB to return to normal use."
+  },
+  "网页连接已断开，键盘保持正常模式。": {
+    "en": "Disconnected from the website. The keyboard remains in normal mode."
+  },
+  "自动 Shift": {
+    "en": "Auto Shift"
+  },
+  "自动 Shift 长按时间（ms）": {
+    "en": "Auto Shift hold time (ms)"
+  },
+  "规则": {
+    "en": "Rule"
+  },
+  "触发选项": {
+    "en": "Trigger options"
+  },
+  "计算器": {
+    "en": "Calculator"
+  },
+  "设为默认层后按 A 调高音量；请先在目标层保留返回第 0 层的键。": {
+    "en": "Set this as the default layer, then press A to raise volume. Keep a key on the target layer that returns to layer 0."
+  },
+  "设备已确认播放": {
+    "en": "Device confirmed playback"
+  },
+  "设置已读取，等待键盘保存…": {
+    "en": "Settings read; waiting for the keyboard to save…"
+  },
+  "请先断开键盘再使用演示模式": {
+    "en": "Disconnect the keyboard before entering demo mode"
+  },
+  "请先读取可编辑的宏": {
+    "en": "Read an editable macro first"
+  },
+  "请先读取宏": {
+    "en": "Read the macros first"
+  },
+  "请先读取宏；不可解码的宏需先备份并清空": {
+    "en": "Read the macros first. Undecodable macros must be backed up and cleared before editing."
+  },
+  "请先读取并配置 TD": {
+    "en": "Read and configure Tap Dance first"
+  },
+  "请先连接键盘": {
+    "en": "Connect a keyboard first"
+  },
+  "请先连接键盘并读取键位": {
+    "en": "Connect a keyboard and load its keymap first"
+  },
+  "请先连接键盘，再从备份列表恢复。": {
+    "en": "Connect a keyboard first, then restore from the backup list."
+  },
+  "请先重新读取此项": {
+    "en": "Reload this item first"
+  },
+  "请先重新读取键盘，再修改键位。": {
+    "en": "Reload the keyboard before changing key mappings."
+  },
+  "请先重新读取键盘，再切换布局。": {
+    "en": "Reload the keyboard before switching layouts."
+  },
+  "请关闭其他配置器标签页后重试": {
+    "en": "Close other configurator tabs and try again"
+  },
+  "请按提示处理后再操作": {
+    "en": "Follow the instructions before trying again"
+  },
+  "读取宏": {
+    "en": "Read macros"
+  },
+  "读取配置": {
+    "en": "Read configuration"
+  },
+  "读取高级参数": {
+    "en": "Read advanced settings"
+  },
+  "赋予当前按键": {
+    "en": "Assign to selected key"
+  },
+  "走路": {
+    "en": "Walking"
+  },
+  "轻按": {
+    "en": "Tap"
+  },
+  "轻按 / 长按分界（ms）": {
+    "en": "Tap / hold threshold (ms)"
+  },
+  "轻按一次后，下一次按键带上所选修饰键；不需要一直按住。": {
+    "en": "Tap once to apply the selected modifiers to your next key. No need to keep holding."
+  },
+  "轻按与长按": {
+    "en": "Tap and hold"
+  },
+  "轻按此键，再按一次 A 调高音量；随后恢复原层。": {
+    "en": "Tap this key, then press A once to raise volume. The original layer then resumes."
+  },
+  "轻按输入 · 按住修饰键": {
+    "en": "Tap a key · hold a modifier"
+  },
+  "轻按输入 · 按住切层": {
+    "en": "Tap a key · hold a layer"
+  },
+  "轻按键码": {
+    "en": "Tap keycode"
+  },
+  "输出功能": {
+    "en": "Output action"
+  },
+  "输出时抑制": {
+    "en": "Suppress on output"
+  },
+  "还没有写入前备份，首次修改键位时会自动生成": {
+    "en": "No pre-write backup yet. One is created on your first keymap change."
+  },
+  "还没有宠物外观备份；当前更新外观不再创建备份。": {
+    "en": "No pet appearance backup. Appearance updates no longer create backups."
+  },
+  "进入升级模式": {
+    "en": "Enter bootloader"
+  },
+  "连接升级设备": {
+    "en": "Connect update device"
+  },
+  "连接后读取宏数量与实际空间。": {
+    "en": "Connect to read the macro count and available space."
+  },
+  "连接已变化，未应用编辑仍在本页；请撤销编辑后重新读取。": {
+    "en": "The connection changed. Unapplied edits remain here; discard them before reading again."
+  },
+  "连接已变化，正在等待设备就绪。": {
+    "en": "Connection changed. Waiting for the device."
+  },
+  "连接键盘并读取配置后，即可编辑这条规则。": {
+    "en": "Connect the keyboard and read its configuration to edit this rule."
+  },
+  "选择": {
+    "en": "Choose"
+  },
+  "选择媒体": {
+    "en": "Select media"
+  },
+  "逐字节校验通过，正在重启键盘…": {
+    "en": "Byte-for-byte verification passed. Restarting keyboard…"
+  },
+  "邮件": {
+    "en": "Mail"
+  },
+  "配色已预览；浏览器无法保存，刷新后会重置。": {
+    "en": "Colors previewed, but the browser cannot save them. Refreshing will reset them."
+  },
+  "释放": {
+    "en": "Release"
+  },
+  "释放排除键时触发": {
+    "en": "Trigger when an excluded key is released"
+  },
+  "重启键盘": {
+    "en": "Restart keyboard"
+  },
+  "重新连接键盘": {
+    "en": "Reconnect keyboard"
+  },
+  "键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。": {
+    "en": "Key mapping and testing share this connection. Update the model-specific firmware to enable screen features."
+  },
+  "键盘已在播放": {
+    "en": "Keyboard is playing"
+  },
+  "键盘已重启": {
+    "en": "Keyboard restarted"
+  },
+  "键盘正在通信，请稍后再试": {
+    "en": "Keyboard communication in progress. Try again shortly."
+  },
+  "键盘连接已断开，重新连接后会自动检测。": {
+    "en": "Keyboard disconnected. Testing resumes after reconnection."
+  },
+  "长按": {
+    "en": "Hold"
+  },
+  "长按后独立松开算轻按": {
+    "en": "Treat an isolated hold release as a tap"
+  },
+  "需要处理": {
+    "en": "Action needed"
+  },
+  "静音": {
+    "en": "Mute"
+  },
+  "音量减少": {
+    "en": "Decrease volume"
+  },
+  "音量增加": {
+    "en": "Increase volume"
+  },
+  "音量静音": {
+    "en": "Mute volume"
+  },
+  "音量＋": {
+    "en": "Volume +"
+  },
+  "音量－": {
+    "en": "Volume −"
+  },
+  "预览即时更新，连接后自动生效并保存。": {
+    "en": "Preview updates instantly. Connect to apply and save automatically."
+  },
+  "鼠标": {
+    "en": "Mouse"
+  },
+  "鼠标 ←": {
+    "en": "Mouse left"
+  },
+  "鼠标 ↑": {
+    "en": "Mouse up"
+  },
+  "鼠标 →": {
+    "en": "Mouse right"
+  },
+  "鼠标 ↓": {
+    "en": "Mouse down"
+  },
+  "鼠标与滚轮": {
+    "en": "Mouse and scroll"
+  },
+  "鼠标中速": {
+    "en": "Mouse medium speed"
+  },
+  "鼠标中键": {
+    "en": "Middle mouse button"
+  },
+  "鼠标加速步数": {
+    "en": "Mouse acceleration steps"
+  },
+  "鼠标右键": {
+    "en": "Right mouse button"
+  },
+  "鼠标启动延迟（ms）": {
+    "en": "Mouse start delay (ms)"
+  },
+  "鼠标左键": {
+    "en": "Left mouse button"
+  },
+  "鼠标快速": {
+    "en": "Mouse fast speed"
+  },
+  "鼠标慢速": {
+    "en": "Mouse slow speed"
+  },
+  "鼠标最高速度": {
+    "en": "Maximum mouse speed"
+  },
+  "鼠标每步距离": {
+    "en": "Mouse step distance"
+  },
+  "鼠标移动间隔（ms）": {
+    "en": "Mouse movement interval (ms)"
+  },
+  "（可选，留为禁用）": {
+    "en": "(optional; leave disabled)"
+  },
+  "＋ 添加步骤": {
+    "en": "+ Add step"
+  },
+  "此固件需使用下方升级模式": {
+    "en": "This firmware requires the bootloader method below"
+  },
+  "原始动画已保存在“动画备份与恢复”中。": {
+    "en": "The original animation is saved in Animation backup and restore."
+  },
+  "原始动画已自动备份到此浏览器。": {
+    "en": "The original animation was backed up in this browser."
+  },
+  "尚未开始擦除或写入。": {
+    "en": "No erasing or writing has started."
+  },
+  "未完成备份，不会开始擦除或写入。": {
+    "en": "Backup is incomplete. Erasing and writing will not start."
+  },
+  "本次未创建备份，该图片位置可能已被覆盖，请重新写入。": {
+    "en": "No backup was created. This slot may have been overwritten; write it again."
+  },
+  "Athena75 已识别 · 等待升级连接": {
+    "en": "Athena75 identified · waiting for bootloader connection"
+  },
+  "Athena75 已识别 · 请重新连接": {
+    "en": "Athena75 identified · please reconnect"
+  },
+  "Flash 操作失败或显示核心无响应": {
+    "en": "Flash operation failed or the display core is unresponsive"
+  },
+  "GIF 解析失败，请检查文件": {
+    "en": "Unable to decode the GIF. Check the file."
+  },
+  "GIF 较大，请先缩短至 600 帧以内，或降低分辨率（解码像素总量上限 3200 万）": {
+    "en": "GIF is too large. Reduce it to 600 frames or lower the resolution (32 million decoded pixels maximum)."
+  },
+  "HID 分块过大": {
+    "en": "HID chunk is too large"
+  },
+  "HID 序号冲突": {
+    "en": "HID sequence number conflict"
+  },
+  "HID 窗口大小无效": {
+    "en": "Invalid HID window size"
+  },
+  "HID 连接不可用或仍有未完成请求": {
+    "en": "HID connection unavailable or a request is still pending"
+  },
+  "USB 命令传输失败": {
+    "en": "USB command transfer failed"
+  },
+  "USB 数据写入不完整": {
+    "en": "USB data write was incomplete"
+  },
+  "USB 数据读取不完整": {
+    "en": "USB data read was incomplete"
+  },
+  "USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份仍可恢复。": {
+    "en": "USB communication timed out. Reconnect the keyboard and re-enter bootloader mode. Original animation backups can still be restored."
+  },
+  "不支持的打字设置版本": {
+    "en": "Unsupported typing-settings version"
+  },
+  "不是兼容的键位备份": {
+    "en": "Incompatible keymap backup"
+  },
+  "传输顺序不一致": {
+    "en": "Transfer order mismatch"
+  },
+  "写入后的逐字节校验失败，请使用备份恢复": {
+    "en": "Byte-for-byte verification failed. Restore from the backup."
+  },
+  "写入回读不一致；请保持升级模式，使用恢复备份": {
+    "en": "Written data does not match readback. Stay in bootloader mode and use the recovery backup."
+  },
+  "判定时间须为 0–65535": {
+    "en": "Tapping term must be 0–65535"
+  },
+  "动画位置无效": {
+    "en": "Invalid animation slot"
+  },
+  "动画分区与已验证的 Athena75 不匹配，已禁止写入": {
+    "en": "Animation partitions do not match the verified Athena75 layout. Writing is blocked."
+  },
+  "动画帧数据或时长无效": {
+    "en": "Invalid animation frame data or duration"
+  },
+  "动画校验失败": {
+    "en": "Animation verification failed"
+  },
+  "动画格式无效": {
+    "en": "Invalid animation format"
+  },
+  "包含不能编辑的原始宏数据，请使用原始备份": {
+    "en": "Contains non-editable macro data. Use the original backup."
+  },
+  "区域无效": {
+    "en": "Invalid region"
+  },
+  "升级信息格式不正确": {
+    "en": "Invalid upgrade manifest format"
+  },
+  "升级备份与读取结果不一致": {
+    "en": "Upgrade backup does not match the read data"
+  },
+  "升级恢复记录不存在": {
+    "en": "Upgrade recovery record not found"
+  },
+  "升级扇区列表不一致": {
+    "en": "Upgrade sector list mismatch"
+  },
+  "升级端点不兼容": {
+    "en": "Incompatible bootloader endpoints"
+  },
+  "升级计划或恢复备份校验失败，未开始写入": {
+    "en": "Upgrade plan or recovery backup verification failed. Writing has not started."
+  },
+  "升级计划越界": {
+    "en": "Upgrade plan is out of bounds"
+  },
+  "升级计划越过允许区域": {
+    "en": "Upgrade plan exceeds the permitted regions"
+  },
+  "升级计划长度不正确": {
+    "en": "Invalid upgrade plan length"
+  },
+  "单帧停留超过 65 秒，请缩短动画": {
+    "en": "A frame lasts longer than 65 seconds. Shorten the animation."
+  },
+  "单步延迟须为 0–65024 毫秒": {
+    "en": "Step delay must be 0–65024 milliseconds"
+  },
+  "原动画像素长度不正确": {
+    "en": "Invalid original animation pixel length"
+  },
+  "原动画压缩数据不完整": {
+    "en": "Original compressed animation is incomplete"
+  },
+  "原动画压缩长度无效": {
+    "en": "Invalid original animation compressed length"
+  },
+  "原动画尺寸或帧数不支持": {
+    "en": "Original animation dimensions or frame count are unsupported"
+  },
+  "原动画差分区域无效": {
+    "en": "Invalid original animation delta region"
+  },
+  "原动画差分范围越界": {
+    "en": "Original animation delta region is out of bounds"
+  },
+  "原动画帧地址无效": {
+    "en": "Invalid original animation frame address"
+  },
+  "原动画帧表无效": {
+    "en": "Invalid original animation frame table"
+  },
+  "原动画帧长度不正确": {
+    "en": "Invalid original animation frame length"
+  },
+  "原动画数据不完整": {
+    "en": "Original animation data is incomplete"
+  },
+  "原动画数据块无效": {
+    "en": "Invalid original animation data block"
+  },
+  "原动画格式不支持": {
+    "en": "Original animation format is unsupported"
+  },
+  "原动画编码暂不支持，已停止升级": {
+    "en": "Original animation encoding is unsupported. Upgrade stopped."
+  },
+  "原日常动画缺失或损坏，已停止升级": {
+    "en": "An original daily animation is missing or damaged. Upgrade stopped."
+  },
+  "参数列表无效": {
+    "en": "Invalid settings list"
+  },
+  "参数列表过长": {
+    "en": "Settings list is too long"
+  },
+  "参数回读不一致，请重新读取": {
+    "en": "Setting readback mismatch. Reload the settings."
+  },
+  "参数已变化，请重新读取": {
+    "en": "Settings changed. Read them again."
+  },
+  "参数长度无效": {
+    "en": "Invalid setting length"
+  },
+  "只能修改物理布局，其他键盘参数必须保留": {
+    "en": "Only the physical layout may change. Other keyboard settings must be preserved."
+  },
+  "同一按键重复按下，请先释放": {
+    "en": "Key is already pressed. Release it first."
+  },
+  "启用替换规则需要原按键和至少一个生效层": {
+    "en": "An override requires an original key and at least one active layer"
+  },
+  "启用组合需要至少两个不同触发键": {
+    "en": "A combo requires at least two distinct trigger keys"
+  },
+  "命令不支持": {
+    "en": "Unsupported command"
+  },
+  "固件下载失败，请重试": {
+    "en": "Firmware download failed. Try again."
+  },
+  "固件下载校验失败": {
+    "en": "Firmware download verification failed"
+  },
+  "固件分块、地址或芯片型号不正确": {
+    "en": "Invalid firmware blocks, addresses, or chip family"
+  },
+  "固件动画布局不兼容": {
+    "en": "Incompatible firmware animation layout"
+  },
+  "固件必须来自当前站点": {
+    "en": "Firmware must come from this website"
+  },
+  "固件恢复备份保存失败": {
+    "en": "Unable to save firmware recovery backup"
+  },
+  "固件拒绝此配置，请检查设备支持与解锁状态": {
+    "en": "Firmware rejected this configuration. Check feature support and unlock status."
+  },
+  "固件文件长度不正确": {
+    "en": "Invalid firmware file length"
+  },
+  "固件来源记录无效": {
+    "en": "Invalid firmware source record"
+  },
+  "固件硬件身份不匹配": {
+    "en": "Firmware hardware identity mismatch"
+  },
+  "固件访问地址越界": {
+    "en": "Firmware access address is out of bounds"
+  },
+  "固件读取不完整": {
+    "en": "Firmware read was incomplete"
+  },
+  "固件超出主程序区域": {
+    "en": "Firmware exceeds the main-program region"
+  },
+  "备份事务中断": {
+    "en": "Backup transaction interrupted"
+  },
+  "备份保存校验失败，未开始写入": {
+    "en": "Backup verification failed. Writing has not started."
+  },
+  "备份校验失败": {
+    "en": "Backup verification failed"
+  },
+  "备份过大": {
+    "en": "Backup is too large"
+  },
+  "完整回读校验失败": {
+    "en": "Full readback verification failed"
+  },
+  "完整键位回读与预期不一致": {
+    "en": "Full keymap readback does not match"
+  },
+  "宏内容不能包含结束符": {
+    "en": "Macro content cannot contain a terminator"
+  },
+  "宏写入保护未生效，已停止": {
+    "en": "Macro write protection failed. Operation stopped."
+  },
+  "宏区尚未完成写入；请恢复写入前备份": {
+    "en": "Macro region write is incomplete. Restore the pre-write backup."
+  },
+  "宏区格式不完整，请先导出原始备份": {
+    "en": "Macro region format is incomplete. Export the original backup first."
+  },
+  "宏区长度或提交标志无效": {
+    "en": "Invalid macro region length or commit flag"
+  },
+  "宏回读失败，播放已暂停；请恢复自动备份": {
+    "en": "Macro readback failed and playback is paused. Restore the automatic backup."
+  },
+  "宏已在其他窗口变化，请重新读取": {
+    "en": "Macros changed in another window. Read them again."
+  },
+  "宏指令无效": {
+    "en": "Invalid macro instruction"
+  },
+  "宏按键须为有效的非透明键码": {
+    "en": "Macro keys must use valid, non-transparent keycodes"
+  },
+  "宏提交未确认，请重新连接后检查": {
+    "en": "Macro commit was not confirmed. Reconnect and check."
+  },
+  "宏数量不匹配": {
+    "en": "Macro count mismatch"
+  },
+  "宏结束前请释放所有按住的键，避免卡键": {
+    "en": "Release all held keys before the macro ends to prevent stuck keys"
+  },
+  "宠物动作帧数无效": {
+    "en": "Invalid pet action frame count"
+  },
+  "宠物动作数据无效": {
+    "en": "Invalid pet action data"
+  },
+  "宠物动作无效": {
+    "en": "Invalid pet action"
+  },
+  "宠物动画时长无效": {
+    "en": "Invalid pet animation duration"
+  },
+  "宠物外观独立回读不一致，请重新写入": {
+    "en": "Independent pet appearance readback mismatch. Write it again."
+  },
+  "宠物素材大小不正确": {
+    "en": "Invalid pet asset size"
+  },
+  "宠物素材格式不兼容": {
+    "en": "Incompatible pet asset format"
+  },
+  "屏幕已关闭，请打开屏幕后重试": {
+    "en": "The display is off. Turn it on and try again."
+  },
+  "布局回读与预期不一致": {
+    "en": "Layout readback mismatch"
+  },
+  "布局选项不一致，请使用相同物理布局的键位文件": {
+    "en": "Layout options differ. Use a keymap file with the same physical layout."
+  },
+  "布局选项无效": {
+    "en": "Invalid layout options"
+  },
+  "当前固件无法保存分裂 Backspace；需要升级布局存储支持": {
+    "en": "This firmware cannot save split Backspace. Layout storage support needs an update."
+  },
+  "当前固件版本尚未验证，已停止升级，未擦除或写入": {
+    "en": "Current firmware is not verified. Upgrade stopped without erasing or writing."
+  },
+  "当前键位协议不兼容": {
+    "en": "Incompatible keymap protocol"
+  },
+  "当前键盘的层数与型号配置不一致": {
+    "en": "Keyboard layer count does not match this model"
+  },
+  "必须按住和不能按住不能重叠": {
+    "en": "Required and excluded modifiers cannot overlap"
+  },
+  "恢复备份校验失败，未开始写入": {
+    "en": "Recovery backup verification failed. Writing has not started."
+  },
+  "恢复数据长度不正确": {
+    "en": "Invalid recovery data length"
+  },
+  "打字设置无效": {
+    "en": "Invalid typing settings"
+  },
+  "按键矩阵数据无效": {
+    "en": "Invalid key matrix data"
+  },
+  "整片校验失败；请保持升级模式，使用恢复备份": {
+    "en": "Full flash verification failed. Stay in bootloader mode and use the recovery backup."
+  },
+  "文件中没有有效画面": {
+    "en": "No valid frames found in the file"
+  },
+  "文字宏支持英文、数字及英文符号；中文需系统输入法配合，不能直接写入": {
+    "en": "Text macros support English letters, numbers, and ASCII symbols. Chinese text needs an input method and cannot be sent directly."
+  },
+  "无法初始化升级接口": {
+    "en": "Unable to initialize the bootloader interface"
+  },
+  "未知参数": {
+    "en": "Unknown setting"
+  },
+  "未知存储布局": {
+    "en": "Unknown storage layout"
+  },
+  "未知宠物配色": {
+    "en": "Unknown pet color theme"
+  },
+  "未知或不完整的宏指令；原数据已保留": {
+    "en": "Unknown or incomplete macro instruction. Original data is preserved."
+  },
+  "未知猫咪花纹": {
+    "en": "Unknown cat pattern"
+  },
+  "未知组合键类型": {
+    "en": "Unknown shortcut type"
+  },
+  "未知键码": {
+    "en": "Unknown keycode"
+  },
+  "未选择键盘": {
+    "en": "No keyboard selected"
+  },
+  "正常模式通信超时，请重新连接；如果键盘也无响应，请拔插 USB 后重试": {
+    "en": "Normal-mode communication timed out. Reconnect; if the keyboard is unresponsive, unplug and reconnect USB."
+  },
+  "此动作只能使用基础按键，请勿嵌套层或宏功能": {
+    "en": "This action only supports basic keycodes. Do not nest layers or macros."
+  },
+  "此固件尚未支持正常模式上传": {
+    "en": "This firmware does not support normal-mode uploads"
+  },
+  "此浏览器不支持 USB 直写，请使用桌面 Chrome 或 Edge": {
+    "en": "This browser does not support USB writes. Use desktop Chrome or Edge."
+  },
+  "此键盘型号或固件身份不在支持范围内": {
+    "en": "Keyboard model or firmware identity is unsupported"
+  },
+  "没有找到兼容的升级接口": {
+    "en": "No compatible bootloader interface found"
+  },
+  "素材保存中断": {
+    "en": "Media save interrupted"
+  },
+  "素材最大 20 MB，请缩小后重试": {
+    "en": "Media must be 20 MB or smaller. Reduce its size and retry."
+  },
+  "至少选择一个修饰键": {
+    "en": "Select at least one modifier"
+  },
+  "解析超时，请缩短或缩小 GIF": {
+    "en": "Decoding timed out. Shorten or resize the GIF."
+  },
+  "设备不支持此参数": {
+    "en": "Device does not support this setting"
+  },
+  "设备内回读校验不一致": {
+    "en": "Device readback verification mismatch"
+  },
+  "设备内容已改变，已停止升级，未擦除或写入": {
+    "en": "Device contents changed. Upgrade stopped without erasing or writing."
+  },
+  "设备接收位置不一致": {
+    "en": "Device receive offset mismatch"
+  },
+  "设备未确认打字模式": {
+    "en": "Device did not confirm typing mode"
+  },
+  "设备未确认操作": {
+    "en": "Device did not acknowledge the operation"
+  },
+  "设备未确认进入宠物模式": {
+    "en": "Device did not confirm pet mode"
+  },
+  "设备正在处理另一段动画": {
+    "en": "Device is processing another animation"
+  },
+  "设备没有可用宏空间": {
+    "en": "Device has no available macro storage"
+  },
+  "设备返回错误状态，已停止": {
+    "en": "Device returned an error. Operation stopped."
+  },
+  "设置回读不一致": {
+    "en": "Settings readback mismatch"
+  },
+  "访问超出动画区域，已停止": {
+    "en": "Access exceeds the animation region. Operation stopped."
+  },
+  "访问超出目标区域": {
+    "en": "Access exceeds the target region"
+  },
+  "请使用桌面版 Chrome 或 Edge，通过 USB 连接": {
+    "en": "Use desktop Chrome or Edge and connect via USB"
+  },
+  "请依次填写触发键，空位放在最后": {
+    "en": "Fill trigger keys in order, leaving unused slots at the end"
+  },
+  "请先升级到新猫动作固件，再写入外观": {
+    "en": "Update to the new cat animation firmware before writing appearance"
+  },
+  "请输入 # 加 6 位颜色代码": {
+    "en": "Enter # followed by a six-digit hex color"
+  },
+  "请输入 # 加 6 位颜色代码，例如 #93DDAA。": {
+    "en": "Enter # followed by six hex digits, for example #93DDAA."
+  },
+  "请输入已知 QMK 名称（如 KC_A）或 0x 开头的四位十六进制键码": {
+    "en": "Enter a known QMK name (such as KC_A) or a four-digit hexadecimal keycode starting with 0x"
+  },
+  "请选择自动生成的 Athena 单项备份": {
+    "en": "Select an automatically generated Athena item backup"
+  },
+  "请重新读取参数": {
+    "en": "Read the settings again"
+  },
+  "超出动画区域": {
+    "en": "Outside the animation region"
+  },
+  "这把键盘仍是旧版固件。请先完成 v2 固件升级与动画迁移，再使用此入口。": {
+    "en": "This keyboard uses legacy firmware. Complete the v2 upgrade and animation migration first."
+  },
+  "连接已中断，请重新连接": {
+    "en": "Connection interrupted. Please reconnect."
+  },
+  "连续传输超时，请重新连接键盘": {
+    "en": "Streaming transfer timed out. Reconnect the keyboard."
+  },
+  "配置回读不一致，请重新读取；自动备份可恢复": {
+    "en": "Configuration readback mismatch. Read again; the automatic backup can be restored."
+  },
+  "配置编号超出设备容量": {
+    "en": "Configuration index exceeds device capacity"
+  },
+  "配置长度无效": {
+    "en": "Invalid configuration length"
+  },
+  "配色格式无效": {
+    "en": "Invalid color palette format"
+  },
+  "释放前必须有对应的按下步骤": {
+    "en": "A release step must follow a matching press step"
+  },
+  "键位地址或功能无效": {
+    "en": "Invalid key address or function"
+  },
+  "键位备份保存失败，未开始写入": {
+    "en": "Keymap backup failed. Writing has not started."
+  },
+  "键位文件与键盘型号不匹配": {
+    "en": "Keymap file does not match the keyboard model"
+  },
+  "键位文件过大": {
+    "en": "Keymap file is too large"
+  },
+  "键位通信超时，请重新连接后读取键盘；已写入的项目可能已生效": {
+    "en": "Keymap communication timed out. Reconnect and read the keyboard; completed writes may already be active."
+  },
+  "键盘型号与固件不匹配": {
+    "en": "Keyboard model does not match the firmware"
+  },
+  "键盘屏幕当前已关闭，请按左右 Shift + O 打开屏幕后重试": {
+    "en": "The display is off. Press Left + Right Shift + O to turn it on, then retry."
+  },
+  "键盘已接收切换指令，但尚未确认屏幕播放，请检查键盘画面": {
+    "en": "The keyboard received the switch command but has not confirmed playback. Check its screen."
+  },
+  "键盘已接收切换指令，但屏幕未能加载图片，请重新写入或检查屏幕": {
+    "en": "The keyboard received the switch command but could not load the image. Write it again or check the display."
+  },
+  "键盘未确认切换到所选图片，请重试": {
+    "en": "The keyboard did not confirm the selected image. Try again."
+  },
+  "键盘识别超时，请关闭其他改键工具后重试": {
+    "en": "Keyboard identification timed out. Close other remapping tools and retry."
+  },
+  "键盘身份不匹配": {
+    "en": "Keyboard identity mismatch"
+  },
+  "键盘连接暂不可用，请重试或重新连接": {
+    "en": "Keyboard connection unavailable. Retry or reconnect."
+  },
+  "键盘配置已变化，请重新读取后再切换布局": {
+    "en": "Keyboard configuration changed. Reload it before switching layouts."
+  },
+  "键盘配置已变化，请重新读取后编辑": {
+    "en": "Keyboard configuration changed. Reload it before editing."
+  },
+  "键盘键位已被其他工具修改，请先重新读取，再调整": {
+    "en": "Another tool changed the keymap. Reload it before editing."
+  },
+  "键码或延迟必须为整数": {
+    "en": "Keycode or delay must be an integer"
+  },
+  "需要完整的 16 MB 读取结果": {
+    "en": "A complete 16 MB read is required"
+  },
+  "静态图片边长请保持在 4096 像素以内": {
+    "en": "Static image dimensions must not exceed 4096 pixels per side"
+  },
+  "颜色格式无效": {
+    "en": "Invalid color format"
+  },
+  "高级配置备份保存失败，未开始写入": {
+    "en": "Advanced settings backup failed. Writing has not started."
+  },
+  "高级配置容量异常": {
+    "en": "Unexpected advanced settings capacity"
+  },
+  "高速传输接收位置不一致": {
+    "en": "High-speed transfer receive offset mismatch"
+  },
+  "高速传输超时，请重新连接键盘": {
+    "en": "High-speed transfer timed out. Reconnect the keyboard."
+  },
+  "高速数据块无效": {
+    "en": "Invalid high-speed data block"
+  },
+  "控制台": {
+    "en": "Console"
+  },
+  "工作区": {
+    "en": "Workspace"
+  },
+  "像素小猫动作预览": {
+    "en": "Pixel cat animation preview"
+  },
+  "128像素键盘屏幕预览": {
+    "en": "128-pixel keyboard display preview"
+  },
+  "字母从底部中央喷出并相互碰撞的本地预览": {
+    "en": "Local preview of letters launching from the bottom center and colliding"
+  },
+  "背景底色": {
+    "en": "Background color"
+  },
+  "格线颜色": {
+    "en": "Grid line color"
+  },
+  "碰撞反弹": {
+    "en": "Collision and bounce"
+  },
+  "物理位置": {
+    "en": "Physical position"
+  },
+  "完整位置备份": {
+    "en": "Complete slot backup"
+  },
+  "写入完成": {
+    "en": "Write complete"
+  },
+  "未完成": {
+    "en": "Incomplete"
+  },
+  "下载 UF2 文件": {
+    "en": "Download UF2 file"
   }
 };

@@ -10,7 +10,7 @@ import { KeymapDevice } from './keymap-protocol.js';
 import { TestAudio, readTestAudioSettings } from './keyboard-test-audio.js';
 import { KeyboardTestState, matrixKeys, browserCode } from './keyboard-test-state.js';
 const $ = (id) => document.getElementById(id);
-export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions }) {
+export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getProfile=()=>null }) {
   let profile=DEVICE_PROFILES.athena75,defaults=profileLayout(profile).defaults,profileId=null;
   const state = new KeyboardTestState();
   const audio = new TestAudio();
@@ -38,7 +38,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions }) {
   const name = (id) => { const [r,c] = id.split(',').map(Number); return platformKeyLabel(keyInfo(defaults[r*8+c])); };
   function renderBoard() {
     const nextLayout = getLayoutOptions();
-    const nextProfile=getDevice()?.profile||DEVICE_PROFILES.athena75;
+    const nextProfile=getDevice()?.profile||getProfile()||DEVICE_PROFILES.athena75;
     if (layout === nextLayout&&profileId===nextProfile.id) return;
     profile=nextProfile;profileId=profile.id;const geometry=profileLayout(profile,nextLayout);defaults=geometry.defaults;
     layout = nextLayout;

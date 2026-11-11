@@ -1,8 +1,16 @@
+import {EN_PATTERNS} from './locales/templates-en.js';
 import {MESSAGES} from './locales/messages.js';
 export const LANGUAGES=[['zh-CN','简体中文'],['zh-TW','繁體中文'],['en','English'],['ja','日本語'],['ko','한국어'],['de','Deutsch'],['fr','Français'],['es','Español']];
 export function resolveLocale(value='en'){
  const s=String(value).toLowerCase();if(s.startsWith('zh'))return /tw|hk|mo|hant/.test(s)?'zh-TW':'zh-CN';
  return LANGUAGES.find(([id])=>id===s.split('-')[0])?.[0]||'en';
+}
+export function initialLocale({saved,hostname='',browserLanguage='en'}={}){
+ if(saved&&LANGUAGES.some(([id])=>id===saved))return saved;
+ const host=hostname.toLowerCase();
+ if(host==='v.kbd.cool')return 'en';
+ if(host==='kbd.cool'||host==='www.kbd.cool')return 'zh-CN';
+ return resolveLocale(browserLanguage);
 }
 let language='zh-CN';
 export const getLocale=()=>language;
@@ -14,9 +22,17 @@ export function translate(text,locale=language){
  const original=text,s=text.trim().replace(/\s+/g,' ');if(!s)return text;
  const entry=MESSAGES[s];let translated=entry?.[locale]||entry?.en;
  if(!translated){
+  if(s.includes('。例：'))translated=s.split('。例：').map(p=>translate(p,locale)).join('. Example: ');
+  else {for(const pattern of EN_PATTERNS){const match=s.match(pattern.regex);if(match){translated=pattern.target.replace(/\{(\d+)\}/g,(_,index)=>translate(match[Number(index)+1],locale));break;}}}
+ }
+ if(!translated){
   let m;
-  if((m=s.match(/^第 (\d+) 层(.*)$/)))translated=word('layer',locale)+' '+m[1]+(m[2].startsWith(' · ')?' · '+translate(m[2].slice(3),locale):translate(m[2],locale));
-  else if((m=s.match(/^按键 (.+)，第 (\d+) 层，(.+)$/)))translated=word('key',locale)+' '+m[1]+', '+word('layer',locale)+' '+m[2]+', '+translate(m[3],locale);
+  if(s.includes(' — '))translated=s.split(' — ').map(p=>translate(p,locale)).join(' — ');
+  else if(s.startsWith('— '))translated='— '+translate(s.slice(2),locale);
+  else if(s.includes(' · '))translated=s.split(' · ').map(p=>translate(p,locale)).join(' · ');
+  else if(s.startsWith('· '))translated='· '+translate(s.slice(2),locale);
+  else if((m=s.match(/^第 (\d+) 层(.*)$/)))translated=word('layer',locale)+' '+m[1]+(m[2].startsWith(' · ')?' · '+translate(m[2].slice(3),locale):translate(m[2],locale));
+  else if((m=s.match(/^按键 (.+)，第 (\d+) 层，(.+)$/)))translated=word('key',locale)+' '+translate(m[1],locale)+', '+word('layer',locale)+' '+m[2]+', '+translate(m[3],locale);
   else if((m=s.match(/^赋予 (.+)$/)))translated=translate(m[1],locale);
   else if((m=s.match(/^颜色 (\d+)$/)))translated=word('color',locale)+' '+m[1];
   else if((m=s.match(/^字母 ([A-Z])$/)))translated=word('letters',locale)+' '+m[1];
@@ -28,6 +44,8 @@ export function translate(text,locale=language){
   else if((m=s.match(/^([✓＋+◡♡↶]\s*)(.+)$/)))translated=m[1]+translate(m[2],locale);
   else if((m=s.match(/^(.+?)(\s*[↗↑↓→♪。])$/)))translated=translate(m[1],locale)+m[2];
   else if(s.includes(' · '))translated=s.split(' · ').map(p=>translate(p,locale)).join(' · ');
+  else if(s.endsWith('…'))translated=translate(s.slice(0,-1),locale)+'…';
+  else if(s.includes('\n'))translated=s.split('\n').map(p=>translate(p,locale)).join('\n');
  }
  return translated?original.slice(0,original.indexOf(original.trim()))+translated+original.slice(original.trimEnd().length):original;
 }

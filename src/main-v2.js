@@ -1,3 +1,4 @@
+import {setupFirmwareUpgrade} from './firmware-upgrade-ui.js';
 import {connectIdentifiedKeyboard} from "./connect-keyboard.js";
 import {setupLanguages} from "./i18n.js";
 import {renderConnectionGate} from "./connection-gate.js";
@@ -25,7 +26,7 @@ import "./console.css";
 import "./workspace-modals.css";
 import "./write-feedback.css";
 import { setupKeyboardTester } from "./keyboard-tester.js";
-let petUI, keymapUI, testerUI, sourceHistoryUI;
+let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI;
 let sourceId = null, sourceSettingsTimer;
 let transferStarted = 0;
 import { saveBackup, listBackups, getBackup, digest } from "./backup-v2.js";
@@ -33,6 +34,7 @@ const $ = (id) => document.getElementById(id);
 const writeFeedback = setupWriteFeedback();
 const state = {
   sessionReady: false,
+  demo: false,
   source: null,
   output: [],
   bytes: null,
@@ -89,12 +91,16 @@ function updateDevice() {
   renderConnectionControls(state.boot, state.busy);
   const screenSupported = state.boot?.capabilities?.screen !== false;
   $("connection-screen-feature").hidden = !screenSupported;
+  $("firmware-entry").hidden = !boot;
+  $("firmware-entry").textContent = screenSupported ? "固件升级与操作图示" : "升级固件，启用屏幕功能";
   $("shared-connection-copy").textContent = screenSupported
     ? "键位设置、屏幕设置和键盘检测共用当前连接，切换功能或关闭弹窗都无需重新连接。"
     : "键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。";
   for(const id of ["screen-nav","screen-shortcut"])$(id).hidden=!!state.boot&&!state.boot.capabilities?.screen;
-  const allowed=renderConnectionGate(state.boot,state.sessionReady,state.busy);
+  const allowed=renderConnectionGate(state.boot,state.sessionReady,state.busy,document,state.demo);
   if(!allowed)testerUI?.setVisible(false);
+  $("demo-banner").hidden=!state.demo;
+  document.body.classList.toggle("demo-mode",state.demo);
   $("connection-state").textContent = boot
     ? state.boot.isRuntime
       ? "正常模式已连接 · 无需升级模式"
@@ -680,6 +686,7 @@ async function connectKeyboard() {
       state.headers = runtime.capabilities?.screen ? await runtime.headers() : null;
       await keymapUI.load();
       state.sessionReady=true;
+      state.demo=false;
       $("connection-dialog").close();
       writeFeedback.dismiss();
       $("notice").hidden = true;
@@ -699,6 +706,12 @@ async function connectKeyboard() {
   }
 }
 $("identify").onclick = $("gate-connect").onclick = connectKeyboard;
+firmwareUI=setupFirmwareUpgrade({
+  getIdentity:()=>state.identity,getBusy:()=>state.busy,
+  releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
+  onFinished:()=>{state.identity=null;updateDevice();},
+});
+$("firmware-entry").onclick=()=>{$("connection-dialog").close();firmwareUI.open();};
 
 function openWriteConfirmation() {
   writeFeedback.dismiss();
@@ -779,8 +792,14 @@ navigator.usb?.addEventListener("disconnect", (e) => {
   }
 });
 document.querySelectorAll("[data-modal-connect]").forEach(b => { b.onclick = () => $("connect").click(); });
-testerUI=setupKeyboardTester({getDevice:()=>state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
-keymapUI=setupKeymap({getDevice:()=>state.boot,getBusy:()=>state.busy,setBusy:busy,notice,onView:(view)=>testerUI.setVisible(view === "test")});
+testerUI=setupKeyboardTester({getProfile:()=>keymapUI?.getProfile(),getDevice:()=>state.boot,getBusy:()=>state.busy,getLayoutOptions:()=>keymapUI?.getLayoutOptions() ?? 10});
+keymapUI=setupKeymap({getDemo:()=>state.demo,getDevice:()=>state.boot,getBusy:()=>state.busy,setBusy:busy,notice,onView:(view)=>testerUI.setVisible(view === "test")});
+$("gate-demo").onclick=async()=>{
+  if(state.busy)return;
+  try{await state.boot?.close();state.boot=null;state.identity=null;state.sessionReady=false;state.headers=null;state.demo=true;keymapUI.previewModel($("demo-model").value);updateDevice();}catch(e){notice(e.message,true);}
+};
+$("demo-model").onchange=()=>{if(state.demo){testerUI.setVisible(false);keymapUI.previewModel($("demo-model").value);updateDevice();}};
+$("demo-exit").onclick=()=>{if(state.busy)return;state.demo=false;testerUI.setVisible(false);keymapUI.viewPage("keymap");updateDevice();};
 sourceHistoryUI=setupSourceHistory({load:loadFile,getBusy:()=>state.busy,notice});
 void sourceHistoryUI.refresh();
 petUI=setupPet({getDevice:()=>state.boot?.capabilities?.screen?state.boot:null,getBusy:()=>state.busy,setBusy:busy,notice,getImage:()=>state.slot,feedback:writeFeedback});

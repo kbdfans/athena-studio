@@ -29,6 +29,7 @@ const copy = (m) => ({ ...m, keycodes: [...m.keycodes] });
 
 export function setupKeymap({
   getDevice,
+  getDemo=()=>false,
   getBusy,
   setBusy,
   notice,
@@ -121,7 +122,7 @@ export function setupKeymap({
   }
   function viewPage(page) {
     if (getBusy()) return;
-    if(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen))page="keymap";
+    if(!getDemo()&&(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen)))page="keymap";
     const value = page === "screen";
     screen = value;
     document.body.classList.toggle("screen-open", false);
@@ -210,11 +211,11 @@ export function setupKeymap({
       b.setAttribute("aria-label", `赋予 ${platformKeyLabel(k)} · ${k.title}`);
       b.classList.toggle("selected", value === k.code);
       b.setAttribute("aria-pressed", String(value === k.code));
-      b.disabled=!getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code);
+      b.disabled=!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code);
       b.onclick = () => assign(k.code);
       return b;
     };
-    if (!q && category === "屏幕快捷键" && !getDevice()?.capabilities?.screen) {
+    if (!q && category === "屏幕快捷键" && !getDemo() && !getDevice()?.capabilities?.screen) {
       const p=document.createElement("p");p.className="empty";p.textContent="此型号的宠物与弹球需要单独适配固件。当前可分配原有图片切换和屏幕开关。";host.append(p);for(const code of [0x7e04,0x7e05])host.append(make(keyInfo(code)));
     } else if (!q && category === "屏幕快捷键") {
       host.classList.add("screen-shortcut-picker");
@@ -286,7 +287,7 @@ export function setupKeymap({
     } else {
       const list = categoryKeys(KEYCODES, mode, category, q);
       for (const k of list) {
-        if(!getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code))continue;
+        if(!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code))continue;
         const b = make(k);
         b.classList.toggle("wide", k.label.length > 5);
         host.append(b);
@@ -378,7 +379,7 @@ export function setupKeymap({
       };
       host.append(b);
     }
-    if(!geometry.screen || !getDevice()?.capabilities?.screen)return;
+    if(!geometry.screen || (!getDemo()&&!getDevice()?.capabilities?.screen))return;
     const lcd = document.createElement("button");
     lcd.className = "keyboard-lcd";
     lcd.style.cssText = keycapStyle(geometry.screen,geometry.board);
@@ -519,7 +520,7 @@ export function setupKeymap({
     }, { quiet: true });
   }
   async function assign(code) {
-    if(!getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(k=>k.code===code)){notice("此型号尚未支持屏幕工作室固件。",true);return;}
+    if(!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(k=>k.code===code)){notice("此型号尚未支持屏幕工作室固件。",true);return;}
     if(connected() && SCREEN_SHORTCUTS.some(k=>k.code===code)){
       if(getBusy())return;
       let version;
@@ -660,7 +661,16 @@ export function setupKeymap({
         ? "screen"
         : "keymap",
   );
+  function previewModel(id){
+    if(getDevice())throw Error("请先断开键盘再使用演示模式");
+    profile=DEVICE_PROFILES[id]||DEVICE_PROFILES.athena75;({definition,defaults}=profileLayout(profile));
+    baseline={format:"athena-keymap-v1",model:profile.id,uid:profile.uid,protocol:12,layers:profile.layers,rows:profile.rows,cols:profile.cols,layoutOptions:profile.layoutOptions,keycodes:[...defaults]};
+    draft=copy(baseline);origin=copy(baseline);loaded=false;boundDevice=null;syncError=false;layer=0;selected={row:0,col:0};
+    document.querySelector(".layer-bar .section-label").textContent=`${profile.name} · 层`;
+    render();viewPage("keymap");
+  }
   return {
+    previewModel,viewPage,
     refreshConnection,
     load,
     getLayoutOptions: () => draft.layoutOptions,

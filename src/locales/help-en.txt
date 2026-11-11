@@ -208,3 +208,21 @@ Athena 屏幕：开启 / 关闭|Athena display: on / off
 此型号待实机验证|Hardware validation pending for this model
 宠物模式运行中|Pet mode is active
 成长进度已保存。|Growth progress saved.
+进入刷机模式的操作步骤|Steps to enter firmware update mode
+先拔掉 USB；按住左上角 Esc 再插入数据线；出现 RPI-RP2 后松开 Esc。|Unplug USB. Hold the top-left Esc key while reconnecting USB. Release Esc when RPI-RP2 appears.
+先识别键盘型号，再按下图进入刷机模式。|Identify your keyboard first, then follow the illustrated steps to enter update mode.
+请先在正常打字模式连接键盘，以确认升级型号。|Connect your keyboard in normal typing mode first so its model can be identified.
+在线升级需要桌面版 Chrome 或 Edge。|Online firmware updates require desktop Chrome or Edge.
+此型号的在线升级包正在验证，暂未开放写入。可以先查看操作图示。|The online update for this model is still being validated. You can view the instructions for now.
+使用刚刚识别的这把键盘。进入升级模式后，选择 RP2 Boot，网页会自动备份、写入、校验并重启。|Use the keyboard just identified. Enter update mode and select RP2 Boot. The browser will back up, write, verify, and restart it.
+旧版升级保留前三组日常动画；其余动画保存在恢复文件中。已有新版会保留图片、键位和宠物数据。|Legacy upgrades keep the first three daily animations; the others remain in the recovery file. Up-to-date layouts retain images, key mappings, and pet data.
+读取键盘，检查升级条件…|Reading keyboard and checking compatibility…
+核对型号与动画布局…|Checking model and animation layout…
+保存完整恢复备份…|Saving a complete recovery backup…
+下载恢复文件|Download recovery file
+当前已是此版本，正在回读校验…|Already on this version; verifying a second read…
+升级完成，键盘已重启。重新连接即可使用。|Upgrade complete. The keyboard has restarted. Reconnect to use it.
+已是此版本，备份与完整回读校验通过，未重复刷写。键盘已重启。|Already on this version. Backup and full readback verified; no rewrite was needed. The keyboard has restarted.
+尚未选择升级设备，可以重试。|No upgrade device selected. You can try again.
+如升级中断，请下载恢复文件，在 RPI-RP2 中拖入恢复后再重试。|If the upgrade was interrupted, download the recovery file and copy it to RPI-RP2 to restore the keyboard before retrying.
+连接 Athena75 或 Athena1800。旧版固件可先设置键位，屏幕功能需升级对应型号固件。|Connect Athena75 or Athena1800. Legacy firmware supports key mapping; screen features require the matching firmware upgrade.
