@@ -12,9 +12,14 @@ test('ZMK behavior help groups native features and preserves custom behavior unc
 });
 test('HID modifier combinations validate without becoming QMK MT/LT codes',()=>{const b=[{id:20,metadata:[{param1:[{hidUsage:{keyboardMax:231,consumerMax:767}}],param2:[]}]}];assert(validBinding({behaviorId:20,param1:0x1070006,param2:0},b,[]));assert(!validBinding({behaviorId:20,param1:0x5221,param2:0},b,[]));});
 test('Agar vendor layer and device behaviors appear in Basic with native semantics',()=>{
- for(const name of ['Layer Momentary','Layer-Tap(TP)','Layer-Tap(HP)','Layer Toggle','Layer To','Layer Sticky']){
-  const b={displayName:name};assert(behaviorInCategory(b,'常用层切换'),name);const h=behaviorHelp(b);assert.notEqual(h.kind,'custom');for(const text of [h.title,h.description,h.example,h.note])assert(!/[\u4e00-\u9fff]/.test(translate(text,'en')),text);
+ const layers=[
+  ['Layer Momentary','&mo 1'],['Layer-Tap(TP)','&lt 1 SPACE'],['Layer-Tap(HP)','&lt_hp 1 SPACE'],
+  ['Layer Toggle','&tog 1'],['Layer To','&to 1'],['Layer Sticky','&sl 1'],
+ ];
+ for(const [name,command] of layers){
+  const b={displayName:name};assert(behaviorInCategory(b,'常用层切换'),name);const h=behaviorHelp(b);assert.equal(h.command,command);for(const text of [h.title,h.description,h.example,h.note])assert(!/[\u4e00-\u9fff]/.test(translate(text,'en')),text);
  }
+ assert.equal(behaviorHelp({displayName:'Vendor Layer',metadata:[{param1:[{layerId:{}}]}]}).command,undefined);
  for(const [name,title]of [['Device_USB','切换 USB 模式'],['Device_BT1','蓝牙设备 1'],['Device_BT2','蓝牙设备 2'],['Device_BT3','蓝牙设备 3'],['Device_BT10','蓝牙设备 10']]){
   const b={displayName:name},h=behaviorHelp(b);assert(behaviorInCategory(b,'蓝牙与输出'));assert.equal(h.title,title);assert.deepEqual(h.params,[]);for(const text of [h.title,h.description,h.example,h.note])assert(!/[\u4e00-\u9fff]/.test(translate(text,'en')),text);
  }

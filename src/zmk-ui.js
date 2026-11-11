@@ -2,17 +2,18 @@ import {ZMK_KEYS,ZMK_MEDIA,behaviorHelp,behaviorInCategory,BASIC_BEHAVIOR_GROUPS
 import {translate} from './i18n-core.js';
 import {platformKeyLabel} from './platform-keys.js';
 import {TKL_KEYS,TKL_MM} from './tkl-layout.js';
-import {decorateFunctionKey,NUMPAD_KEYS} from './function-palette.js';
+import {addFunctionHint,decorateFunctionKey,NUMPAD_KEYS} from './function-palette.js';
 import {keycapStyle} from './keyboard-geometry.js';
 import {usesModifierColor} from './keycap-colors.js';
 import {keypressBehavior,validBinding,zmkGeometry} from './zmk-model.js';
 const el=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;};
 const button=(label,fn,cls='')=>{const b=el('button',cls,label);b.type='button';b.onclick=fn;return b;};
+const nativeCode=(text,cls)=>{const code=el('code',cls,text);code.dataset.i18nSkip='';return code;};
 const label=code=>platformKeyLabel(ZMK_KEYS.find(k=>k.code===code)||{code,label:'0x'+code.toString(16),title:'USB HID'});
 export function setupZmkUI({getDevice,notice}){
  const root=el('section','keymap-workspace zmk-workspace');root.id='zmk-workspace';root.hidden=true;root.setAttribute('aria-label','ZMK 键位设置');
  document.getElementById('keymap-workspace').after(root);
- root.innerHTML=`<div class="keymap-toolbar"><div class="layer-bar"><span class="section-label" data-z="name"></span><div class="layer-chips" data-z="layers"></div></div></div><div class="zmk-warning" data-z="warning" hidden></div><div class="keyboard-stage"><div class="keyboard-scroll"><div class="keyboard-case"><div class="keyboard" data-z="keyboard"></div></div></div></div><aside class="key-inspector"><div class="function-toolbar"><div class="selected-key-row"><span class="section-label">当前选中</span><div class="selected-keycap" data-z="selected"></div><div class="selected-description"><h2 data-z="description"></h2></div><span data-z="position"></span><button data-z="undo" aria-label="撤销上一次改键">撤销</button></div></div><div class="function-sidebar"><div class="key-mode-switch"><button data-z="basic">基础</button><button data-z="advanced">高级</button></div><label class="key-search"><span>⌕</span><input data-z="search" type="search" aria-label="搜索按键或功能" placeholder="搜索…"></label><div class="key-categories" data-z="categories"></div><div class="sidebar-tools"><button class="text-button" data-z="reload">重新读取键盘</button><button class="text-button" data-z="export">导出当前键位</button></div></div><div class="zmk-choices" data-z="choices"></div></aside><div class="zmk-sync"><p data-z="sync" role="status" aria-live="polite"></p><button class="text-button" data-z="retry" hidden>重试自动保存</button></div>`;
+ root.innerHTML=`<div class="keymap-toolbar"><div class="layer-bar"><span class="section-label" data-z="name"></span><div class="layer-chips" data-z="layers"></div></div></div><div class="zmk-warning" data-z="warning" hidden></div><div class="keyboard-stage"><div class="keyboard-scroll"><div class="keyboard-case"><div class="keyboard" data-z="keyboard"></div></div></div></div><aside class="key-inspector"><div class="function-toolbar"><div class="selected-key-row"><span class="section-label">当前选中</span><div class="selected-keycap" data-z="selected"></div><div class="selected-description"><h2 data-z="description"></h2></div><span data-z="position"></span><button data-z="undo" aria-label="撤销上一次改键">撤销</button></div><div class="function-hint" aria-hidden="true" data-i18n-skip></div></div><div class="function-sidebar"><div class="key-mode-switch"><button data-z="basic">基础</button><button data-z="advanced">高级</button></div><label class="key-search"><span>⌕</span><input data-z="search" type="search" aria-label="搜索按键或功能" placeholder="搜索…"></label><div class="key-categories" data-z="categories"></div><div class="sidebar-tools"><button class="text-button" data-z="reload">重新读取键盘</button><button class="text-button" data-z="export">导出当前键位</button></div></div><div class="zmk-choices" data-z="choices"></div></aside><div class="zmk-sync"><p data-z="sync" role="status" aria-live="polite"></p><button class="text-button" data-z="retry" hidden>重试自动保存</button></div>`;
  const $=name=>root.querySelector(`[data-z="${name}"]`);
  let device=null,layerId=0,position=0,mode='basic',category='基础按键';
  const live=()=>device&&getDevice()===device&&!device.broken&&device.device.opened;
@@ -77,15 +78,38 @@ export function setupZmkUI({getDevice,notice}){
    const items=category==='媒体控制'?media.map(([name,usage])=>({name,value:(12<<16)|usage})):ZMK_KEYS.filter(k=>k.code>=4&&k.code<=231&&(category!=='数字小键盘'||k.code>=83&&k.code<=99)).map(k=>({name:label(k.code),value:(7<<16)|k.code,title:k.title}));
    for(const item of items){if(query&&!`${item.name} ${item.title||''}`.toLowerCase().includes(query))continue;const binding={behaviorId:kp.id,param1:item.value,param2:0};if(validBinding(binding,device.behaviors,device.map.layers))host.append(decorateFunctionKey(button('',()=>assign(binding)),item.name,item.title||item.name));}return;
   }
-  const behaviors=device.behaviors.filter(b=>!b.displayName.startsWith('zmk_reserved_')).filter(b=>{const h=behaviorHelp(b);return query?[b.displayName,h.title,h.description,translate(h.title),translate(h.description)].join(' ').toLowerCase().includes(query):behaviorInCategory(b,category);});
+  const behaviors=device.behaviors.filter(b=>!b.displayName.startsWith('zmk_reserved_')).map(behavior=>({behavior,help:behaviorHelp(behavior)})).filter(({behavior,help})=>query?
+   [behavior.displayName,help.command,help.title,help.description,translate(help.title),translate(help.description)].join(' ').toLowerCase().includes(query):
+   behaviorInCategory(behavior,category));
+  const layerCards=query?behaviors.some(({help})=>help.command||help.kind==='custom-layer'):['常用层切换','层与双功能'].includes(category);
   host.classList.add('zmk-behaviors');
-  for(const behavior of behaviors){const h=behaviorHelp(behavior),b=decorateFunctionKey(button('',()=>renderBehavior(behavior),'zmk-behavior-card'),h.title,[h.title,behavior.displayName,h.description].join(' · '));b.dataset.behavior=behavior.displayName;host.append(b);}
+  if(layerCards)host.classList.add('zmk-layer-choices');
+  for(const {behavior,help} of behaviors){
+   const b=button('',()=>renderBehavior(behavior),'zmk-behavior-card');
+   b.dataset.behavior=behavior.displayName;
+   if(layerCards){
+    b.classList.add('zmk-layer-card');
+    const title=el('strong','',help.title);
+    title.id='zmk-layer-title-'+behavior.id;
+    b.setAttribute('aria-labelledby',title.id);
+    b.append(title);
+    if(help.command)b.append(nativeCode(help.command,'zmk-layer-command'));
+    if(behavior.displayName!==help.title)b.append(nativeCode(behavior.displayName,'zmk-layer-native'));
+    addFunctionHint(b,help.description);
+   }else{
+    decorateFunctionKey(b,help.title,help.description);
+   }
+   host.append(b);
+  }
   if(!behaviors.length)host.append(el('p','muted','当前固件没有提供此类功能。'));
  }
  function renderBehavior(behavior){
   const host=$('choices'),help=behaviorHelp(behavior);host.replaceChildren();host.className='zmk-choices zmk-builder';
-  host.append(button('返回功能列表',renderChoices,'text-button'),el('h3','',help.title),el('code','zmk-native-name',behavior.displayName),el('p','',help.description));
-  const example=el('div','zmk-example');example.append(el('strong','','使用示例'),el('p','',help.example));host.append(example);if(help.note)host.append(el('p','zmk-behavior-note',help.note));
+  host.append(button('返回功能列表',renderChoices,'text-button'),el('h3','',help.title),nativeCode(behavior.displayName,'zmk-native-name'),el('p','',help.description));
+  const example=el('div','zmk-example');
+  example.append(el('strong','',help.command?'示例':'使用示例'));
+  if(help.command)example.append(nativeCode(help.command,'zmk-layer-command'));
+  example.append(el('p','',help.example));host.append(example);if(help.note)host.append(el('p','zmk-behavior-note',help.note));
   const metadata=behavior.metadata.length?behavior.metadata:[{param1:[],param2:[]}];
   const variants=el('select');variants.setAttribute('aria-label','功能参数组合');metadata.forEach((m,i)=>{const o=el('option','',m.param1.map(d=>d.name).filter(Boolean).join(' / ')||`参数组合 ${i+1}`);o.value=i;variants.append(o);});if(metadata.length>1)host.append(variants);
   const form=el('div','zmk-params');host.append(form);let values=[0,0];

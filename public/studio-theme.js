@@ -1,6 +1,5 @@
 (() => {
   const storageKey = 'kbd-studio-theme';
-  const system = matchMedia('(prefers-color-scheme: dark)');
   const root = document.documentElement;
   function preference() {
     try {
@@ -17,7 +16,7 @@
     }
   }
   function sync() {
-    apply(preference() ?? (system.matches ? 'dark' : 'light'));
+    apply(preference() ?? 'dark');
   }
   sync();
   document.addEventListener('pointerdown', () => root.removeAttribute('data-keyboard-navigation'), true);
@@ -31,6 +30,5 @@
     try { localStorage.setItem(storageKey, theme); } catch {}
     apply(theme);
   });
-  system.addEventListener('change', () => { if (!preference()) sync(); });
   window.addEventListener('storage', event => { if (event.key === storageKey) sync(); });
 })();

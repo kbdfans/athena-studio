@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   --ink: light-dark(#171717, #f5f5f5);
   --paper: light-dark(#fff, #242424);
   --page: light-dark(#f5f5f5, #151515);
@@ -21,7 +21,7 @@
   --gray-96: light-dark(#f2f2f2, #2b2b2b);
   --gray-98: light-dark(#f8f8f8, #1e1e1e);
 }
-:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
 a { color: inherit; }
 
 .theme-toggle {

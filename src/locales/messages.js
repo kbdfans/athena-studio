@@ -5540,5 +5540,50 @@ export const MESSAGES={
   },
   "插线时一直按住左上角 Esc。": {
     "en": "Hold the top-left Esc key while reconnecting USB."
+  },
+  "示例": {
+    "en": "Example",
+    "zh-TW": "範例",
+    "ja": "例",
+    "ko": "예시",
+    "de": "Beispiel",
+    "fr": "Exemple",
+    "es": "Ejemplo"
+  },
+  "轻按优先": {
+    "en": "Tap preferred",
+    "zh-TW": "輕按優先",
+    "ja": "タップ優先",
+    "ko": "탭 우선",
+    "de": "Tippen bevorzugt",
+    "fr": "Frappe courte prioritaire",
+    "es": "Toque prioritario"
+  },
+  "长按优先": {
+    "en": "Hold preferred",
+    "zh-TW": "長按優先",
+    "ja": "長押し優先",
+    "ko": "길게 누르기 우선",
+    "de": "Halten bevorzugt",
+    "fr": "Maintien prioritaire",
+    "es": "Pulsación larga prioritaria"
+  },
+  "轻按发送按键，长按启用目标层。在长按判定前按下其他键，仍可判定为轻按。": {
+    "en": "Tap to send a key or hold to activate a layer. Pressing another key before the hold threshold can still count as a tap.",
+    "zh-TW": "輕按傳送按鍵，長按啟用目標層。在長按判定前按下其他鍵，仍可判定為輕按。",
+    "ja": "タップでキーを送信し、長押しでレイヤーを有効にします。長押し判定前に別のキーを押してもタップとして扱えます。",
+    "ko": "탭하면 키를 보내고 길게 누르면 레이어가 활성화됩니다. 길게 누르기 판정 전에 다른 키를 눌러도 탭으로 처리될 수 있습니다.",
+    "de": "Tippen sendet eine Taste, Halten aktiviert eine Ebene. Ein weiterer Tastendruck vor der Halteschwelle kann weiterhin als Tippen gelten.",
+    "fr": "Un appui bref envoie une touche, un appui prolongé active une couche. Appuyer sur une autre touche avant le seuil peut encore compter comme un appui bref.",
+    "es": "Un toque envía una tecla y mantenerla pulsada activa una capa. Pulsar otra tecla antes del umbral puede seguir contando como un toque."
+  },
+  "轻按发送按键，长按启用目标层。按住时再按其他键，可立即触发长按切层。": {
+    "en": "Tap to send a key or hold to activate a layer. Pressing another key while holding can activate the layer immediately.",
+    "zh-TW": "輕按傳送按鍵，長按啟用目標層。按住時再按其他鍵，可立即觸發長按切層。",
+    "ja": "タップでキーを送信し、長押しでレイヤーを有効にします。押したまま別のキーを押すと、すぐにレイヤーが切り替わります。",
+    "ko": "탭하면 키를 보내고 길게 누르면 레이어가 활성화됩니다. 누른 상태에서 다른 키를 누르면 즉시 레이어를 활성화할 수 있습니다.",
+    "de": "Tippen sendet eine Taste, Halten aktiviert eine Ebene. Beim Halten kann ein weiterer Tastendruck die Ebene sofort aktivieren.",
+    "fr": "Un appui bref envoie une touche, un appui prolongé active une couche. Appuyer sur une autre touche pendant le maintien peut activer la couche immédiatement.",
+    "es": "Un toque envía una tecla y mantenerla pulsada activa una capa. Pulsar otra tecla mientras se mantiene pulsada puede activar la capa de inmediato."
   }
 };

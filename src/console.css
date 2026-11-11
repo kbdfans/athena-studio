@@ -958,34 +958,23 @@
   gap: 10px 12px;
 }
 .function-toolbar {
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  row-gap: 4px;
   min-height: 42px;
-  position: relative;
 }
 .selected-key-row {
-  flex: 0 1 auto;
   justify-content: center;
+  flex-wrap: wrap;
   padding: 6px 14px;
   border-radius: 20px;
   border: 1px solid var(--gray-85);
   background: var(--gray-93);
   box-shadow: 0 2px 5px color-mix(in srgb, #000 3.1%, transparent);
-  position: relative;
   max-width: 100%;
 }
-.selected-key-row::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: calc(50% - 4px);
-  width: 8px;
-  height: 8px;
-  background: var(--gray-93);
-  border-top: 1px solid var(--gray-85);
-  border-left: 1px solid var(--gray-85);
-  transform: rotate(45deg);
-}
-.selected-description { min-width: 0; }
+.selected-description { min-width: 0; text-align: center; }
 .selected-key-row h2 { max-width: none; white-space: normal; }
 .selected-key-row #selected-example {
   font-size: 10px;
@@ -1258,6 +1247,26 @@
   text-underline-offset: .22em;
 }
 
+.function-hint {
+  display: grid;
+  align-content: safe center;
+  block-size: 3lh;
+  min-width: 0;
+  overflow: auto;
+  color: var(--gray-30);
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: end;
+  overflow-wrap: anywhere;
+}
+.function-toolbar .function-hint {
+  inline-size: min(100%, 780px);
+  text-align: center;
+}
+@media (max-width: 720px) {
+  .function-hint { block-size: 4lh; }
+}
+
 /* The physical palettes keep their proportions. Standalone options use wider labels. */
 .key-inspector {
   container-type: inline-size;
@@ -1268,7 +1277,7 @@
 }
 .key-picker-dialog { --palette-size: 44px; --palette-width: 80px; }
 #key-choices:not(.physical-picker, .advanced-picker, .numpad-picker, .layout-picker),
-.zmk-choices:not(.physical-picker, .zmk-layouts, .zmk-builder),
+.zmk-choices:not(.physical-picker, .zmk-layouts, .zmk-builder, .zmk-layer-choices),
 .key-picker-dialog .picker-results {
   grid-template-columns: repeat(auto-fill, var(--palette-width));
   grid-auto-rows: auto;

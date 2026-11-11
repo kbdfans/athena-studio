@@ -40,6 +40,10 @@ export function openKeyPicker(input) {
   search.setAttribute("aria-label", "搜索要选择的按键");
   const tabs = document.createElement("div");
   tabs.className = "picker-tabs";
+  const hint = document.createElement("div");
+  hint.className = "function-hint";
+  hint.setAttribute("aria-hidden", "true");
+  hint.dataset.i18nSkip = "";
   const list = document.createElement("div");
   list.className = "picker-results";
   list.setAttribute("aria-label", "按键搜索结果");
@@ -110,7 +114,7 @@ export function openKeyPicker(input) {
     }
   };
   custom.append(summary, raw, use, error);
-  dialog.append(header, search, tabs, list, custom);
+  dialog.append(header, search, tabs, hint, list, custom);
   dialog.addEventListener("close", () => {
     dialog.remove();
     input.focus();

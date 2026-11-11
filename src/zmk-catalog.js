@@ -39,17 +39,42 @@ const rows=[
  ['mouse',['mouse button','mouse buttons','mouse move','mouse scroll'],'鼠标控制','鼠标与滚轮','使用固件提供的鼠标按键、移动或滚轮功能。','给拇指键分配鼠标左键，按下即可点击。',['鼠标操作','数值']],
 ];
 const normalize=s=>s.toLowerCase().replace(/[ _-]/g,'');
+const layerCommands={
+ mo:'&mo 1',
+ tog:'&tog 1',
+ to:'&to 1',
+ sl:'&sl 1',
+ lt:'&lt 1 SPACE',
+};
+const layerTapVariants={
+ tp:{
+  command:layerCommands.lt,
+  priority:'轻按优先',
+  description:'轻按发送按键，长按启用目标层。在长按判定前按下其他键，仍可判定为轻按。',
+ },
+ hp:{
+  command:'&lt_hp 1 SPACE',
+  priority:'长按优先',
+  description:'轻按发送按键，长按启用目标层。按住时再按其他键，可立即触发长按切层。',
+ },
+};
 export function behaviorHelp(behavior){
  const raw=behavior.displayName||'',name=normalize(raw);let match;
  if(name==='deviceusb')return {kind:'device-usb',title:'切换 USB 模式',group:'无线与设备',description:'将键盘输入切换到 USB 连接的电脑。',example:'插好 USB 数据线后，按此键让输入通过 USB 发送到电脑。',params:[],note:'此功能是固件预设的设备切换动作；这里仅分配到按键。'};
  if((match=name.match(/^devicebt(\d+)$/)))return {kind:'device-bt',title:`蓝牙设备 ${Number(match[1])}`,group:'无线与设备',description:'切换到对应编号的蓝牙设备。',example:'把设备 1 用于电脑、设备 2 用于平板，分别按对应快捷键切换。',params:[],note:'设备编号沿用固件名称；首次使用需在系统中完成蓝牙配对。'};
- // Vendor names retain the compiled behavior ID and parameters. TP/HP only
- // identify the vendor variants; do not infer their timing from the name.
+ // OpenKBD's common.keymap exposes &lt and &lt_hp under these display names.
+ // The keyboard still supplies the behavior ID and accepted parameters.
  const variant=name.match(/^(layertap|modtap)\((tp|hp)\)$/);
  const canonical=variant?variant[1]:name;
  const mouseAlias=/^mouse(move|scroll)(up|down|left|right)$/.test(name)||name==='mousekeypress';
  const row=rows.find(r=>r[1].some(n=>normalize(n)===canonical)||(mouseAlias&&r[0]==='mouse'));
- if(row){const [kind,,title,group,description,example,params,note='']=row;return {kind,title:variant?title+' · '+variant[2].toUpperCase():title,group,description,example,params,note};}
+ if(row){
+  const [kind,,title,group,description,example,params,note='']=row;
+  const flavor=kind==='lt'&&variant?layerTapVariants[variant[2]]:null;
+  const suffix=flavor?.priority||variant?.[2].toUpperCase();
+  return {kind,title:suffix?title+' · '+suffix:title,group,
+   description:flavor?.description||description,example,params,note,command:flavor?.command||layerCommands[kind]};
+ }
  if((behavior.metadata||[]).some(m=>[...(m.param1||[]),...(m.param2||[])].some(d=>d.layerId!==undefined)))return {kind:'custom-layer',title:raw,group:'层与双功能',description:'当前固件提供的层功能，可选择目标层后分配到按键。',example:'选择 Fn 层并应用；具体触发方式以此固件的行为定义为准。',params:[],note:'自定义层功能的触发规则由固件定义。'};
  return {kind:'custom',title:behavior.displayName||'自定义功能',group:'固件自定义',description:'这是当前固件提供的自定义行为。可设置的参数以设备返回的说明为准。',example:'先查阅该 PCB 的行为说明，再把此功能分配给选中的按键。',params:[],note:'行为内部动作、宏内容、组合触发条件和时间参数需要在 ZMK 固件源码中定义；当前 Studio 接口只能修改这里列出的绑定参数。'};
 }

@@ -6,16 +6,17 @@ export function setupLanguages(root=document){
  let saved;try{saved=localStorage.getItem('athena-language');}catch{}
  setLocale(initialLocale({saved,hostname:location.hostname,browserLanguage:navigator.language}));
  function ignored(element){return !element||element.closest('script,style,[data-i18n-skip],.language-picker');}
+ const translatedAttributes=['title','placeholder','aria-label','aria-description','alt','label'];
  function text(node){if(ignored(node.parentElement)||node.parentElement.closest('textarea'))return;let r=sources.get(node);if(!r||node.nodeValue!==r.rendered)r={source:node.nodeValue};r.rendered=translate(r.source);if(node.nodeValue!==r.rendered)node.nodeValue=r.rendered;sources.set(node,r);}
  function element(el){
   if(ignored(el))return;
   if(el.tagName==='OPTION'&&!el.hasAttribute('value'))el.setAttribute('value',el.textContent);
   let record=attributes.get(el)||{};
-  for(const name of ['title','placeholder','aria-label','alt','label']){if(!el.hasAttribute(name))continue;const value=el.getAttribute(name);let r=record[name];if(!r||value!==r.rendered)r={source:value};r.rendered=translate(r.source);if(r.rendered!==value)el.setAttribute(name,r.rendered);record[name]=r;}
+  for(const name of translatedAttributes){if(!el.hasAttribute(name))continue;const value=el.getAttribute(name);let r=record[name];if(!r||value!==r.rendered)r={source:value};r.rendered=translate(r.source);if(r.rendered!==value)el.setAttribute(name,r.rendered);record[name]=r;}
   attributes.set(el,record);
  }
  function walk(node){if(node.nodeType===3){text(node);return;}if(node.nodeType!==1)return;element(node);if(ignored(node))return;for(const child of node.childNodes)walk(child);}
- const options={subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['title','placeholder','aria-label','alt','label']};
+ const options={subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:translatedAttributes};
  function observe(){observer.observe(root.body,options);}
  observer=new MutationObserver(records=>{observer.disconnect();for(const r of records){if(r.type==='childList')for(const n of r.addedNodes)walk(n);else if(r.type==='characterData')text(r.target);else element(r.target);}observe();});
  const selectors=[...root.querySelectorAll('.language-picker')];

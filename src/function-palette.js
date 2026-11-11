@@ -6,6 +6,47 @@ export const NUMPAD_KEYS = [
   [98, 0, 4, 2], [99, 2, 4],
 ];
 
+let hint;
+let hintButton;
+
+function closeHint() {
+  if (hint) hint.textContent = '';
+  hint = null;
+  hintButton = null;
+}
+
+function showHint(event) {
+  const button = event.currentTarget;
+  if (button.disabled || event.pointerType === 'touch' ||
+    (event.type === 'focus' && !button.matches(':focus-visible'))) return;
+  const target = button.closest('.key-inspector, .key-picker-dialog')?.querySelector('.function-hint');
+  if (!target) return;
+  closeHint();
+  hint = target;
+  hintButton = button;
+  hint.textContent = button.getAttribute('aria-description');
+}
+
+function hideButtonHint(event) {
+  if (event.currentTarget === hintButton) closeHint();
+}
+
+function dismissHint(event) {
+  if (event.key !== 'Escape' || event.currentTarget !== hintButton) return;
+  event.preventDefault();
+  closeHint();
+}
+
+export function addFunctionHint(button, description) {
+  button.setAttribute('aria-description', description);
+  button.addEventListener('pointerenter', showHint);
+  button.addEventListener('focus', showHint);
+  button.addEventListener('pointerleave', hideButtonHint);
+  button.addEventListener('blur', hideButtonHint);
+  button.addEventListener('click', hideButtonHint, true);
+  button.addEventListener('keydown', dismissHint);
+}
+
 export function decorateFunctionKey(button, label, description = label) {
   const legend = document.createElement('span');
   legend.className = 'palette-legend';
@@ -16,6 +57,6 @@ export function decorateFunctionKey(button, label, description = label) {
   button.classList.add('palette-key');
   button.replaceChildren(legend);
   button.setAttribute('aria-label', label);
-  button.title = description;
+  addFunctionHint(button, description);
   return button;
 }

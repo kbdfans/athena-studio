@@ -8,3 +8,35 @@
 .zmk-builder h3{margin-top:6px;font-size:19px}.zmk-example{background:var(--gray-93);padding:14px 16px;border-radius:10px;margin:16px 0}.zmk-example strong{font-size:12px;color:var(--gray-40)}.zmk-example p{margin:5px 0 0}.zmk-behavior-note{color:var(--gray-50);border-left:2px solid var(--gray-85);padding-left:12px}.zmk-modifiers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:6px}.zmk-modifiers label{display:flex;flex-direction:row;align-items:center;gap:5px;background:var(--gray-93);border-radius:6px;padding:7px 5px;font-size:11px}.zmk-modifiers input{margin:0;width:13px;height:13px;accent-color:var(--accent)}.zmk-modifiers[hidden],.zmk-params label[hidden]{display:none}.zmk-simple-extras{display:flex;gap:8px;margin-top:10px}.zmk-behaviors>p{grid-column:1/-1}@media(max-width:720px){.zmk-behaviors{grid-template-columns:1fr}.zmk-modifiers{grid-template-columns:repeat(4,minmax(0,1fr))}}
 
 .zmk-numpad{width:max-content;max-width:100%;padding:8px;background:var(--gray-90);border:1px solid var(--gray-85);border-radius:10px}.zmk-numpad button{font:inherit;font-size:13px;line-height:1.2;box-shadow:0 1px 0 var(--gray-80);cursor:pointer}.zmk-numpad button:hover{border-color:var(--accent)}.zmk-numpad button.selected{color:var(--accent);border-color:var(--accent);background:var(--gray-98)}.zmk-numpad button:disabled{cursor:not-allowed;opacity:.45}
+.zmk-choices.zmk-layer-choices {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 205px), 1fr));
+  gap: 10px;
+}
+.zmk-layer-choices > .zmk-layer-card {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  padding: 13px 14px;
+  border: 1px solid var(--gray-85);
+  border-radius: 8px;
+  background: var(--gray-98);
+  color: var(--gray-20);
+  text-align: start;
+  line-height: 1.5;
+}
+.zmk-layer-choices > .zmk-layer-card:hover { background: var(--gray-93); }
+.zmk-layer-card strong { font-size: 14px; line-height: 1.4; }
+.zmk-layer-command {
+  display: inline-block;
+  max-width: 100%;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--gray-93);
+  color: var(--gray-20);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.zmk-layer-native { color: var(--gray-40); }
+.zmk-example .zmk-layer-command { margin-inline-start: 8px; }
