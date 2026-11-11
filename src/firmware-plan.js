@@ -1,5 +1,7 @@
 // Firmware plans are pure. No USB writes are possible in this module.
 import {digest} from './backup-v2.js';
+import {petPackSize,validatePetPack} from './pet-pack.js';
+import {crc32} from './crc32.js';
 export const FLASH_BYTES = 0x1000000, MAIN_LIMIT = 0x1f0000, SECTOR = 4096, BASE = 0x10000000;
 const assert = (ok, message) => { if (!ok) throw Error(message); };
 export function decodeFirmwareUf2(bytes) {
@@ -64,6 +66,18 @@ export async function planFirmwareUpgrade(current, uf2, release, profile, {clear
   }
   assert(source,'当前固件版本尚未验证，已停止升级，未擦除或写入');
   assert(source.layout==='legacy'||source.layout==='v2','未知存储布局');
+  // Audited rollback firmware can coexist with the newer resource layout.
+  // Accept only its exact program fingerprint AND valid existing v2 resources.
+  if(source.requiresV2Resources){
+    assert(source.layout==='v2','升级来源的资源规则无效');
+    let validAsset=false,validSave=false;
+    try{const size=petPackSize(current.subarray(0xa00000,0xa00100));validatePetPack(current.subarray(0xa00000,0xa00000+size));validAsset=true;}catch{}
+    for(let off=0xdfe000;off<0xe00000;off+=256){
+      const p=current.subarray(off,off+256),v=new DataView(p.buffer,p.byteOffset,p.byteLength);
+      if(p[0]===80&&p[1]===69&&p[2]===84&&p[3]===50&&v.getUint32(20,true)===crc32(p.subarray(0,20))&&p[16]<3&&p[17]<3&&p[18]<=100&&v.getUint32(8,true)<=2000000)validSave=true;
+    }
+    assert(validAsset&&validSave,'当前固件的资源分区与已验证记录不一致，已停止升级，未擦除或写入');
+  }
   const target=current.slice();target.set(main);
   if(clearImages){
     // The user explicitly chose a clean three-slot image area. Never parse old images.

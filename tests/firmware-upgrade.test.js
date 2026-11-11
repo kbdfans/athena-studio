@@ -7,6 +7,8 @@ import {writeFirmwarePlan} from '../src/firmware-transport.js';
 import {digest} from '../src/backup-v2.js';
 import {encodeQgf} from '../src/format-v2.js';
 import {connectIdentifiedKeyboard} from '../src/connect-keyboard.js';
+import {createPetPack} from '../src/pet-pack.js';
+import {crc32} from '../src/crc32.js';
 globalThis.indexedDB=indexedDB;
 const profile={id:'athena1800',pid:0x4100,vid:0x9d5b};
 function firmware(pid=0x4100){const b=new Uint8Array(512),v=new DataView(b.buffer);[0x0a324655,0x9e5d5157,0x2000,0x10000000,256,0,1,0xe48bff56].forEach((n,j)=>v.setUint32(j*4,n,true));b[32]=18;b[33]=1;b[40]=0x5b;b[41]=0x9d;b[42]=pid&255;b[43]=pid>>8;v.setUint32(508,0x0ab16f30,true);return b;}
@@ -74,6 +76,18 @@ test('image reset transport refuses writes outside actual firmware and image bou
   await assert.rejects(writeFirmwarePlan({command(){commands++;}},plan,record.id),/越界/);
   assert.equal(commands,0);
  }
+});
+test('audited rollback firmware requires valid v2 resources and preserves them during image reset',async()=>{
+ const {uf2,current,release}=await fixture();release.sources[0].requiresV2Resources=true;
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),/资源分区/);
+ current.set(createPetPack('mint'),0xa00000);
+ const page=current.subarray(0xdfe000,0xdfe100),v=new DataView(page.buffer,page.byteOffset,page.byteLength);
+ page.fill(0);page.set([80,69,84,50]);v.setUint32(8,2316,true);page[16]=1;page[18]=80;v.setUint32(20,crc32(page.subarray(0,20)),true);
+ const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true});
+ assert.deepEqual(plan.target.subarray(0xa00000),current.subarray(0xa00000));
+ assert.ok(plan.target.subarray(0x400000,0xa00000).every(b=>b===255));
+ page[8]^=1;await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),/资源分区/);
+ page[8]^=1;current[0xa00004]=99;await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),/资源分区/);
 });
 test('durable backup must match the whole plan before any USB command',async()=>{
  const {uf2,current,release}=await fixture();const plan=await planFirmwareUpgrade(current,uf2,release,profile),record=await saveFirmwareBackup(current,plan,'test-serial');

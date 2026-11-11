@@ -4631,5 +4631,11 @@ export const MESSAGES={
   },
   "升级条件已齐备，可以开始。": {
     "en": "All requirements are met. You can start the upgrade."
+  },
+  "升级来源的资源规则无效": {
+    "en": "Invalid resource rule for the source firmware."
+  },
+  "当前固件的资源分区与已验证记录不一致，已停止升级，未擦除或写入": {
+    "en": "The resource layout does not match the verified source. Upgrade stopped without erasing or writing."
   }
 };

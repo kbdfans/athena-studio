@@ -93,6 +93,13 @@
           "layout": "v2",
           "length": 249856,
           "sha256": "41826b4c14258d27726390a9f7e71ddb43cabb0b35a3b6478ef21b1865a7e767"
+        },
+        {
+          "layout": "v2",
+          "length": 2031616,
+          "sha256": "f294a73ea864f4792b9d19fbc20545f30833f0fc0500b8227b13bd17fa80ca28",
+          "requiresV2Resources": true,
+          "description": "Audited DQ9O program with existing v2 pet resources and unchanged logical keyboard configuration"
         }
       ],
       "source": {

@@ -634,3 +634,5 @@ USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份�
 需要授权并连接 RP2 Boot 后才能开始升级。|Authorize and connect RP2 Boot before starting the upgrade.
 请勾选清除图片和动画的确认项。|Confirm that all images and animations will be cleared.
 升级条件已齐备，可以开始。|All requirements are met. You can start the upgrade.
+升级来源的资源规则无效|Invalid resource rule for the source firmware.
+当前固件的资源分区与已验证记录不一致，已停止升级，未擦除或写入|The resource layout does not match the verified source. Upgrade stopped without erasing or writing.
