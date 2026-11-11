@@ -41,5 +41,6 @@ No QMK matrix commands are sent to ZMK devices. Duplicate outputs, layer-only
 keys, tap/hold behaviors, macros, transparent bindings and modified HID bindings
 are dashed/excluded rather than guessed. OS-intercepted keys may not arrive;
 input from another keyboard can also match. The selected layer must match the
-actual layer the user activates on the keyboard. A hardware test of this new
-ZMK tester remains separate from mocked browser verification.
+actual layer the user activates on the keyboard. On 2026-11-11, the user confirmed correct press/release highlighting with an
+Agar Micro on kbd.cool. This acceptance covers ordinary key output, not physical
+Fn/layer-switch detection.
