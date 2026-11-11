@@ -32,6 +32,7 @@ export function translate(text,locale=language){
   else if(s.startsWith('— '))translated='— '+translate(s.slice(2),locale);
   else if(s.includes(' · '))translated=s.split(' · ').map(p=>translate(p,locale)).join(' · ');
   else if(s.startsWith('· '))translated='· '+translate(s.slice(2),locale);
+  else if((m=s.match(/^蓝牙设备 (\d+)$/)))translated='Bluetooth device '+m[1];
   else if((m=s.match(/^当前布局：(.*)$/)))translated='Current layout: '+m[1];
   else if((m=s.match(/^参数(?:组合)? (\d+)$/)))translated='Parameter '+m[1];
   else if((m=s.match(/^第 (\d+) 层(.*)$/)))translated=word('layer',locale)+' '+m[1]+(m[2].startsWith(' · ')?' · '+translate(m[2].slice(3),locale):translate(m[2],locale));

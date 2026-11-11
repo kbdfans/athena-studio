@@ -12,18 +12,18 @@ for(let i=0;i<9;i++)add(135+i,`International ${i+1}`);for(let i=0;i<9;i++)add(14
 export const ZMK_MEDIA=[['播放 / 暂停',0xcd],['停止播放',0xb7],['音量 +',0xe9],['音量 −',0xea],['静音',0xe2],['上一首',0xb6],['下一首',0xb5],['屏幕亮度 +',0x6f],['屏幕亮度 −',0x70]];
 const rows=[
  ['kp',['key press','keypress','kp'],'普通按键 / 组合快捷键','输入与组合','按下时发送按键，松开时释放；也可以同时附带 Ctrl、Shift、Option / Alt、Cmd / Win。','选择 C，再勾选 Ctrl，按一下此键即可发送 Ctrl+C。Mac 的复制通常使用 Cmd+C。',['发送的按键'],'组合键由当前系统或应用解释。'],
- ['mo',['momentary layer','mo'],'按住切换层','层与双功能','按住此键启用目标层，松开后关闭该层。','把目标层的 I / J / K / L 配成方向键；按住此键即可使用方向键。',['目标层']],
+ ['mo',['momentary layer','layer momentary','mo'],'按住切换层','层与双功能','按住此键启用目标层，松开后关闭该层。','把目标层的 I / J / K / L 配成方向键；按住此键即可使用方向键。',['目标层']],
  ['tog',['toggle layer','layer toggle','tog'],'开关切换层','层与双功能','按一下启用目标层，再按一下关闭；无需一直按住。','按一次进入数字层，再按一次回到原来的输入方式。',['目标层']],
  ['to',['to layer','layer to','to'],'跳转到层','层与双功能','启用目标层，并关闭默认层以外的其他层。','从游戏层直接切到工作层；建议在目标层安排一个返回基础层的键。',['目标层']],
  ['lt',['layer tap','layer-tap','lt'],'轻按按键 / 长按切层','层与双功能','轻按发送普通按键，长按时启用目标层。','轻按发送 Space；按住时启用 Fn 层，松开后回到原层。',['长按启用的层','轻按发送的按键'],'轻按与长按的判定时间、优先策略由当前固件定义，此处只设置绑定参数。'],
  ['mt',['mod tap','mod-tap','mt'],'轻按 / 长按双功能','层与双功能','轻按发送第二个按键，长按发送第一个按键；长按通常设置为修饰键。','轻按发送 A；按住时作为左 Ctrl，再按 C 发送 Ctrl+C。',['长按发送的按键','轻按发送的按键'],'轻按与长按的判定时间、优先策略由当前固件定义，此处只设置绑定参数。'],
  ['sk',['sticky key','sk'],'粘滞按键','输入与组合','按一下暂时保留该按键，供后续按键组合使用，不必持续按住。','设为 Shift：按一下，再按 A，就能输入大写 A。',['暂时保留的按键'],'释放时机和超时时间由固件决定。'],
- ['sl',['sticky layer','sl'],'单次使用层','层与双功能','按一下暂时启用目标层，供后续按键使用。','按一下后，在符号层选择一个符号，随后继续普通输入。',['目标层'],'释放时机和超时时间由固件决定。'],
+ ['sl',['sticky layer','layer sticky','sl'],'单次使用层','层与双功能','按一下暂时启用目标层，供后续按键使用。','按一下后，在符号层选择一个符号，随后继续普通输入。',['目标层'],'释放时机和超时时间由固件决定。'],
  ['kt',['key toggle','kt'],'按键保持开关','输入与组合','按一下保持按键按下，再按一下释放。','设为 Shift：第一次按下后连续输入大写，再按一次取消。',['保持的按键']],
  ['caps',['caps word','caps_word'],'单词大写','输入与组合','连续字母自动转为大写，遇到固件规定的结束键后退出。','启用后输入 hello，得到 HELLO；输入空格后恢复普通输入。',[]],
  ['repeat',['key repeat','key_repeat'],'重复上一个键','输入与组合','再次发送最近的可重复按键。','先输入 A，再按此键重复 A；适合放在拇指键。',[]],
  ['transparent',['transparent','trans'],'透明 / 沿用下层','输入与组合','此位置不覆盖下层，继续查找更低层的按键功能。','在 Fn 层把字母区设为透明，仍可使用基础层的字母。',[]],
- ['none',['none','no operation'],'禁用此键','输入与组合','此位置不发送按键，也不会继续使用下层功能。','将容易误触的位置设为禁用，按下时不会产生输入。',[]],
+ ['none',['none','no operation','key(none)'],'禁用此键','输入与组合','此位置不发送按键，也不会继续使用下层功能。','将容易误触的位置设为禁用，按下时不会产生输入。',[]],
  ['bt',['bluetooth','bt'],'蓝牙连接管理','无线与设备','选择蓝牙配置位、切换设备或清除配对，选项由固件提供。','选择配置位 0 用于电脑、配置位 1 用于平板；在两个位置之间切换。',['蓝牙操作','配置位'],'清除配对会解除相应设备的绑定，之后需要重新配对。'],
  ['out',['output selection','output','out'],'USB / 蓝牙输出','无线与设备','设置键盘将按键发送到 USB 还是蓝牙，或切换输出方式。','同时插着 USB 并连接蓝牙时，可指定让按键发送到电脑或平板。',['输出方式']],
  ['rgb',['rgb underglow','rgb_ug'],'RGB 灯光','灯光与电源','使用固件提供的开关、亮度、颜色或效果命令。','给常用按键分配灯光开关，按一下切换 RGB 状态。',['灯光操作','数值'],'只有 PCB 安装并启用了相应灯光时才有效。'],
@@ -40,10 +40,19 @@ const rows=[
 ];
 const normalize=s=>s.toLowerCase().replace(/[ _-]/g,'');
 export function behaviorHelp(behavior){
- const name=normalize(behavior.displayName||'');const row=rows.find(r=>r[1].some(n=>normalize(n)===name));
- if(row){const [kind,,title,group,description,example,params,note='']=row;return {kind,title,group,description,example,params,note};}
+ const raw=behavior.displayName||'',name=normalize(raw);let match;
+ if(name==='deviceusb')return {kind:'device-usb',title:'切换 USB 模式',group:'无线与设备',description:'将键盘输入切换到 USB 连接的电脑。',example:'插好 USB 数据线后，按此键让输入通过 USB 发送到电脑。',params:[],note:'此功能是固件预设的设备切换动作；这里仅分配到按键。'};
+ if((match=name.match(/^devicebt(\d+)$/)))return {kind:'device-bt',title:`蓝牙设备 ${Number(match[1])}`,group:'无线与设备',description:'切换到对应编号的蓝牙设备。',example:'把设备 1 用于电脑、设备 2 用于平板，分别按对应快捷键切换。',params:[],note:'设备编号沿用固件名称；首次使用需在系统中完成蓝牙配对。'};
+ // Vendor names retain the compiled behavior ID and parameters. TP/HP only
+ // identify the vendor variants; do not infer their timing from the name.
+ const variant=name.match(/^(layertap|modtap)\((tp|hp)\)$/);
+ const canonical=variant?variant[1]:name;
+ const mouseAlias=/^mouse(move|scroll)(up|down|left|right)$/.test(name)||name==='mousekeypress';
+ const row=rows.find(r=>r[1].some(n=>normalize(n)===canonical)||(mouseAlias&&r[0]==='mouse'));
+ if(row){const [kind,,title,group,description,example,params,note='']=row;return {kind,title:variant?title+' · '+variant[2].toUpperCase():title,group,description,example,params,note};}
+ if((behavior.metadata||[]).some(m=>[...(m.param1||[]),...(m.param2||[])].some(d=>d.layerId!==undefined)))return {kind:'custom-layer',title:raw,group:'层与双功能',description:'当前固件提供的层功能，可选择目标层后分配到按键。',example:'选择 Fn 层并应用；具体触发方式以此固件的行为定义为准。',params:[],note:'自定义层功能的触发规则由固件定义。'};
  return {kind:'custom',title:behavior.displayName||'自定义功能',group:'固件自定义',description:'这是当前固件提供的自定义行为。可设置的参数以设备返回的说明为准。',example:'先查阅该 PCB 的行为说明，再把此功能分配给选中的按键。',params:[],note:'行为内部动作、宏内容、组合触发条件和时间参数需要在 ZMK 固件源码中定义；当前 Studio 接口只能修改这里列出的绑定参数。'};
 }
 export const BASIC_BEHAVIOR_GROUPS=['常用层切换','蓝牙与输出','鼠标与滚轮','布局设置'];
 export const ADVANCED_BEHAVIOR_GROUPS=['输入与组合','层与双功能','无线与设备','灯光与电源','鼠标与滚轮','维护与固件','固件自定义','布局设置'];
-export function behaviorInCategory(behavior,category){const h=behaviorHelp(behavior);if(category==='常用层切换')return ['mo','tog','to','sl'].includes(h.kind);if(category==='蓝牙与输出')return ['bt','out'].includes(h.kind);return category===h.group;}
+export function behaviorInCategory(behavior,category){const h=behaviorHelp(behavior);if(category==='常用层切换')return ['mo','tog','to','sl','lt','custom-layer'].includes(h.kind);if(category==='蓝牙与输出')return ['bt','out','device-usb','device-bt'].includes(h.kind);return category===h.group;}

@@ -11,3 +11,16 @@ test('ZMK behavior help groups native features and preserves custom behavior unc
  assert(behaviorInCategory({displayName:'Momentary Layer'},'常用层切换'));assert(!behaviorInCategory({displayName:'Mod-Tap'},'常用层切换'));assert.equal(behaviorHelp({displayName:'User macro A'}).kind,'custom');
 });
 test('HID modifier combinations validate without becoming QMK MT/LT codes',()=>{const b=[{id:20,metadata:[{param1:[{hidUsage:{keyboardMax:231,consumerMax:767}}],param2:[]}]}];assert(validBinding({behaviorId:20,param1:0x1070006,param2:0},b,[]));assert(!validBinding({behaviorId:20,param1:0x5221,param2:0},b,[]));});
+test('Agar vendor layer and device behaviors appear in Basic with native semantics',()=>{
+ for(const name of ['Layer Momentary','Layer-Tap(TP)','Layer-Tap(HP)','Layer Toggle','Layer To','Layer Sticky']){
+  const b={displayName:name};assert(behaviorInCategory(b,'常用层切换'),name);const h=behaviorHelp(b);assert.notEqual(h.kind,'custom');for(const text of [h.title,h.description,h.example,h.note])assert(!/[\u4e00-\u9fff]/.test(translate(text,'en')),text);
+ }
+ for(const [name,title]of [['Device_USB','切换 USB 模式'],['Device_BT1','蓝牙设备 1'],['Device_BT2','蓝牙设备 2'],['Device_BT3','蓝牙设备 3'],['Device_BT10','蓝牙设备 10']]){
+  const b={displayName:name},h=behaviorHelp(b);assert(behaviorInCategory(b,'蓝牙与输出'));assert.equal(h.title,title);assert.deepEqual(h.params,[]);for(const text of [h.title,h.description,h.example,h.note])assert(!/[\u4e00-\u9fff]/.test(translate(text,'en')),text);
+ }
+ assert(!behaviorInCategory({displayName:'Mod-Tap(TP)'},'常用层切换'));
+ assert(behaviorInCategory({displayName:'Vendor Layer',metadata:[{param1:[{layerId:{}}],param2:[]}]},'常用层切换'));
+ assert.equal(behaviorHelp({displayName:'DeviceMystery'}).kind,'custom');
+ assert.equal(behaviorHelp({displayName:'Key(None)'}).kind,'none');
+ for(const name of ['Mouse Key Press','Mouse Move Left','Mouse Scroll Up'])assert(behaviorInCategory({displayName:name},'鼠标与滚轮'));
+});

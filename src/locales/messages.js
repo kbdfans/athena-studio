@@ -5243,5 +5243,35 @@ export const MESSAGES={
   },
   "屏幕亮度 −": {
     "en": "Display brightness −"
+  },
+  "切换 USB 模式": {
+    "en": "Switch to USB mode"
+  },
+  "将键盘输入切换到 USB 连接的电脑。": {
+    "en": "Switches keyboard input to the computer connected over USB."
+  },
+  "插好 USB 数据线后，按此键让输入通过 USB 发送到电脑。": {
+    "en": "Connect a USB data cable, then press this key to send input to that computer over USB."
+  },
+  "此功能是固件预设的设备切换动作；这里仅分配到按键。": {
+    "en": "This is a device-switching action defined by the firmware. This editor assigns it to a key."
+  },
+  "切换到对应编号的蓝牙设备。": {
+    "en": "Switches to the Bluetooth device with the corresponding number."
+  },
+  "把设备 1 用于电脑、设备 2 用于平板，分别按对应快捷键切换。": {
+    "en": "Use device 1 for your computer and device 2 for your tablet, then press the corresponding shortcut to switch."
+  },
+  "设备编号沿用固件名称；首次使用需在系统中完成蓝牙配对。": {
+    "en": "Device numbers follow the firmware names. Pair the device in your system settings before first use."
+  },
+  "当前固件提供的层功能，可选择目标层后分配到按键。": {
+    "en": "A layer behavior provided by this firmware. Choose its target layer, then assign it to a key."
+  },
+  "选择 Fn 层并应用；具体触发方式以此固件的行为定义为准。": {
+    "en": "Select the Fn layer and apply. The firmware behavior determines how this layer is activated."
+  },
+  "自定义层功能的触发规则由固件定义。": {
+    "en": "The firmware defines the activation rules for custom layer behaviors."
   }
 };
