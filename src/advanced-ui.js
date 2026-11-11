@@ -733,14 +733,14 @@ export function setupAdvanced({
           draw();
         };
         row.append(
-          button("↑", () => {
+          button("上移", () => {
             if (i) {
               dirty = true;
               [actions[i - 1], actions[i]] = [actions[i], actions[i - 1]];
               draw();
             }
           }),
-          button("↓", () => {
+          button("下移", () => {
             if (i < actions.length - 1) {
               dirty = true;
               [actions[i + 1], actions[i]] = [actions[i], actions[i + 1]];

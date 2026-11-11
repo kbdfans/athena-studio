@@ -176,8 +176,8 @@ export function setupKeymap({
           : "离线仅预览 · 连接后读取键盘实际配置";
     $("keymap-sync").classList.toggle("error", syncError);
     $("keymap-import").textContent = live
-      ? "导入并应用键位 ↑"
-      : "导入键位预览 ↑";
+      ? "导入并应用键位"
+      : "导入键位预览";
     $("key-reset").disabled =
       getBusy() ||
       (connected() && !live) ||
@@ -219,7 +219,7 @@ export function setupKeymap({
       return b;
     };
     if (!q && category === "屏幕快捷键" && !getDemo() && !getDevice()?.capabilities?.screen) {
-      const p=document.createElement("p");p.className="empty";p.textContent="此型号的宠物与弹球需要单独适配固件。当前可分配原有图片切换和屏幕开关。";host.append(p);for(const code of [0x7e04,0x7e05])host.append(make(keyInfo(code)));
+      const p=document.createElement("p");p.className="empty";p.textContent="此型号的宠物与击打特效需要单独适配固件。当前可分配原有图片切换和屏幕开关。";host.append(p);for(const code of [0x7e04,0x7e05])host.append(make(keyInfo(code)));
     } else if (!q && category === "屏幕快捷键") {
       host.classList.add("screen-shortcut-picker");
       const intro=document.createElement("p");intro.className="screen-shortcut-help";
@@ -310,7 +310,7 @@ export function setupKeymap({
     ) {
       const more = document.createElement("button");
       more.className = "advanced-search-link";
-      more.textContent = "在高级模式查看更多结果 →";
+      more.textContent = "在高级模式查看更多结果";
       more.onclick = () => switchMode("advanced", true);
       host.append(more);
     }

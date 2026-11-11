@@ -146,7 +146,7 @@ TT 锁层连按次数|Tap count to toggle a TT layer
 所有动作同步预览 · 配色已记在此浏览器，写入后在键盘生效。|Preview all actions · Colors are saved in this browser; upload to apply on the keyboard.
 手动键码|Manual keycode
 打字动画|Typing animation
-打字弹球运行中|Typing bounce is running
+击打特效运行中|Keystroke effects is running
 打字时显示|Shown while typing
 打开计算器|Open calculator
 把常用的组合操作，放到一个按键上。|Assign a frequently used shortcut to a single key.
@@ -575,7 +575,7 @@ USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份�
 等待连接键盘，连接成功后自动检测（含 MO/Fn）。|Connect your keyboard to start physical testing, including MO/Fn.
 反馈问题|Report a bug
 本站使用 AI 辅助构建。|Built with AI assistance.
-发现问题？提交反馈 ↗|Found a bug? Send feedback ↗
+发现问题？提交反馈|Found a bug? Send feedback
 管理员收件箱|Admin inbox
 一起让它更好用。|Help make it better.
 遇到问题，告诉我们。无需登录即可提交。|Tell us what went wrong. No account needed.
@@ -656,7 +656,7 @@ ZMK 通信超时|ZMK communication timed out.
 ZMK 键位数量不匹配|ZMK key count mismatch.
 ZMK 键位设置|ZMK key mapping
 ZMK 键帽尺寸无效|Invalid ZMK key geometry.
-← 返回功能列表|← Back to behaviors
+返回功能列表|Back to behaviors
 使用此功能|Assign this behavior
 保留并保存|Keep and save
 修改参数后直接选择功能，网页会自动保存到键盘。|Choose the parameters and assign the behavior. Changes save automatically to your keyboard.
@@ -859,9 +859,33 @@ RGB 灯光|RGB underglow
 键盘名称|Keyboard name
 请选择你的键盘|Choose your keyboard
 其他兼容键盘|Other compatible keyboard
-请先选择键盘名称。|Please choose your keyboard first.
+请先选择你的键盘。|Please choose your keyboard first.
 选择键盘名称，网页会自动使用对应的连接方式。|Choose your keyboard name. The website handles the connection method.
 首次连接：插好 USB 数据线，在浏览器弹窗中选择键盘并授权。|First connection: plug in a USB data cable, then select and authorize your keyboard in the browser prompt.
 重新授权 / 选择其他设备|Authorize again / choose another device
 已授权的键盘会优先直接重连；两个站点的授权需要分别进行。|Previously authorized keyboards reconnect directly when possible. Each website needs its own permission.
-选择键盘名称后连接。可用功能以键盘实际固件为准。|Choose your keyboard, then connect. Available features depend on its firmware.
+选择你的键盘后连接。可用功能以键盘实际固件为准。|Choose your keyboard, then connect. Available features depend on its firmware.
+输出信息|Output
+正在适配…|Fitting animation…
+适配完成，保留播放时长。|Animation fitted. Playback duration preserved.
+适配失败|Could not fit the animation
+撤销|Undo
+上移|Move up
+下移|Move down
+上一个|Previous
+下一个|Next
+请在键盘上切到相同层。虚线键不计入检测。多个位置输出相同时会一起亮起，松开后显示条纹，只计为一个输出。|Switch to the same layer on your keyboard. Dashed keys are excluded. Positions with the same output light up together and show stripes on release. They count as one output.
+ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能和宏不计入检测。系统快捷键可能被拦截，输入也可能来自其他键盘。|This ZMK firmware does not report physical key states. Fn, layer changes, dual-role keys and macros are excluded. System shortcuts may be intercepted, and input can come from another keyboard.
+已检测输出|Outputs detected
+共享输出|Shared output
+选择你的键盘|Choose your keyboard
+暗色模式|Dark mode
+当前版本|Current version
+可升级版本|Available upgrade
+选择键盘后显示|Choose a keyboard to check
+无可用更新|No update available
+尚未识别键盘|Keyboard not identified
+暂无可用升级包|No upgrade package available
+正在查询…|Checking…
+需升级固件|Firmware update required
+升级包未提供可比较的版本号|The upgrade package has no comparable version number

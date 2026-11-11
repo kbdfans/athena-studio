@@ -1,32 +1,38 @@
-#firmware-dialog{width:800px;padding:32px;background:#faf9f6;border:1px solid #e0dfd7;border-radius:24px;max-height:calc(100dvh - 32px)}
-#firmware-dialog::backdrop{background:#1d251963;backdrop-filter:blur(12px)}
+#firmware-dialog{width:800px;padding:32px;background:var(--gray-98);border:1px solid var(--gray-85);border-radius:24px;max-height:calc(100dvh - 32px)}
+#firmware-dialog::backdrop{background:color-mix(in srgb, #000 38.8%, transparent);backdrop-filter:blur(12px)}
 #firmware-dialog h2{font-size:27px;margin:8px 0 10px;letter-spacing:-.6px;line-height:1.35}
-#firmware-dialog .upgrade-subtitle{font-size:13px;line-height:1.8;color:#72756b;margin:0 0 20px}
-.upgrade-model{display:inline-flex;align-items:center;gap:8px;border-radius:20px;background:#e9eddf;padding:6px 12px;font:600 12px system-ui;margin-bottom:18px;color:#4b603c}
-.upgrade-model:before{content:"";width:6px;height:6px;background:#758b5f;border-radius:50%}
+#firmware-dialog .upgrade-subtitle{font-size:13px;line-height:1.8;color:var(--gray-50);margin:0 0 20px}
+.upgrade-model{display:inline-flex;align-items:center;gap:8px;border-radius:20px;background:var(--gray-93);padding:6px 12px;font:600 12px system-ui;margin:0;color:var(--gray-30)}
+.upgrade-model:before{content:"";width:6px;height:6px;background:var(--gray-50);border-radius:50%}
 .boot-guide-art{display:block;width:100%;height:auto;margin:0}
 .boot-guide-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;list-style:none;padding:12px 0 0;margin:0}
-.boot-guide-steps strong{font-size:14px;display:block;line-height:1.6;color:#262922}
-.boot-guide-steps span{display:block;font-size:12px;color:#73776b;line-height:1.8;margin-top:4px}
-.boot-guide-note{font-size:12px;line-height:1.8;color:#73776b;padding:16px 0;margin:18px 0 0;border-top:1px solid #e5e6dc}
+.boot-guide-steps strong{font-size:14px;display:block;line-height:1.6;color:var(--gray-20)}
+.boot-guide-steps span{display:block;font-size:12px;color:var(--gray-50);line-height:1.8;margin-top:4px}
+.boot-guide-note{font-size:12px;line-height:1.8;color:var(--gray-50);padding:16px 0;margin:18px 0 0;border-top:1px solid var(--gray-90)}
 .upgrade-footer{display:flex;gap:12px;align-items:center;justify-content:flex-end;margin-top:16px}
 #upgrade-progress{margin:20px 0 10px;height:7px}
-#upgrade-status{font-size:13px;line-height:1.8;color:#59634e}
+#upgrade-status{font-size:13px;line-height:1.8;color:var(--gray-40)}
 #upgrade-error{white-space:pre-line}
 .upgrade-download{font-size:12px;text-decoration:underline;text-underline-offset:3px}
 #firmware-entry{margin:12px 0}
 @media(max-width:560px){#firmware-dialog{padding:24px 18px}.boot-guide-steps{gap:12px}.boot-guide-steps strong{font-size:12px}.boot-guide-steps span{font-size:11px}.upgrade-footer{flex-wrap:wrap}#firmware-dialog h2{font-size:23px}}
-.upgrade-detection{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0;padding:14px 16px;border:1px solid #e0dfd5;border-radius:12px;background:#efeee7;font-size:12px;line-height:1.7;color:#77786d}
-.upgrade-detection.ready{background:#edf4e6;border-color:#cedfbd;color:#496134}
+.upgrade-detection{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:18px 0;padding:14px 16px;border:1px solid var(--gray-85);border-radius:12px;background:var(--gray-93);font-size:12px;line-height:1.7;color:var(--gray-50)}
+.upgrade-detection.ready{background:var(--gray-96);border-color:var(--gray-85);color:var(--gray-30)}
 .upgrade-detection[hidden]{display:none}.upgrade-detection button{flex:none}
 @media(max-width:560px){.upgrade-detection{align-items:flex-start;flex-direction:column;gap:10px}}
-.upgrade-reset-choice{display:flex;gap:11px;align-items:flex-start;background:#fff2e9;border:1px solid #efc9af;border-radius:12px;padding:14px 16px;margin:18px 0;color:#8b431d;cursor:pointer}
-.upgrade-reset-choice input{margin-top:3px;accent-color:#ff4d00;flex:none;width:16px;height:16px}
-.upgrade-reset-choice strong{display:block;font-size:13px;line-height:1.6}.upgrade-reset-choice small{display:block;font-size:11px;line-height:1.8;margin-top:4px;color:#8d6e5b}
-.upgrade-detection.needs-authorization{border-color:#f1be9f;background:#fff1e6;color:#713c20}
+.upgrade-reset-choice{display:flex;gap:11px;align-items:flex-start;background:var(--gray-96);border:1px solid var(--gray-80);border-radius:12px;padding:14px 16px;margin:18px 0;color:var(--gray-30);cursor:pointer}
+.upgrade-reset-choice input{margin-top:3px;accent-color:var(--accent);flex:none;width:16px;height:16px}
+.upgrade-reset-choice strong{display:block;font-size:13px;line-height:1.6}.upgrade-reset-choice small{display:block;font-size:11px;line-height:1.8;margin-top:4px;color:var(--gray-50)}
+.upgrade-detection.needs-authorization{border-color:var(--gray-80);background:var(--gray-96);color:var(--gray-30)}
 #upgrade-detect{min-height:48px;min-width:176px;padding:12px 20px;font-size:14px;font-weight:700;white-space:normal}
-.upgrade-blocker{font-size:12px;line-height:1.7;margin:14px 0 0;color:#686d60}
+.upgrade-blocker{font-size:12px;line-height:1.7;margin:14px 0 0;color:var(--gray-40)}
 @media(max-width:560px){#upgrade-detect{width:100%;min-height:50px}.upgrade-detection{padding:16px}}
 
-.upgrade-version{font-size:12px;color:#666e5e;padding:8px 0}.upgrade-compatibility{border:1px solid #efbda0;background:#fff0e7;padding:18px;border-radius:12px;margin-top:18px}.upgrade-compatibility[hidden]{display:none}.upgrade-compatibility h3{font-size:16px;margin:0 0 8px}.upgrade-compatibility p,.upgrade-compatibility label{font-size:13px;line-height:1.8}.upgrade-compatibility label{display:flex;align-items:flex-start;gap:9px;margin-top:12px}.upgrade-compatibility input{accent-color:#f50;flex:none;margin-top:5px}
-.upgrade-reset-choice[hidden]{display:none}#firmware-dialog.version-only{width:460px;padding:32px}#firmware-dialog.version-only h2{font-size:24px}#firmware-dialog.version-only .upgrade-version{font-size:13px;margin:8px 0 24px}#firmware-dialog.version-only .upgrade-model{margin-bottom:8px}
+.upgrade-compatibility{border:1px solid var(--gray-80);background:var(--gray-96);padding:18px;border-radius:12px;margin-top:18px}.upgrade-compatibility[hidden]{display:none}.upgrade-compatibility h3{font-size:16px;margin:0 0 8px}.upgrade-compatibility p,.upgrade-compatibility label{font-size:13px;line-height:1.8}.upgrade-compatibility label{display:flex;align-items:flex-start;gap:9px;margin-top:12px}.upgrade-compatibility input{accent-color:var(--accent);flex:none;margin-top:5px}
+.upgrade-reset-choice[hidden]{display:none}#firmware-dialog.version-only{width:460px;padding:32px}#firmware-dialog.version-only h2{font-size:24px}
+
+.upgrade-identity { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 10px 0 16px; }
+.upgrade-versions { display: flex; flex-wrap: wrap; gap: 8px 12px; margin: 0; }
+.upgrade-versions > div { padding: 6px 10px; border-radius: 7px; border: 1px solid var(--gray-90); background: var(--paper); }
+.upgrade-versions dt { font-size: 11px; color: var(--gray-50); }
+.upgrade-versions dd { margin: 2px 0 0; font-size: 12px; font-weight: 650; }

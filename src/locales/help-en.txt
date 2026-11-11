@@ -78,7 +78,7 @@ Esc 用于测试；点击右上角关闭，检测随即暂停。|Esc is availabl
 预览即时更新，连接新版键盘后自动生效并保存。|Preview updates instantly. On supported firmware, changes apply and save automatically.
 仅本地预览 · 连接后读取键盘实际设置|Local preview only · connect to load actual keyboard settings
 当前固件不支持外观设置，升级后才会在键盘生效。|This firmware needs an update before appearance settings can apply.
-「左右 Shift + T」切换打字弹球 / 图片；「左右 Shift + P」切换宠物 / 图片。|Left + Right Shift + T switches typing bounce / images; Left + Right Shift + P switches pet / images.
+「左右 Shift + T」切换击打特效 / 图片；「左右 Shift + P」切换宠物 / 图片。|Left + Right Shift + T switches keystroke effects / images; Left + Right Shift + P switches pet / images.
 支持英文字母、数字和常用标点。中文输入法下显示对应的字母按键；Ctrl / Cmd 等组合快捷键不生成字母。|Supports English letters, numbers and punctuation. With a Chinese IME, physical letter keys are shown. Ctrl / Cmd shortcuts do not emit letters.
 同屏最多 16 个字母，仅在运行内存短暂显示，不保存输入。关闭网页后仍可使用。打字模式下暂停宠物消耗。|Up to 16 letters appear briefly in RAM; input is not saved. Works with the website closed. Pet energy use pauses in typing mode.
 键盘屏幕 · 128 × 128|Keyboard display · 128 × 128
@@ -135,10 +135,10 @@ USB 直写适用于桌面 Chrome / Edge|USB writing works in desktop Chrome / Ed
 键位、屏幕和检测共用此连接 · 点击管理|One connection for keys, screen and testing · click to manage
 连接一次，即可使用全部功能|Connect once for all features
 请先连接 v2 键盘|Connect a v2 keyboard first
-请先升级打字弹球固件|Update typing-bounce firmware first
-打字弹球正在键盘上运行|Typing bounce is running on the keyboard
-已连接 · 可启用打字弹球|Connected · typing bounce available
-需先升级打字弹球固件|Typing-bounce firmware update required
+请先升级击打特效固件|Update keystroke effects firmware first
+击打特效正在键盘上运行|Keystroke effects is running on the keyboard
+已连接 · 可启用击打特效|Connected · keystroke effects available
+需先升级击打特效固件|Keystroke effects firmware update required
 正在读取设备状态…|Reading device status…
 正在读取键盘设置…|Reading keyboard settings…
 预览已更新 · 等待应用…|Preview updated · waiting to apply…

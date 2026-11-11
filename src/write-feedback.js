@@ -96,7 +96,7 @@ export function setupWriteFeedback(root = document, clock = {}) {
     $('transfer-dismiss').hidden = false; $('transfer-dismiss').disabled = false;
     $('transfer-timing').textContent = details;
     $('transfer-details').hidden = !details;
-    buttonState('success', buttonLabel || (button.id === 'write' ? '再次写入 ↗' : '已完成'));
+    buttonState('success', buttonLabel || (button.id === 'write' ? '再次写入' : '已完成'));
     elapsed(seconds);
     if (panel.dataset.kind !== "activation") stopCelebration = celebrate();
   }

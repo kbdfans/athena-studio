@@ -4,9 +4,29 @@ export function setupTypingSettings({preview,getDevice,getBusy,setBusy}){
  const $=id=>document.getElementById(id),box=$('typing-settings'),hint=$('typing-settings-status');
  let draft=normalizeTypingSettings(TYPING_DEFAULTS),loaded=null,current=null,status=null,lastStatus=null,timer=0,loading=false,saving=false,savePending=false,revision=0;
  try{const saved=localStorage.getItem(STORAGE);if(saved)draft=normalizeTypingSettings(JSON.parse(saved));}catch{}
+ const choices = [
+  ['typing-size', 'size', ['小 · 14 px', '中 · 18 px', '大 · 22 px']],
+  ['typing-weight', 'weight', ['常规', '加粗', '特粗']],
+  ['typing-color-mode', 'mode', ['统一颜色', '多彩随机', '按字母 / 数字 / 符号分类']],
+ ].map(([id, key, names]) => ({
+  key,
+  inputs: names.map((name, value) => {
+   const label = document.createElement('label');
+   const input = document.createElement('input');
+   input.type = 'radio';
+   input.name = id;
+   input.value = String(value);
+   const text = document.createElement('span');
+   text.textContent = name;
+   label.append(input, text);
+   $(id).append(label);
+   input.onchange = () => edited();
+   return input;
+  }),
+ }));
  function remember(){try{localStorage.setItem(STORAGE,JSON.stringify(draft));}catch{}}
  function render(){
-  $('typing-size').value=String(draft.size);$('typing-weight').value=String(draft.weight);$('typing-color-mode').value=String(draft.mode);
+  for (const {key, inputs} of choices) inputs[draft[key]].checked = true;
   const labels=draft.mode===0?['统一颜色']:draft.mode===2?['字母','数字','符号']:['颜色 1','颜色 2','颜色 3','颜色 4'];
   draft.colors.forEach((c,i)=>{const input=$('typing-color-'+i);input.value=c;input.parentElement.hidden=i>=labels.length;input.parentElement.querySelector('span').textContent=labels[i]||'';input.setAttribute('aria-label',labels[i]||'备用颜色');});
   $('typing-background').value=draft.background;$('typing-grid').value=draft.grid;
@@ -36,10 +56,10 @@ export function setupTypingSettings({preview,getDevice,getBusy,setBusy}){
  }
  function edited(commit=true){
   clearTimeout(timer);timer=0;
-  draft=normalizeTypingSettings({size:Number($('typing-size').value),weight:Number($('typing-weight').value),mode:Number($('typing-color-mode').value),colors:Array.from({length:4},(_,i)=>$('typing-color-'+i).value),background:$('typing-background').value,grid:$('typing-grid').value});revision++;render();remember();
+  const selected = Object.fromEntries(choices.map(({key, inputs}) => [key, inputs.findIndex(input => input.checked)]));
+  draft=normalizeTypingSettings({...selected,colors:Array.from({length:4},(_,i)=>$('typing-color-'+i).value),background:$('typing-background').value,grid:$('typing-grid').value});revision++;render();remember();
   if(commit){clearTimeout(timer);if(current&&loaded===current&&status?.motionVersion>=8){hint.textContent='预览已更新 · 等待应用…';timer=setTimeout(apply,350);}else offlineMessage();}
  }
- for(const id of ['typing-size','typing-weight','typing-color-mode'])$(id).onchange=()=>edited();
  for(let i=0;i<4;i++){const input=$('typing-color-'+i);input.oninput=()=>edited(false);input.onchange=()=>edited();}
  for(const id of ['typing-background','typing-grid']){const input=$(id);input.oninput=()=>edited(false);input.onchange=()=>edited();}
  $('typing-settings-reset').onclick=()=>{draft=normalizeTypingSettings(TYPING_DEFAULTS);render();edited();};

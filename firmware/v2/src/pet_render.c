@@ -22,7 +22,7 @@ void pet_render(const void *display,bool force){
     pet_status_t s;pet_status(&s);if(!s.ready)return;
     uint32_t now=timer_read32();
     const uint8_t *pack=pet_active_pack();
-    uint8_t action=s.action<8?s.action:0,frame=pet_frame(pack,action,now-s.action_started);
+    uint8_t action=s.action<8?s.action:0,frame=pet_frame(pack,action,pet_animation_elapsed(&s,now));
     const uint8_t *pixels=pack+pet_pixel_offset(pack,action,frame);
     uint8_t sleep_phase=action==3?((now-s.action_started)/250)%12:0;
     uint8_t ground_offset=scene_ground_tick(&ground,now,action,s.stage);

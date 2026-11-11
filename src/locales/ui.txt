@@ -15,10 +15,10 @@
 屏幕快捷键|Screen shortcuts|螢幕快捷鍵|画面ショートカット|화면 단축키|Display-Tasten|Raccourcis écran|Atajos de pantalla
 动画模式|Animation mode|動畫模式|アニメーション|애니메이션 모드|Animation|Mode animation|Modo animación
 电子宠物|Pixel pet|電子寵物|ピクセルペット|픽셀 펫|Pixel-Tier|Animal pixel|Mascota píxel
-打字弹球|Typing bounce|打字彈球|文字バウンス|타이핑 바운스|Buchstaben-Bounce|Lettres rebondissantes|Letras rebotantes
+击打特效|Keystroke Effects|擊打特效|打鍵エフェクト|키 입력 효과|Tasteneffekte|Effets de frappe|Efectos de pulsación
 切换到已保存的图片动画|Show saved images and animations|切換至已儲存的圖片動畫|保存した画像・アニメを表示|저장된 이미지와 애니메이션 표시|Gespeicherte Bilder anzeigen|Afficher les animations enregistrées|Mostrar animaciones guardadas
 切换到电子宠物|Show your pixel pet|切換至電子寵物|ペットを表示|픽셀 펫 표시|Pixel-Tier anzeigen|Afficher votre animal|Mostrar tu mascota
-切换到打字弹球|Show bouncing letters as you type|切換至打字彈球|入力に合わせて文字が弾む|타이핑에 맞춰 글자 표시|Buchstaben beim Tippen anzeigen|Afficher les lettres en tapant|Mostrar letras al escribir
+切换到击打特效|Switch to keystroke effects|切換至擊打特效|打鍵エフェクトに切り替える|키 입력 효과로 전환|Zu Tasteneffekten wechseln|Passer aux effets de frappe|Cambiar a efectos de pulsación
 媒体控制|Media controls|媒體控制|メディア|미디어 제어|Medien|Multimédia|Multimedia
 常用层切换|Layer switching|常用層切換|レイヤー切替|레이어 전환|Ebenenwechsel|Changement de couche|Cambio de capa
 鼠标按键|Mouse keys|滑鼠按鍵|マウスキー|마우스 키|Maustasten|Touches souris|Teclas de ratón
@@ -59,7 +59,7 @@ Combo 组合触发|Combos|Combo 組合觸發|コンボ|콤보|Combos|Combos|Comb
 图片动画|Images & GIFs|圖片動畫|画像・GIF|이미지 및 GIF|Bilder & GIFs|Images et GIF|Imágenes y GIF
 写入键盘|Write to keyboard|寫入鍵盤|キーボードに転送|키보드에 쓰기|Übertragen|Transférer au clavier|Enviar al teclado
 在键盘上启用|Enable on keyboard|在鍵盤上啟用|キーボードで有効にする|키보드에서 활성화|Auf Tastatur aktivieren|Activer sur le clavier|Activar en el teclado
-启用打字弹球|Enable typing bounce|啟用打字彈球|文字バウンスを有効にする|타이핑 바운스 활성화|Buchstaben-Bounce aktivieren|Activer les lettres|Activar letras rebotantes
+启用击打特效|Enable keystroke effects|啟用擊打特效|打鍵エフェクトを有効にする|키 입력 효과 켜기|Tasteneffekte aktivieren|Activer les effets de frappe|Activar efectos de pulsación
 导入素材|Import|匯入素材|素材を読み込む|소재 가져오기|Importieren|Importer|Importar
 裁剪与优化|Crop & optimize|裁切與最佳化|切り抜き・最適化|자르기 및 최적화|Zuschneiden & optimieren|Recadrer et optimiser|Recortar y optimizar
 编辑画布|Editor|編輯畫布|編集キャンバス|편집 캔버스|Editor|Éditeur|Editor
@@ -98,7 +98,7 @@ Combo 组合触发|Combos|Combo 組合觸發|コンボ|콤보|Combos|Combos|Comb
 大 · 22 px|Large · 22 px|大 · 22 px|大 · 22 px|크게 · 22 px|Groß · 22 px|Grand · 22 px|Grande · 22 px
 常规|Regular|一般|標準|보통|Normal|Normal|Normal
 加粗|Bold|粗體|太字|굵게|Fett|Gras|Negrita
-特粗 · 当前效果|Extra bold|特粗 · 目前效果|極太|아주 굵게|Extrafett|Très gras|Extranegrita
+特粗|Extra bold|特粗|極太|아주 굵게|Extrafett|Très gras|Extra gruesa
 配色方式|Color mode|配色方式|配色モード|색상 모드|Farbmodus|Mode de couleur|Modo de color
 统一颜色|Single color|單一色彩|単色|단색|Einfarbig|Couleur unique|Un solo color
 多彩随机|Random palette|隨機多彩|ランダム配色|무작위 색상|Zufällige Farben|Palette aléatoire|Paleta aleatoria
@@ -208,7 +208,7 @@ HP · 体力|HP · energy|HP · 體力|HP · 体力|HP · 체력|HP · Energie|H
 请使用桌面版 Chrome 或 Edge，并通过 USB 连接键盘。|Use desktop Chrome or Edge and connect your keyboard via USB.|請使用桌面版 Chrome 或 Edge，並透過 USB 連接鍵盤。|PC 版 Chrome または Edge で USB 接続してください。|데스크톱 Chrome 또는 Edge에서 USB로 연결하세요.|Bitte Desktop-Chrome oder Edge verwenden und per USB verbinden.|Utilisez Chrome ou Edge sur ordinateur et branchez en USB.|Usa Chrome o Edge de escritorio y conecta por USB.
 已连接|Connected|已連接|接続済み|연결됨|Verbunden|Connecté|Conectado
 默认输入|Default typing|預設輸入|標準入力|기본 입력|Standardeingabe|Saisie par défaut|Entrada predeterminada
-此型号的宠物与弹球需要单独适配固件。当前可分配原有图片切换和屏幕开关。|Pet and typing bounce need firmware adapted for this model. Existing image and display controls can be assigned.|此型號的寵物與彈球需個別適配韌體。目前可指派原有圖片切換及螢幕開關。|ペットと文字バウンスは専用ファームウェアが必要です。既存の画像切替と画面電源は割り当てできます。|펫과 타이핑 바운스는 전용 펌웨어가 필요합니다. 기존 이미지 전환 및 화면 전원은 지정 가능합니다.|Tier und Bounce benötigen angepasste Firmware. Bildwechsel und Display-Schalter sind verfügbar.|L’animal et les lettres nécessitent un firmware adapté. Image suivante et écran restent disponibles.|La mascota y las letras necesitan firmware adaptado. El cambio de imagen y la pantalla están disponibles.
+此型号的宠物与击打特效需要单独适配固件。当前可分配原有图片切换和屏幕开关。|Pet and keystroke effects need firmware adapted for this model. Existing image and display controls can be assigned.|此型號的寵物與彈球需個別適配韌體。目前可指派原有圖片切換及螢幕開關。|ペットと文字バウンスは専用ファームウェアが必要です。既存の画像切替と画面電源は割り当てできます。|펫과 타이핑 바운스는 전용 펌웨어가 필요합니다. 기존 이미지 전환 및 화면 전원은 지정 가능합니다.|Tier und Bounce benötigen angepasste Firmware. Bildwechsel und Display-Schalter sind verfügbar.|L’animal et les lettres nécessitent un firmware adapté. Image suivante et écran restent disponibles.|La mascota y las letras necesitan firmware adaptado. El cambio de imagen y la pantalla están disponibles.
 按住 Esc，再连接键盘。|Hold Esc, then connect your keyboard.|按住 Esc，再連接鍵盤。|Esc を押しながらキーボードを接続|Esc를 누른 채 키보드를 연결하세요.|Esc halten, dann Tastatur verbinden.|Maintenez Échap, puis connectez le clavier.|Mantén Esc y conecta el teclado.
 拔掉 USB|Unplug USB|拔掉 USB|USB を抜く|USB 분리|USB abziehen|Débranchez l’USB|Desconecta el USB
 先断开键盘的数据线。|Disconnect the keyboard’s USB cable first.|先拔掉鍵盤的資料線。|先にキーボードの USB ケーブルを抜きます。|먼저 키보드 USB 케이블을 분리하세요.|Zuerst das USB-Kabel der Tastatur abziehen.|Débranchez d’abord le câble USB du clavier.|Primero desconecta el cable USB del teclado.

@@ -7,14 +7,16 @@
       name="description"
       content="为 Athena75 裁剪和优化屏幕动画，通过 USB 直接写入键盘。图片只在本地处理。"
     />
-    <title>Athena · Screen Studio</title>
+    <title>KBD Studio</title>
+    <link rel="stylesheet" href="/studio-theme.css" />
+    <script src="/studio-theme.js"></script>
   </head>
   <body>
     <header>
-      <a class="brand" href="/">Athena<span>SCREEN STUDIO</span></a>
-      <div class="header-right">
+      <a class="brand" href="/">KBD Studio</a>
+      <div class="header-right"><button type="button" class="theme-toggle" data-theme-toggle aria-label="暗色模式" aria-pressed="false" title="暗色模式"><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.7 14.2A9 9 0 0 1 9.8 3.3 9 9 0 1 0 20.7 14.2Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg></button>
         <span class="local"><i></i> 本地处理 · 不上传图片</span
-        ><button id="connect" class="outline">连接键盘 <span>↗</span></button>
+        ><button id="connect" class="outline">连接键盘</button>
       </div>
     </header>
     <main>
@@ -24,7 +26,7 @@
           <h1>让小屏幕，播放你的灵感<span>。</span></h1>
           <p>把喜欢的画面，变成键盘上的日常。</p>
         </div>
-        <button id="help" class="text-button">使用指南 ↗</button>
+        <button id="help" class="text-button">使用指南</button>
       </section>
       <div class="steps">
         <span class="active"><b>01</b> 导入素材</span><i></i
@@ -155,7 +157,7 @@
               <span>更小体积</span><span>更流畅</span>
             </div>
             <button id="optimize" class="outline full">
-              自动适配屏幕容量 <span>↗</span>
+              自动适配屏幕容量
             </button>
             <div class="stats">
               <div>
@@ -182,9 +184,9 @@
               ><span id="connection-state">尚未连接键盘</span>
             </div>
             <button id="write" class="primary full" disabled>
-              写入键盘 <span>↗</span></button
+              写入键盘</button
             ><button id="download" class="text-button full">
-              下载 UF2 文件 ↓
+              下载 UF2 文件
             </button>
             <div id="progress-area" hidden>
               <progress id="progress" value="0" max="100"></progress>
@@ -193,13 +195,13 @@
             <p class="write-note">写入前自动备份 · 写入后回读校验</p>
           </section>
           <button id="backups" class="backup-link">
-            ↶ 动画备份与恢复 <span>→</span>
+            动画备份与恢复
           </button>
         </aside>
       </div>
       <div id="notice" class="notice" role="status" hidden></div>
       <footer>
-        <span>ATHENA SCREEN STUDIO <b>LOCAL PREVIEW</b></span
+        <span>KBD STUDIO <b>LOCAL PREVIEW</b></span
         ><span
           >USB 直写适用于桌面 Chrome / Edge
           <button id="disconnect" class="text-button" hidden>断开连接</button
@@ -211,7 +213,7 @@
     </main>
     <dialog id="connection-dialog">
       <button class="dialog-close" data-close aria-label="关闭">×</button>
-      <div class="eyebrow">CONNECT YOUR ATHENA</div>
+      <div class="eyebrow">CONNECT YOUR KEYBOARD</div>
       <h2>让键盘准备好。</h2>
       <ol class="connect-steps">
         <li>

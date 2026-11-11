@@ -15,12 +15,12 @@ for i in range(44):
  b=c.getchannel('A').point(lambda a:255 if a>=128 else 0).getbbox()
  assert b, i
  cells.append(c);boxes.append(b)
-scale=min(26/max(b[3]-b[1] for b in boxes),38/max(b[2]-b[0] for b in boxes))
+scale=min(30/max(b[3]-b[1] for b in boxes),38/max(b[2]-b[0] for b in boxes))
 frames=[]
 for c,b in zip(cells,boxes):
  w=max(1,round((b[2]-b[0])*scale));h=max(1,round((b[3]-b[1])*scale))
  c=c.crop(b).resize((w,h),Image.Resampling.NEAREST)
- pixels=[0]*1280;left=(40-w)//2;top=30-h
+ pixels=[0]*1280;left=(40-w)//2;top=31-h
  for y in range(h):
   for x in range(w):
    p=c.getpixel((x,y))

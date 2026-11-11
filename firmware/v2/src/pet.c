@@ -12,7 +12,7 @@ static uint8_t activity;
 static uint8_t interaction,save_index;
 static bool has_save,force_save;
 static uint32_t care_clock,metabolism_ms,run_ms,hunger_ms;
-static uint8_t completed_jumps;
+static uint8_t completed_jumps,jump_gait,jump_entry_lift;
 static bool jump_pending,settings_save_pending;
 static uint32_t settings_changed;
 #define HP_IDLE_MS 300000u
@@ -67,6 +67,35 @@ uint8_t pet_lift(const uint8_t *p,uint8_t a,uint32_t elapsed){
     // Positive weighted sum matches browser Math.floor, including descending phases.
     return (h*(ms-elapsed)+next*elapsed)/ms;
 }
+#define JUMP_TAKEOFF_MS 80u
+#define JUMP_LANDING_MS 90u
+uint32_t pet_animation_elapsed(const pet_status_t *s,uint32_t now){
+    uint32_t age=now-s->action_started;
+    if(s->action!=6||!s->jump_duration)return age;
+    uint32_t airborne=s->jump_landing-s->jump_takeoff;
+    if(age<JUMP_TAKEOFF_MS)return s->jump_takeoff*age/JUMP_TAKEOFF_MS;
+    age-=JUMP_TAKEOFF_MS;
+    if(age<airborne)return s->jump_takeoff+age;
+    age-=airborne;
+    if(age>JUMP_LANDING_MS)age=JUMP_LANDING_MS;
+    uint32_t recovery=s->jump_duration-s->jump_landing;
+    return s->jump_landing+recovery*age/JUMP_LANDING_MS;
+}
+static uint32_t interaction_duration(const uint8_t *pack,uint8_t action){
+    if(action==6&&state.jump_duration)return JUMP_TAKEOFF_MS+state.jump_landing-state.jump_takeoff+JUMP_LANDING_MS;
+    return pet_duration(pack,action);
+}
+static void start_jump(const uint8_t *pack,uint32_t now){
+    jump_gait=state.action==1||state.action==2?state.action:0;
+    jump_entry_lift=pet_lift(pack,state.action,now-state.action_started);
+    state.jump_duration=0;
+    if(jump_gait&&pet_is40(pack)&&pack[24+6]==8){
+        state.jump_takeoff=frame_ms(pack,6,0)+frame_ms(pack,6,1);
+        state.jump_landing=state.jump_takeoff;
+        for(uint8_t frame=2;frame<6;frame++)state.jump_landing+=frame_ms(pack,6,frame);
+        state.jump_duration=pet_duration(pack,6);
+    }
+}
 static uint8_t growth(void){return state.xp<10?0:state.xp<200?1:2;}
 static void decay_activity(uint32_t now){
     uint32_t steps=(uint32_t)(now-activity_clock)/100;
@@ -102,9 +131,10 @@ void pet_key(bool space){
     uint32_t now=su_millis();care_update(now);last_key=now;decay_activity(now);
     activity=activity>36?40:activity+4;
     const uint8_t *pack=pet_active_pack();
-    bool busy=interaction&&(uint32_t)(now-interaction_start)<pet_duration(pack,interaction);
+    bool busy=interaction&&(uint32_t)(now-interaction_start)<interaction_duration(pack,interaction);
     if(!busy&&(state.action==3||space)){
         interaction=state.action==3?7:6;interaction_start=now;jump_pending=interaction==6;
+        if(jump_pending)start_jump(pack,now);
         state.action=interaction;state.action_started=now;
     }
     if(state.keys<0xffffffffu)state.keys++;
@@ -134,7 +164,7 @@ static void care_update(uint32_t now){
     uint32_t left=(uint32_t)(now-care_clock),idle=(uint32_t)(care_clock-last_key);
     uint32_t running=state.action==2&&idle<900?900-idle:0;
     uint32_t jump_left=0;
-    if(jump_pending){uint32_t age=(uint32_t)(care_clock-interaction_start),duration=pet_duration(pet_active_pack(),6);jump_left=age<duration?duration-age:0;}
+    if(jump_pending){uint32_t age=(uint32_t)(care_clock-interaction_start),duration=interaction_duration(pet_active_pack(),6);jump_left=age<duration?duration-age:0;}
     care_clock=now;if(state.mode!=1)return;
     uint32_t awake=idle<SLEEP_IDLE_MS?SLEEP_IDLE_MS-idle:0;
     if(left>awake)left=awake;
@@ -167,11 +197,25 @@ void pet_tick(void){
     decay_activity(now);
     state.level=1+(state.xp/200>19?19:state.xp/200);
     state.stage=growth();
-    uint8_t next;
-    if(interaction&&(uint32_t)(now-interaction_start)<pet_duration(pet_active_pack(),interaction))next=interaction;
-    else {interaction=0;uint32_t idle=(uint32_t)(now-last_key);next=idle>=SLEEP_IDLE_MS?3:idle<900&&activity?(activity>=(state.action==2?10:16)?2:1):0;}
-    if(next!=state.action){state.action=next;state.action_started=now;}
-    state.jump=pet_lift(pet_active_pack(),state.action,now-state.action_started);
+    const uint8_t *pack=pet_active_pack();
+    uint8_t previous=state.action,next;
+    if(interaction&&(uint32_t)(now-interaction_start)<interaction_duration(pack,interaction))next=interaction;
+    else {
+        interaction=0;
+        uint32_t idle=(uint32_t)(now-last_key);
+        bool running=previous==2||(previous==6&&jump_gait==2);
+        next=idle>=SLEEP_IDLE_MS?3:idle<900&&activity?(activity>=(running?10:16)?2:1):0;
+    }
+    if(next!=previous){
+        state.action=next;state.action_started=now;
+        if(previous==6&&next==2&&pet_is40(pack)&&pack[24+2]>=4)
+            state.action_started-=frame_ms(pack,2,0)+frame_ms(pack,2,1)+frame_ms(pack,2,2);
+    }
+    pet_status_t pose=state;
+    uint32_t age=now-pose.action_started;
+    state.jump=pet_lift(pack,next,pet_animation_elapsed(&pose,now));
+    if(next==6&&pose.jump_duration&&age<JUMP_TAKEOFF_MS)
+        state.jump+=(jump_entry_lift*(JUMP_TAKEOFF_MS-age)+JUMP_TAKEOFF_MS/2)/JUMP_TAKEOFF_MS;
     if(state.dirty&&!su_busy()&&(force_save||(settings_save_pending&&(uint32_t)(now-settings_changed)>=1500&&(uint32_t)(now-last_save)>=2000)||((uint32_t)(now-dirty_since)>=1500&&(uint32_t)(now-last_save)>=60000))){
         state.save_error=!save();last_save=now;force_save=false;if(!state.save_error){state.dirty=0;settings_save_pending=false;}
     }
@@ -189,7 +233,7 @@ void pet_command(uint8_t op,uint32_t value,uint8_t p[32]){
         default:p[5]=SU_COMMAND;return;
     }
     p[6]=state.mode;p[7]=state.image;p[8]=state.action;p[9]=state.level;p[10]=state.fullness;p[11]=state.dirty;
-    put32(p+12,state.xp);put32(p+16,state.keys);put32(p+20,u32(pet_active_pack()+12));put32(p+24,state.sequence);p[28]=state.save_error;p[29]=state.ready;p[30]=12;p[31]=state.stage;
+    put32(p+12,state.xp);put32(p+16,state.keys);put32(p+20,u32(pet_active_pack()+12));put32(p+24,state.sequence);p[28]=state.save_error;p[29]=state.ready;p[30]=13;p[31]=state.stage;
 }
 
 void pet_typing_config(uint8_t op,const uint8_t data[16],uint8_t p[32]){

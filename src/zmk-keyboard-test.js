@@ -4,7 +4,7 @@ import {platformKeyLabel} from './platform-keys.js';
 import {browserCode} from './keyboard-test-state.js';
 
 // Browser events identify output, never physical switches or the active layer.
-// Only unique plain Key Press bindings can be located without guessing.
+// Plain bindings with the same browser code share one testable output.
 export function zmkTestLayout(device,layerId){
  const layer=device.map?.layers.find(l=>l.id===layerId)||device.map?.layers[0];
  const layout=device.physical?.layouts[device.physical.activeLayoutIndex];
@@ -21,5 +21,5 @@ export function zmkTestLayout(device,layerId){
   return {...k,id:`z:${k.position}`,label,code};
  });
  const ambiguous=new Set([...counts].filter(([,n])=>n>1).map(([code])=>code));
- return {...geometry,layer,keys:keys.map(k=>({...k,reason:!k.code?'此功能不提供可定位的普通按键输出':ambiguous.has(k.code)?'多个位置输出相同，浏览器无法区分':'',code:ambiguous.has(k.code)?null:k.code})),ambiguous};
+ return {...geometry,layer,keys:keys.map(k=>({...k,reason:!k.code?'此功能不提供可定位的普通按键输出':ambiguous.has(k.code)?'多个位置输出相同，浏览器无法区分':''})),ambiguous};
 }

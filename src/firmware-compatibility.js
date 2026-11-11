@@ -14,6 +14,7 @@ export function firmwareVersionStatus(info,release){
  if(!info)return {kind:'unknown',label:'旧版固件未提供版本信息'};
  if(info.model!==release.model||info.hardwareRevision!==release.hardwareRevision)return {kind:'unsupported',label:'硬件版本与升级包不匹配'};
  if(info.buildId===release.buildId)return {kind:'current',label:'已是当前发布版本'};
+ if(!Number.isInteger(release.releaseSequence))return {kind:'unsupported',label:'升级包未提供可比较的版本号'};
  if(info.releaseSequence>release.releaseSequence)return {kind:'newer',label:'键盘版本比此站点更新'};
  return {kind:'update',label:'有可用更新'};
 }

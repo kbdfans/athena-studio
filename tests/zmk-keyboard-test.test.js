@@ -9,10 +9,10 @@ test('ZMK tester follows the reported active layout, selected layer and remapped
  const board=zmkTestLayout(d,9);assert.equal(board.keys.length,3);assert.equal(board.layer.id,9);assert.equal(board.keys[0].code,'Numpad0');assert.equal(board.keys[1].code,'KeyE');
  assert.deepEqual(d.ops,[]);assert.equal(d.saved,0);
 });
-test('duplicate output and firmware-only behaviors never count as unique physical positions',()=>{
+test('duplicate plain bindings retain the browser code; firmware-only behaviors stay unavailable',()=>{
  const d=fakeZmk();d.physical.activeLayoutIndex=1;
  d.map.layers[0].bindings=[kp(4),kp(4),{behaviorId:12,param1:9,param2:0}];
- const board=zmkTestLayout(d,3);assert.equal(board.keys.filter(k=>k.code).length,0);assert.ok(board.ambiguous.has('KeyA'));assert.match(board.keys[0].reason,/无法区分/);assert.match(board.keys[2].reason,/不提供/);
+ const board=zmkTestLayout(d,3);assert.equal(board.keys.filter(k=>k.code).length,2);assert.ok(board.ambiguous.has('KeyA'));assert.match(board.keys[0].reason,/无法区分/);assert.match(board.keys[2].reason,/不提供/);
 });
 test('modifier combinations, consumer usage and transparent/unknown behaviors are not guessed',()=>{
  const d=fakeZmk();d.physical.activeLayoutIndex=1;

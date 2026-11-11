@@ -12,7 +12,7 @@ test('locales use explicit matching and native labels; dynamic variables and dev
  for(const entries of Object.values(MESSAGES))for(const value of Object.values(entries))assert(value.trim());
 });
 test('localized search finds stable screen keycodes, firmware capability is required',()=>{
- setLocale('en');assert.equal(categoryKeys(KEYCODES,'basic','屏幕快捷键','typing bounce')[0].code,0x7e12);setLocale('zh-CN');
+ setLocale('en');assert.equal(categoryKeys(KEYCODES,'basic','屏幕快捷键','keystroke effects')[0].code,0x7e12);setLocale('zh-CN');
  assert.equal(categoryKeys(KEYCODES,'basic','屏幕快捷键').length,3);for(const k of SCREEN_SHORTCUTS){assert.equal(keyInfo(k.code).label,k.label);assert(!screenShortcutSupported(k.code,8));assert(screenShortcutSupported(k.code,9));}assert(screenShortcutSupported(0x7e04,8));
 });
 test('connection gate requires a verified ready open runtime; disconnection cannot keep access',()=>{

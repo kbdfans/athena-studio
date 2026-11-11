@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createPetPack,validatePetPack,petThemeColors,PET_PALETTES,petRgba,PET_SEQUENCES} from '../src/pet-pack.js';
+import {createPetPack,validatePetPack,petThemeColors,PET_PALETTES,petRgba,PET_SEQUENCES,petRequiresUpgrade} from '../src/pet-pack.js';
 import {color565,colorHex,normalizePetColors,customPetPalette,readPetColors} from '../src/pet-colors.js';
 
 test('custom colors change only six palette bytes, preserving every sprite, timing and transparent pixel',()=>{
@@ -59,4 +59,15 @@ test('pet preferences can use a separate species storage key without changing ol
  const values={'athena-pet-colors-v1':JSON.stringify(cat),'athena-pet-colors-v1-shiba':JSON.stringify(dog)},storage={getItem:k=>values[k]};
  assert.deepEqual(readPetColors(storage,{},Object.keys(PET_PALETTES)),cat);
  assert.deepEqual(readPetColors(storage,{},Object.keys(PET_PALETTES),'athena-pet-colors-v1-shiba'),dog);
+});
+
+test('appearance-only pets use existing PT40 firmware; higher requirements are per model',()=>{
+ assert.equal(petRequiresUpgrade({},'athena75',5),false);
+ assert.equal(petRequiresUpgrade({},'athena1800',12),false);
+ assert.equal(petRequiresUpgrade({},'athena1800',4),true);
+ const custom={firmware:{athena75:13,athena1800:14}};
+ assert.equal(petRequiresUpgrade(custom,undefined,undefined),false);
+ assert.equal(petRequiresUpgrade(custom,'athena75',12),true);
+ assert.equal(petRequiresUpgrade(custom,'athena75',13),false);
+ assert.equal(petRequiresUpgrade(custom,'athena1800',13),true);
 });

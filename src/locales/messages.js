@@ -144,14 +144,14 @@ export const MESSAGES={
     "fr": "Animal pixel",
     "es": "Mascota píxel"
   },
-  "打字弹球": {
-    "en": "Typing bounce",
-    "zh-TW": "打字彈球",
-    "ja": "文字バウンス",
-    "ko": "타이핑 바운스",
-    "de": "Buchstaben-Bounce",
-    "fr": "Lettres rebondissantes",
-    "es": "Letras rebotantes"
+  "击打特效": {
+    "en": "Keystroke Effects",
+    "zh-TW": "擊打特效",
+    "ja": "打鍵エフェクト",
+    "ko": "키 입력 효과",
+    "de": "Tasteneffekte",
+    "fr": "Effets de frappe",
+    "es": "Efectos de pulsación"
   },
   "切换到已保存的图片动画": {
     "en": "Show saved images and animations",
@@ -171,14 +171,14 @@ export const MESSAGES={
     "fr": "Afficher votre animal",
     "es": "Mostrar tu mascota"
   },
-  "切换到打字弹球": {
-    "en": "Show bouncing letters as you type",
-    "zh-TW": "切換至打字彈球",
-    "ja": "入力に合わせて文字が弾む",
-    "ko": "타이핑에 맞춰 글자 표시",
-    "de": "Buchstaben beim Tippen anzeigen",
-    "fr": "Afficher les lettres en tapant",
-    "es": "Mostrar letras al escribir"
+  "切换到击打特效": {
+    "en": "Switch to keystroke effects",
+    "zh-TW": "切換至擊打特效",
+    "ja": "打鍵エフェクトに切り替える",
+    "ko": "키 입력 효과로 전환",
+    "de": "Zu Tasteneffekten wechseln",
+    "fr": "Passer aux effets de frappe",
+    "es": "Cambiar a efectos de pulsación"
   },
   "媒体控制": {
     "en": "Media controls",
@@ -540,14 +540,14 @@ export const MESSAGES={
     "fr": "Activer sur le clavier",
     "es": "Activar en el teclado"
   },
-  "启用打字弹球": {
-    "en": "Enable typing bounce",
-    "zh-TW": "啟用打字彈球",
-    "ja": "文字バウンスを有効にする",
-    "ko": "타이핑 바운스 활성화",
-    "de": "Buchstaben-Bounce aktivieren",
-    "fr": "Activer les lettres",
-    "es": "Activar letras rebotantes"
+  "启用击打特效": {
+    "en": "Enable keystroke effects",
+    "zh-TW": "啟用擊打特效",
+    "ja": "打鍵エフェクトを有効にする",
+    "ko": "키 입력 효과 켜기",
+    "de": "Tasteneffekte aktivieren",
+    "fr": "Activer les effets de frappe",
+    "es": "Activar efectos de pulsación"
   },
   "导入素材": {
     "en": "Import",
@@ -891,14 +891,14 @@ export const MESSAGES={
     "fr": "Gras",
     "es": "Negrita"
   },
-  "特粗 · 当前效果": {
+  "特粗": {
     "en": "Extra bold",
-    "zh-TW": "特粗 · 目前效果",
+    "zh-TW": "特粗",
     "ja": "極太",
     "ko": "아주 굵게",
     "de": "Extrafett",
     "fr": "Très gras",
-    "es": "Extranegrita"
+    "es": "Extra gruesa"
   },
   "配色方式": {
     "en": "Color mode",
@@ -1881,8 +1881,8 @@ export const MESSAGES={
     "fr": "Saisie par défaut",
     "es": "Entrada predeterminada"
   },
-  "此型号的宠物与弹球需要单独适配固件。当前可分配原有图片切换和屏幕开关。": {
-    "en": "Pet and typing bounce need firmware adapted for this model. Existing image and display controls can be assigned.",
+  "此型号的宠物与击打特效需要单独适配固件。当前可分配原有图片切换和屏幕开关。": {
+    "en": "Pet and keystroke effects need firmware adapted for this model. Existing image and display controls can be assigned.",
     "zh-TW": "此型號的寵物與彈球需個別適配韌體。目前可指派原有圖片切換及螢幕開關。",
     "ja": "ペットと文字バウンスは専用ファームウェアが必要です。既存の画像切替と画面電源は割り当てできます。",
     "ko": "펫과 타이핑 바운스는 전용 펌웨어가 필요합니다. 기존 이미지 전환 및 화면 전원은 지정 가능합니다.",
@@ -2289,8 +2289,8 @@ export const MESSAGES={
   "当前固件不支持外观设置，升级后才会在键盘生效。": {
     "en": "This firmware needs an update before appearance settings can apply."
   },
-  "「左右 Shift + T」切换打字弹球 / 图片；「左右 Shift + P」切换宠物 / 图片。": {
-    "en": "Left + Right Shift + T switches typing bounce / images; Left + Right Shift + P switches pet / images."
+  "「左右 Shift + T」切换击打特效 / 图片；「左右 Shift + P」切换宠物 / 图片。": {
+    "en": "Left + Right Shift + T switches keystroke effects / images; Left + Right Shift + P switches pet / images."
   },
   "支持英文字母、数字和常用标点。中文输入法下显示对应的字母按键；Ctrl / Cmd 等组合快捷键不生成字母。": {
     "en": "Supports English letters, numbers and punctuation. With a Chinese IME, physical letter keys are shown. Ctrl / Cmd shortcuts do not emit letters."
@@ -2460,17 +2460,17 @@ export const MESSAGES={
   "请先连接 v2 键盘": {
     "en": "Connect a v2 keyboard first"
   },
-  "请先升级打字弹球固件": {
-    "en": "Update typing-bounce firmware first"
+  "请先升级击打特效固件": {
+    "en": "Update keystroke effects firmware first"
   },
-  "打字弹球正在键盘上运行": {
-    "en": "Typing bounce is running on the keyboard"
+  "击打特效正在键盘上运行": {
+    "en": "Keystroke effects is running on the keyboard"
   },
-  "已连接 · 可启用打字弹球": {
-    "en": "Connected · typing bounce available"
+  "已连接 · 可启用击打特效": {
+    "en": "Connected · keystroke effects available"
   },
-  "需先升级打字弹球固件": {
-    "en": "Typing-bounce firmware update required"
+  "需先升级击打特效固件": {
+    "en": "Keystroke effects firmware update required"
   },
   "正在读取设备状态…": {
     "en": "Reading device status…"
@@ -3174,8 +3174,8 @@ export const MESSAGES={
   "打字动画": {
     "en": "Typing animation"
   },
-  "打字弹球运行中": {
-    "en": "Typing bounce is running"
+  "击打特效运行中": {
+    "en": "Keystroke effects is running"
   },
   "打字时显示": {
     "en": "Shown while typing"
@@ -4455,8 +4455,8 @@ export const MESSAGES={
   "本站使用 AI 辅助构建。": {
     "en": "Built with AI assistance."
   },
-  "发现问题？提交反馈 ↗": {
-    "en": "Found a bug? Send feedback ↗"
+  "发现问题？提交反馈": {
+    "en": "Found a bug? Send feedback"
   },
   "管理员收件箱": {
     "en": "Admin inbox"
@@ -4695,8 +4695,8 @@ export const MESSAGES={
   "ZMK 键帽尺寸无效": {
     "en": "Invalid ZMK key geometry."
   },
-  "← 返回功能列表": {
-    "en": "← Back to behaviors"
+  "返回功能列表": {
+    "en": "Back to behaviors"
   },
   "使用此功能": {
     "en": "Assign this behavior"
@@ -5283,7 +5283,7 @@ export const MESSAGES={
   "其他兼容键盘": {
     "en": "Other compatible keyboard"
   },
-  "请先选择键盘名称。": {
+  "请先选择你的键盘。": {
     "en": "Please choose your keyboard first."
   },
   "选择键盘名称，网页会自动使用对应的连接方式。": {
@@ -5298,7 +5298,7 @@ export const MESSAGES={
   "已授权的键盘会优先直接重连；两个站点的授权需要分别进行。": {
     "en": "Previously authorized keyboards reconnect directly when possible. Each website needs its own permission."
   },
-  "选择键盘名称后连接。可用功能以键盘实际固件为准。": {
+  "选择你的键盘后连接。可用功能以键盘实际固件为准。": {
     "en": "Choose your keyboard, then connect. Available features depend on its firmware."
   },
   "测试层": {
@@ -5372,5 +5372,113 @@ export const MESSAGES={
   },
   "草地随走跑向后移动，奔跑速度为慢走的 3 倍；跳跃延续起跳速度，落地接回走跑。目前仅网页预览；键盘端需要后续固件升级。": {
     "en": "Grass scrolls while walking or running (3× faster). Jumps keep the takeoff speed and flow back into walking or running. Web preview only; keyboard playback needs a future firmware update."
+  },
+  "击打特效设置": {
+    "en": "Keystroke Effects settings"
+  },
+  "向左浏览宠物": {
+    "en": "Browse pets left"
+  },
+  "向右浏览宠物": {
+    "en": "Browse pets right"
+  },
+  "正在读取键盘上的宠物外观…": {
+    "en": "Reading the pet appearance from your keyboard…"
+  },
+  "无法确认键盘上的外观，可手动更新。": {
+    "en": "Could not verify the keyboard’s pet appearance. You can still update it manually."
+  },
+  "当前预览有新外观可写入键盘。": {
+    "en": "The preview has a new appearance ready to write to the keyboard."
+  },
+  "当前预览与键盘上的宠物外观一致。": {
+    "en": "The preview matches the pet appearance on your keyboard."
+  },
+  "已更新": {
+    "en": "Updated"
+  },
+  "输出信息": {
+    "en": "Output"
+  },
+  "正在适配…": {
+    "en": "Fitting animation…"
+  },
+  "适配完成，保留播放时长。": {
+    "en": "Animation fitted. Playback duration preserved."
+  },
+  "适配失败": {
+    "en": "Could not fit the animation"
+  },
+  "撤销": {
+    "en": "Undo"
+  },
+  "上移": {
+    "en": "Move up"
+  },
+  "下移": {
+    "en": "Move down"
+  },
+  "上一个": {
+    "en": "Previous"
+  },
+  "下一个": {
+    "en": "Next"
+  },
+  "请在键盘上切到相同层。虚线键不计入检测。多个位置输出相同时会一起亮起，松开后显示条纹，只计为一个输出。": {
+    "en": "Switch to the same layer on your keyboard. Dashed keys are excluded. Positions with the same output light up together and show stripes on release. They count as one output."
+  },
+  "ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能和宏不计入检测。系统快捷键可能被拦截，输入也可能来自其他键盘。": {
+    "en": "This ZMK firmware does not report physical key states. Fn, layer changes, dual-role keys and macros are excluded. System shortcuts may be intercepted, and input can come from another keyboard."
+  },
+  "已检测输出": {
+    "en": "Outputs detected"
+  },
+  "共享输出": {
+    "en": "Shared output"
+  },
+  "选择你的键盘": {
+    "en": "Choose your keyboard",
+    "zh-TW": "選擇你的鍵盤",
+    "ja": "キーボードを選択",
+    "ko": "키보드를 선택하세요",
+    "de": "Tastatur auswählen",
+    "fr": "Choisissez votre clavier",
+    "es": "Elige tu teclado"
+  },
+  "暗色模式": {
+    "en": "Dark mode",
+    "zh-TW": "深色模式",
+    "ja": "ダークモード",
+    "ko": "다크 모드",
+    "de": "Dunkelmodus",
+    "fr": "Mode sombre",
+    "es": "Modo oscuro"
+  },
+  "当前版本": {
+    "en": "Current version"
+  },
+  "可升级版本": {
+    "en": "Available upgrade"
+  },
+  "选择键盘后显示": {
+    "en": "Choose a keyboard to check"
+  },
+  "无可用更新": {
+    "en": "No update available"
+  },
+  "尚未识别键盘": {
+    "en": "Keyboard not identified"
+  },
+  "暂无可用升级包": {
+    "en": "No upgrade package available"
+  },
+  "正在查询…": {
+    "en": "Checking…"
+  },
+  "需升级固件": {
+    "en": "Firmware update required"
+  },
+  "升级包未提供可比较的版本号": {
+    "en": "The upgrade package has no comparable version number"
   }
 };

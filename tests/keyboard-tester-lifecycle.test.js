@@ -79,3 +79,25 @@ test('active test surface captures Tab and browser shortcuts; controls and pause
  f.el('tester-toggle').onclick();const paused=key('Tab','Tab');f.events.keydown(paused);assert.equal(paused.prevented,undefined);
  f.ui.setVisible(false);const closed=key('f','KeyF');f.events.keydown(closed);assert.equal(closed.prevented,undefined);
 });
+
+test('two ZMK positions mapped to 2 highlight together and count as one output',t=>{
+ const f=fixture(t,{connected:true,zmk:true});
+ f.runtime.map.layers[0].bindings[0]={behaviorId:7,param1:0x7001f,param2:0};
+ f.runtime.map.layers[0].bindings[1]={behaviorId:7,param1:0x7001f,param2:0};
+ f.ui.setVisible(true);
+ const caps=f.el('tester-keyboard').children;
+ assert.deepEqual(caps.map(cap=>cap.dataset.visual),['idle','idle']);
+ const key=type=>({type,key:'2',code:'Digit2',preventDefault(){},stopPropagation(){}});
+ f.events.keydown(key('keydown'));f.events.keydown(key('keydown'));
+ assert.deepEqual(caps.map(cap=>cap.dataset.visual),['pressed','pressed']);
+ assert.equal(f.el('tester-held').textContent,1);
+ assert.equal(f.el('tester-total').textContent,1);
+ assert.equal(f.el('tester-last').textContent,'2 · 共享输出');
+ f.events.keyup(key('keyup'));
+ assert.deepEqual(caps.map(cap=>cap.dataset.visual),['tested','tested']);
+ assert.equal(f.el('tester-count').textContent,'1 / 1');
+ f.el('tester-clear').onclick();
+ assert.deepEqual(caps.map(cap=>cap.dataset.visual),['idle','idle']);
+ assert.equal(f.el('tester-count').textContent,'0 / 1');
+ assert.deepEqual(f.runtime.ops,[]);
+});

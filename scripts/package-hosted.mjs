@@ -4,7 +4,7 @@ copyFileSync('LICENSE', 'dist/LICENSE.txt');
 copyFileSync('THIRD_PARTY.md', 'dist/THIRD_PARTY.txt');
 cpSync('licenses', 'dist/licenses', {recursive: true});
 writeFileSync('dist/release.json', JSON.stringify({
-  application: 'Athena Studio',
+  application: 'KBD Studio',
   builtAt: new Date().toISOString(),
   base: '/studio/',
 }) + '\n');

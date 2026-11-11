@@ -79,9 +79,9 @@ function updateDevice() {
     ? "已连接 · Athena75"
     : state.identity
       ? state.identity.runtimeUpload
-        ? "重新连接键盘 ↗"
-        : "连接升级设备 ↗"
-      : "连接键盘 ↗";
+        ? "重新连接键盘"
+        : "连接升级设备"
+      : "连接键盘";
   $("boot").disabled = !state.identity || state.busy;
   $("write").disabled =
     !boot || !state.bytes || state.busy || state.preparedEpoch !== state.epoch;

@@ -30,15 +30,17 @@ outlasting the 900 ms typing inactivity threshold and landing abruptly idle.
 The preview's action buttons and typing area share this transition behavior;
 clicking the typing area again no longer resets an ongoing jump.
 
-Ground inheritance is mirrored in the generated C scene. The shortened motion
-controller is web-only at this stage and still needs porting to `pet.c` before
-any future firmware release. The published firmware and source archives do
-not contain these preview changes.
+The motion controller and the generated ground scene are shared by the two
+Athena firmware candidates. Both were compiled with the existing model-specific
+display initialization and use the same on-device appearance and save formats.
 
-**Release boundary:** this release updates the website and prepares shared C
-source only. No UF2 was built, no device was flashed, and `releases.json` plus
-all offered firmware files/source archives remain unchanged. Existing keyboard
-firmware still has static grass; uploading a cat/dog appearance cannot change
-that background. The preview states this explicitly. A future firmware release
-must apply the shared renderer to each model's verified source without changing
-its screen initialization, then compile, inspect and validate on hardware.
+The current public firmware packages are still display-r5 and screen-r2.
+The new candidate programs report builds 75-261111-2 and 18-261111-2 over the
+normal-mode identity command. Generate the shared build identity before a new
+release with `node scripts/build-firmware-identity.mjs YYYYMMDDNN`, using a
+release sequence greater than the last shipped build. Verify each model on
+hardware before offering the candidates through the upgrade catalog.
+
+Appearance-only pets use the existing PT40 format. Register the artwork and
+palette in `PET_SPECIES`. Specify a higher per-model minimum motion version
+only when a pet actually requires newer firmware behavior.

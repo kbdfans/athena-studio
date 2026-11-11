@@ -69,7 +69,7 @@ static void care_tests(void){
  seed_care(200,0,0);awake_for(600000);assert(status().xp==199&&status().level==1&&status().stage==1);
  // Repeated space during one jump cannot charge multiple jumps. Charge on the fifth landing.
  seed_care(200,80,0);
- for(unsigned j=0;j<5;j++){pet_key(true);pet_tick();assert(status().action==6);for(unsigned i=0;i<9;i++){now+=100;pet_key(true);pet_tick();}now+=200;pet_tick();assert(status().fullness==(j<4?80:79));}
+ for(unsigned j=0;j<5;j++){pet_key(true);pet_tick();assert(status().action==6);for(unsigned i=0;i<4;i++){now+=100;pet_key(true);pet_tick();}now+=700;pet_tick();assert(status().fullness==(j<4?80:79));}
  // Cancelled jump via feeding never counts; preserve completed-jump remainder across reboot.
  seed_care(200,80,0);pet_key(true);now+=100;cmd(18,0);now+=2000;pet_tick();assert(status().fullness==100);
  seed_care(200,80,0);for(unsigned j=0;j<4;j++){pet_key(true);now+=1100;pet_tick();}cmd(21,0);pet_tick();pet_init();pet_key(true);now+=1100;pet_tick();assert(status().fullness==79);
@@ -109,8 +109,8 @@ int main(int argc,char **argv){
  // Sustained typing must not return to walk when crossing the old 2-second window.
  cmd(17,1);now+=1000;
  for(unsigned i=0;i<24;i++){now+=100;pet_key(false);pet_tick();if(i>=8)assert(status().action==2);}
- pet_key(true);pet_tick();now+=490;pet_tick();assert(status().jump==24&&status().action==6);
- pet_key(true);now+=560;pet_tick();assert(status().jump==0&&status().action!=6);
+ pet_key(true);pet_tick();now+=260;pet_tick();assert(status().jump==24&&status().action==6);
+ pet_key(true);now+=320;pet_tick();assert(status().jump==0&&status().action==2);
  now+=1000;pet_tick();assert(status().action==0);
  // Growth derives from existing XP; the journal layout remains readable after reboot.
  while(status().xp<200){now+=1000;pet_key(false);pet_tick();if(status().xp>=10&&status().xp<200)assert(status().stage==1);}

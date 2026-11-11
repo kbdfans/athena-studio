@@ -7,16 +7,21 @@ import {readFirmwareFlash,writeFirmwarePlan} from './firmware-transport.js';
 import {saveFirmwareBackup} from './firmware-backup.js';
 import {digest} from './backup-v2.js';
 
-export function setupFirmwareUpgrade({getIdentity,getSnapshot,getBusy,releaseConnection,onFinished,onStateChange}) {
+export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot,getBusy,releaseConnection,onFinished,onStateChange}) {
   const dialog=document.createElement('dialog');dialog.id='firmware-dialog';
   dialog.setAttribute('aria-labelledby','firmware-title');
   // Retain the guide across the intentional USB disconnect. Other workspaces close.
   dialog.dataset.connectionIndependent='true';
   dialog.innerHTML=`<button type="button" class="dialog-close" id="upgrade-close" aria-label="关闭">×</button>
-    <div class="eyebrow">ATHENA · FIRMWARE</div><h2 id="firmware-title">按住 Esc，再连接键盘。</h2>
-    <span class="upgrade-model" id="upgrade-model"></span>
+    <div class="eyebrow">KBD STUDIO · FIRMWARE</div><h2 id="firmware-title">按住 Esc，再连接键盘。</h2>
+    <div class="upgrade-identity">
+      <span class="upgrade-model" id="upgrade-model"></span>
+      <dl class="upgrade-versions" aria-live="polite">
+        <div><dt>当前版本</dt><dd id="upgrade-current-version"></dd></div>
+        <div><dt>可升级版本</dt><dd id="upgrade-target-version"></dd></div>
+      </dl>
+    </div>
     <p class="upgrade-subtitle" id="upgrade-intro">先识别键盘型号，再按下图进入刷机模式。</p>
-    <p id="upgrade-version" class="upgrade-version"></p>
     <div id="upgrade-guide">${bootloaderGuide()}</div>
     <div id="upgrade-detection" class="upgrade-detection" role="status" aria-live="polite"><span id="upgrade-detection-text"></span><button type="button" id="upgrade-detect" class="primary">授权 RP2 Boot</button></div>
     <label class="upgrade-reset-choice"><input id="upgrade-clear-confirm" type="checkbox"><span><strong>我确认：升级将清除全部图片和动画</strong><small id="upgrade-preservation">升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。</small></span></label>
@@ -49,9 +54,9 @@ export function setupFirmwareUpgrade({getIdentity,getSnapshot,getBusy,releaseCon
   }
   $('upgrade-clear-confirm').onchange=$('upgrade-reset-confirm').onchange=()=>renderDetection();
   $('upgrade-keymap-download').onclick=()=>{if(!snapshot)return;const url=URL.createObjectURL(new Blob([JSON.stringify(snapshot,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`${identity.profile.id}-before-upgrade.json`;a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);};
-  function showVersionOnly(label,version){
+  function showVersionOnly(label){
     versionBlocked=true;monitor.stop();dialog.classList.add('version-only');
-    $('firmware-title').textContent=label;$('upgrade-version').textContent=version;
+    $('firmware-title').textContent=label;
     for(const id of ['upgrade-intro','upgrade-guide','upgrade-detection','upgrade-compatibility','upgrade-progress','upgrade-error','upgrade-status','upgrade-blocker','upgrade-start','upgrade-recovery'])$(id).hidden=true;
     dialog.querySelector('.upgrade-reset-choice').hidden=true;$('upgrade-start').disabled=true;$('upgrade-back').textContent='关闭';onStateChange?.();
   }
@@ -76,25 +81,37 @@ export function setupFirmwareUpgrade({getIdentity,getSnapshot,getBusy,releaseCon
     if(getBusy()||running)return;
     versionBlocked=false;dialog.classList.remove('version-only');$('firmware-title').textContent='按住 Esc，再连接键盘。';$('upgrade-back').textContent='返回';dialog.querySelector('.upgrade-reset-choice').hidden=false;for(const id of ['upgrade-intro','upgrade-error','upgrade-status'])$(id).hidden=false;
     $('upgrade-preservation').textContent='升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。';
-    identity=getIdentity();snapshot=getSnapshot?.()||null;needsReset=false;$('upgrade-compatibility').hidden=true;$('upgrade-reset-confirm').checked=false;$('upgrade-version').textContent='';if(identity?.protocol==='zmk')return;packageState='loading';release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
-    $('upgrade-model').textContent=identity?.profile?.name||'Athena';
+    identity=getIdentity();snapshot=getSnapshot?.()||null;needsReset=false;$('upgrade-compatibility').hidden=true;$('upgrade-reset-confirm').checked=false;if(identity?.protocol==='zmk')return;packageState='loading';release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
+    const profile=identity?.profile||getSelectedProfile?.();
+    const buildInfo=identity?.buildInfo;
+    $('upgrade-model').textContent=profile?.name||'尚未识别键盘';
+    $('upgrade-current-version').textContent=buildInfo?.buildId||(identity?'旧版固件未提供版本信息':'连接后读取');
+    $('upgrade-target-version').textContent=profile?'正在查询…':'选择键盘后显示';
     $('upgrade-clear-confirm').checked=false;$('upgrade-error').textContent='';$('upgrade-status').textContent='';$('upgrade-guide').hidden=false;$('upgrade-progress').hidden=true;$('upgrade-recovery').hidden=true;
     $('upgrade-start').textContent='开始升级';$('upgrade-detection').hidden=false;$('upgrade-start').hidden=false;lock(false);
     $('upgrade-intro').textContent='先识别键盘型号，再按下图进入刷机模式。';
     if(!dialog.open)dialog.showModal();
     onStateChange?.();void monitor.start();
-    if(!identity){$('upgrade-status').textContent='请先在正常打字模式连接键盘，以确认升级型号。';return;}
-    if(!navigator.usb){$('upgrade-status').textContent='在线升级需要桌面版 Chrome 或 Edge。';return;}
+    if(!identity)$('upgrade-status').textContent='请先在正常打字模式连接键盘，以确认升级型号。';
+    if(!profile)return;
     try{
       const manifestUrl=import.meta.env.DEV?'/__firmware-test/releases.json':`${import.meta.env.BASE_URL}firmware/releases.json`;
       const response=await fetch(manifestUrl,{cache:'no-store'});
       if(!response.ok)throw Error('此型号的在线升级包正在验证，暂未开放写入。可以先查看操作图示。');
       const manifest=await response.json();if(ticket!==generation)return;
       if(manifest.schema!==1||!Array.isArray(manifest.releases))throw Error('升级信息格式不正确');
-      const selected=manifest.releases.find(r=>r.model===identity.profile.id&&r.pid===identity.profile.pid);
+      const selected=manifest.releases.find(r=>r.model===profile.id&&r.pid===profile.pid);
       if(!selected)throw Error('此型号的在线升级包正在验证，暂未开放写入。可以先查看操作图示。');
-      const state=firmwareVersionStatus(identity.buildInfo,selected);
-      if(['current','newer','unsupported'].includes(state.kind)){release=selected;packageState='ready';showVersionOnly(state.kind==='current'?'当前固件已是最新版本':state.label,`${identity.buildInfo.buildId} · ${state.kind==='current'?selected.version:''}`);return;}
+      const version=firmwareVersionStatus(buildInfo,selected);
+      const target=selected.buildId?`${selected.version} · ${selected.buildId}`:selected.version;
+      $('upgrade-target-version').textContent=target;
+      if(!identity)return;
+      if(version.kind==='current')$('upgrade-current-version').textContent=target;
+      if(['current','newer','unsupported'].includes(version.kind)){
+        $('upgrade-target-version').textContent='无可用更新';
+        showVersionOnly(version.kind==='current'?'当前固件已是最新版本':version.label);return;
+      }
+      if(!navigator.usb){$('upgrade-status').textContent='在线升级需要桌面版 Chrome 或 Edge。';return;}
       const url=new URL(selected.url,new URL(import.meta.env.BASE_URL,location.href));
       if(url.origin!==location.origin)throw Error('固件必须来自当前站点');
       const file=await fetch(url,{cache:'no-store'});if(!file.ok)throw Error('固件下载失败，请重试');
@@ -102,11 +119,10 @@ export function setupFirmwareUpgrade({getIdentity,getSnapshot,getBusy,releaseCon
       if(await digest(bytes)!==selected.sha256)throw Error('固件下载校验失败');
       if(ticket!==generation)return;
       release=selected;uf2=bytes;packageState='ready';
-      const version=firmwareVersionStatus(identity.buildInfo,release);$('upgrade-version').textContent=`${version.label} · ${identity.buildInfo?.buildId||'—'} → ${release.version}${release.channel==='preview'?' · Preview':''}`;
       $('upgrade-intro').textContent='拔插时会保留当前型号和升级步骤。进入 RPI-RP2 后点击开始升级，网页会备份、写入、校验并重启。';
       $('upgrade-status').textContent='本次升级会清除全部旧图片和动画，不迁移旧素材。请确认下方提示后开始。';
       lock(false);
-    }catch(e){if(ticket===generation){packageState='unavailable';$('upgrade-error').textContent=e.message;renderDetection();}}
+    }catch(e){if(ticket===generation){packageState='unavailable';$('upgrade-target-version').textContent='暂无可用升级包';$('upgrade-error').textContent=e.message;renderDetection();}}
   }
   $('upgrade-start').onclick=async()=>{
     if(running||versionBlocked||!release||!identity||!monitor.getDevice()||!$('upgrade-clear-confirm').checked||(needsReset&&(!snapshot||!$('upgrade-reset-confirm').checked)))return;
@@ -134,7 +150,11 @@ export function setupFirmwareUpgrade({getIdentity,getSnapshot,getBusy,releaseCon
       $('upgrade-start').hidden=true;
       onFinished?.();
     }catch(e){
-      if(e.code==='ALREADY_CURRENT'){showVersionOnly('当前固件已是最新版本',release.version);}
+      if(e.code==='ALREADY_CURRENT'){
+        $('upgrade-current-version').textContent=release.version;
+        $('upgrade-target-version').textContent='无可用更新';
+        showVersionOnly('当前固件已是最新版本');
+      }
       else if(e.code==='COMPATIBILITY_RESET_REQUIRED'&&release?.compatibility){needsReset=true;$('upgrade-preservation').textContent='此兼容重置会同时清除键位、宏、布局设置和全部屏幕数据。请阅读下方说明。';$('upgrade-compatibility').hidden=false;$('upgrade-guide').hidden=true;$('upgrade-status').textContent='尚未擦除或写入。请阅读兼容升级的数据重置说明。';$('upgrade-error').textContent='';}
       else if(e.name==='NotFoundError')$('upgrade-status').textContent='尚未选择升级设备，可以重试。';
       else $('upgrade-error').textContent=e.message;

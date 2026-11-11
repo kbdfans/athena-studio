@@ -5,6 +5,7 @@ import {setupZmkUI} from './zmk-ui.js';
 import {setupFeedback} from './feedback-ui.js';
 import {startDiagnostics,recordDiagnostic} from './diagnostics.js';
 import {setupFirmwareUpgrade} from './firmware-upgrade-ui.js';
+import {DEVICE_PROFILES} from './device-profiles.js';
 import {connectIdentifiedKeyboard} from "./connect-keyboard.js";
 import {setupLanguages} from "./i18n.js";
 import {renderConnectionGate} from "./connection-gate.js";
@@ -205,7 +206,7 @@ function animate(time) {
   } else prevTime = time;
   requestAnimationFrame(animate);
 }
-function syncStats() {
+function syncStats(capacityFit) {
   const s = slotAt(state.slot),
     n = state.output.length,
     duration = state.output.reduce((a, f) => a + f.delay, 0) / 1000;
@@ -216,7 +217,7 @@ function syncStats() {
   $("capacity-bar").style.width =
     `${((state.bytes?.length || 0) / s.capacity) * 100}%`;
   $("duration").textContent = `${duration.toFixed(2)} 秒`;
-  $("optimization-note").textContent =
+  $("optimization-note").textContent = capacityFit ? "适配完成，保留播放时长。" :
     `${Number($("end").value) - Number($("start").value) + 1} 原始帧 → ${n} 输出帧 · 保留播放时长`;
   $("preview-mode").textContent = state.source?.demo
     ? "示例预览"
@@ -226,7 +227,10 @@ function syncStats() {
 function sourceSettings() {
   return {zoom:state.zoom,x:state.x,y:state.y,start:Number($("start").value),end:Number($("end").value),fps:Number($("fps").value)};
 }
-function prepare(delay = 120) {
+function prepare(delay = 120, {capacityFit = false} = {}) {
+  const optimizationNote = $("optimization-note");
+  optimizationNote.classList.remove("fit-success", "fit-error");
+  if (capacityFit) optimizationNote.textContent = "正在适配…";
   if (sourceId) {
     const id = sourceId, settings = sourceSettings();
     clearTimeout(sourceSettingsTimer);
@@ -266,12 +270,17 @@ function prepare(delay = 120) {
       state.preparedEpoch = epoch;
       state.frame = 0;
       prevTime = 0;
-      syncStats();
+      syncStats(capacityFit);
+      optimizationNote.classList.toggle("fit-success", capacityFit);
       render();
     } catch (e) {
       if (epoch === state.epoch) {
         state.bytes = null;
-        notice(e.message, true);
+        if (capacityFit) {
+          recordDiagnostic("runtime.error");
+          optimizationNote.textContent = `适配失败：${e.message}`;
+          optimizationNote.classList.add("fit-error");
+        } else notice(e.message, true);
         updateDevice();
       }
     }
@@ -566,14 +575,20 @@ async function showBackups() {
     $("backup-error").textContent = "无法读取备份：" + e.message;
   }
 }
-SLOTS.forEach((s, i) => {
-  const o = new Option(`${s.label} — ${s.name}`, i);
-  $("slot").append(o);
+SLOTS.forEach(({label}, i) => {
+  const choice = document.createElement("label");
+  const radio = document.createElement("input");
+  radio.type = "radio";
+  radio.name = "image-slot";
+  radio.value = String(i);
+  radio.checked = i === state.slot;
+  const text = document.createElement("span");
+  text.textContent = label;
+  choice.append(radio, text);
+  $("slot").append(choice);
 });
-$("slot").value = state.slot;
 $("import").onclick = () => $("file").click();
 $("file").onchange = (e) => loadFile(e.target.files[0]);
-$("demo").onclick = demo;
 $("dropzone").ondragover = (e) => {
   e.preventDefault();
   $("dropzone").classList.add("dragover");
@@ -653,13 +668,11 @@ $("fps").oninput = (e) => {
 };
 $("start").onchange = $("end").onchange = () => prepare(0);
 $("slot").onchange = (e) => {
+  if (!e.target.checked) return;
   state.slot = Number(e.target.value);
   updateSlot();
 };
-$("optimize").onclick = () => {
-  prepare(0);
-  notice("已自动匹配该位置的容量：保留片段时长，减少冗余帧。");
-};
+$("optimize").onclick = () => prepare(0, {capacityFit: true});
 $("play").onclick = () => {
   state.playing = !state.playing;
   render();
@@ -683,7 +696,7 @@ async function connectKeyboard({forcePrompt=false}={}) {
     return;
   }
   const model=connectionModel($('connection-model').value);
-  if(!model){$('gate-error').textContent='请先选择键盘名称。';$('connection-model').focus();return;}
+  if(!model){$('gate-error').textContent='请先选择你的键盘。';$('connection-model').focus();return;}
   $("connection-error").textContent = "";
   $("gate-error").textContent = "";state.sessionReady=false;
   $("notice").hidden = true;
@@ -745,7 +758,7 @@ for(const picker of document.querySelectorAll('[data-connection-model]')){
 }
 for(const button of document.querySelectorAll('[data-reauthorize]'))button.onclick=()=>connectKeyboard({forcePrompt:true});
 firmwareUI=setupFirmwareUpgrade({
-  getIdentity:()=>state.identity,getSnapshot:()=>keymapUI.snapshot(),getBusy:()=>state.busy,
+  getIdentity:()=>state.identity,getSelectedProfile:()=>DEVICE_PROFILES[$("connection-model").value],getSnapshot:()=>keymapUI.snapshot(),getBusy:()=>state.busy,
   releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
   onFinished:()=>{state.identity=null;updateDevice();},
   onStateChange:()=>updateDevice(),
@@ -760,7 +773,7 @@ function openWriteConfirmation() {
 }
 function updateWriteConfirmation() {
   const backup = $("backup-before-write").checked;
-  $("confirm-write").textContent = backup ? "备份并开始写入 ↗" : "直接写入 ↗";
+  $("confirm-write").textContent = backup ? "备份并开始写入" : "直接写入";
   $("skip-backup-note").hidden = backup;
   $("backup-before-write").setAttribute("aria-describedby", backup ? "backup-choice-help" : "backup-choice-help skip-backup-note");
 }

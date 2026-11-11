@@ -20,12 +20,12 @@ test('all three connection controls follow the same runtime through busy, unplug
   renderConnectionControls(runtime,true,root); assert.ok(controls.every(b=>b.disabled));
   assert.equal(ids['connection-disconnect'].disabled,true);
   runtime.device.opened=false; renderConnectionControls(runtime,false,root);
-  assert.ok(controls.every(b=>b.textContent==='连接键盘 ↗'));
+  assert.ok(controls.every(b=>b.textContent==='连接键盘'));
   assert.equal(connected[0].hidden,true); assert.equal(ids.identify.disabled,false);
   runtime.device.opened=true; renderConnectionControls(runtime,false,root);
   assert.ok(controls.every(b=>b.textContent==='已连接 · Athena75'));
   runtime.broken=true; renderConnectionControls(runtime,false,root);
-  assert.ok(controls.every(b=>b.textContent==='连接键盘 ↗'));
+  assert.ok(controls.every(b=>b.textContent==='连接键盘'));
 });
 
 test('only an open, healthy device is a reusable session', () => {
