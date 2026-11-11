@@ -3,6 +3,7 @@ import {digest} from './backup-v2.js';
 import {petPackSize,validatePetPack} from './pet-pack.js';
 import {crc32} from './crc32.js';
 import {validateResetEvidence} from './firmware-compatibility.js';
+import {DEVICE_PROFILES} from './device-profiles.js';
 export const FLASH_BYTES = 0x1000000, MAIN_LIMIT = 0x1f0000, SECTOR = 4096, BASE = 0x10000000;
 const assert = (ok, message) => { if (!ok) throw Error(message); };
 export function decodeFirmwareUf2(bytes) {
@@ -55,13 +56,16 @@ export function normalizeLegacyQgf(data) {
   return out;
 }
 export async function planFirmwareUpgrade(current, uf2, release, profile, {clearImages=false,compatibilityReset=null}={}) {
+  assert(!DEVICE_PROFILES[profile.id]?.keymapOnly,'此型号暂未提供在线升级');
   assert(current instanceof Uint8Array && current.length===FLASH_BYTES,'需要完整的 16 MB 读取结果');
   assert(release.model===profile.id && release.pid===profile.pid && profile.vid===0x9d5b,'键盘型号与固件不匹配');
   assert(await digest(uf2)===release.sha256,'固件下载校验失败');
   const main=decodeFirmwareUf2(uf2);
   assert(hasModelDescriptor(main,profile.pid) && hasModelDescriptor(current.subarray(0,MAIN_LIMIT),profile.pid),'固件硬件身份不匹配');
-  const otherPid=profile.pid===0x2513?0x4100:0x2513;
-  assert(!hasModelDescriptor(current.subarray(0,MAIN_LIMIT),otherPid),'发现冲突的硬件身份，已停止升级');
+  for (const other of Object.values(DEVICE_PROFILES)) {
+    if (other.pid===profile.pid) continue;
+    assert(!hasModelDescriptor(current.subarray(0,MAIN_LIMIT),other.pid) && !hasModelDescriptor(main,other.pid),'发现冲突的硬件身份，已停止升级');
+  }
   if(main.every((b,i)=>current[i]===b)){const error=Error('当前固件已是最新版本，无需升级');error.code='ALREADY_CURRENT';throw error;}
   let source;
   for(const item of release.sources){

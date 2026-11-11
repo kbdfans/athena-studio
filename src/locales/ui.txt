@@ -1,6 +1,8 @@
 # zh-CN | en | zh-TW | ja | ko | de | fr | es
 键位设置|Key mapping|鍵位設定|キー設定|키 설정|Tastenbelegung|Affectation des touches|Asignación de teclas
 键盘测试|Keyboard test|鍵盤測試|キーテスト|키보드 테스트|Tastaturtest|Test du clavier|Prueba del teclado
+搜索…|Search…|搜尋…|検索…|검색…|Suchen…|Rechercher…|Buscar…
+测试选项|Test options|測試選項|テストオプション|테스트 옵션|Testoptionen|Options de test|Opciones de prueba
 键盘检测|Keyboard test|鍵盤檢測|キーテスト|키보드 테스트|Tastaturtest|Test du clavier|Prueba del teclado
 屏幕设置|Screen settings|螢幕設定|画面設定|화면 설정|Anzeige|Écran|Pantalla
 连接键盘|Connect keyboard|連接鍵盤|キーボードを接続|키보드 연결|Verbinden|Connecter|Conectar

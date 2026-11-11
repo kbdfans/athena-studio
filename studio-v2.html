@@ -22,11 +22,13 @@
   </head>
   <body class="studio-v2 connection-required">
     <header>
-      <a class="brand" href="./studio-v2.html">KBD Studio</a>
+      <a class="brand" href="./studio-v2.html">
+        <span class="brand-mark"><img src="/kbdfans-logo.png" width="907" height="792" alt="KBDfans" /></span>
+        <span class="brand-name">KBD <small>Studio</small></span>
+      </a>
       <nav class="console-tabs" aria-label="控制台">
         <button id="keymap-nav" class="selected" aria-pressed="true">
           键位设置</button
-        ><button id="tester-nav" aria-pressed="false">键盘测试</button
         ><button id="screen-nav" aria-pressed="false">
           屏幕设置
         </button><button id="firmware-nav" aria-haspopup="dialog">固件升级</button>
@@ -46,10 +48,9 @@
       <div class="connection-help"><small>首次连接：插好 USB 数据线，在浏览器弹窗中选择键盘并授权。</small><small>已授权的键盘会优先直接重连；两个站点的授权需要分别进行。</small></div>
       <div class="connection-tools"><button class="text-button" data-reauthorize>重新授权 / 选择其他设备</button><button id="gate-firmware" class="text-button">升级操作图示</button></div>
       <p id="gate-error" class="error" role="alert"></p>
-      <small><a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a> · <a href="./THIRD_PARTY.txt" target="_blank" rel="noopener noreferrer">Open-source notices</a></small>
     </section>
     <main id="studio-main" inert>
-      <div id="demo-banner" class="demo-banner" hidden><div><strong>演示模式</strong><span>仅本地预览，不会连接或写入键盘。</span></div><div><select id="demo-model" aria-label="演示键盘型号"><option value="athena75">Athena75</option><option value="athena1800">Athena1800</option></select><button id="demo-exit" class="text-button">退出演示</button></div></div>
+      <div id="demo-banner" class="demo-banner" hidden><div><strong>演示模式</strong><span>仅本地预览，不会连接或写入键盘。</span></div><div><select id="demo-model" aria-label="演示键盘型号"><option value="athena75">Athena75</option><option value="athena75-rgb">Athena75 RGB</option><option value="athena1800">Athena1800</option></select><button id="demo-exit" class="text-button">退出演示</button></div></div>
       <section class="console-heading">
         <div>
           <div class="eyebrow">MAKE IT YOURS</div>
@@ -62,15 +63,15 @@
         class="keymap-workspace"
         aria-label="键位设置"
       >
-        <div class="layer-bar">
-          <span class="section-label">Athena75 · 层</span>
-          <div
-            id="keymap-layers"
-            class="layer-chips"
-            aria-label="选择键盘层"
-          ></div>
-          <span id="layer-caption">第 0 层 · 默认输入</span
-          ><span id="keymap-state">未连接 · 演示布局</span>
+        <div class="keymap-toolbar">
+          <div class="layer-bar">
+            <span class="section-label">Athena75 · 层</span>
+            <div id="keymap-layers" class="layer-chips" aria-label="选择键盘层"></div>
+            <span id="layer-caption">第 0 层 · 默认输入</span>
+          </div>
+          <button id="keyboard-test-switch" class="keyboard-test-switch" type="button" role="switch" aria-checked="false" aria-controls="tester-surface keyboard-tester">
+            键盘测试 <span class="keyboard-test-track" aria-hidden="true"></span>
+          </button>
         </div>
         <div class="keyboard-column">
           <div class="keyboard-stage">
@@ -116,7 +117,7 @@
               ><input
                 id="key-search"
                 type="search"
-                placeholder="搜索功能…"
+                placeholder="搜索…"
                 aria-label="搜索按键或功能"
             /></label>
 
@@ -173,31 +174,27 @@
         </aside>
         <p id="keymap-sync" class="keymap-sync" role="status" aria-live="polite">离线仅预览 · 连接后读取键盘实际配置</p>
       </section>
-      <dialog id="tester-dialog" class="studio-modal tester-modal" aria-labelledby="tester-modal-title">
-        <div class="modal-heading"><div><span class="modal-eyebrow">KBD STUDIO</span><h2 id="tester-modal-title">键盘检测</h2><p>按下每一颗键，看看它的回应。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button type="button" class="theme-toggle" data-theme-toggle aria-label="暗色模式" aria-pressed="false" title="暗色模式"><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.7 14.2A9 9 0 0 1 9.8 3.3 9 9 0 1 0 20.7 14.2Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg></button><button class="outline small" data-modal-connect>连接键盘</button><button class="modal-close" data-workspace-close aria-label="关闭键盘检测">×</button></div></div>
-        <div class="modal-body">
+      <div id="tester-surface" class="tester-surface" tabindex="0" hidden aria-label="键盘测试区域">
+        <div class="keyboard-scroll"><div class="keyboard-case"><div id="tester-keyboard" class="keyboard" aria-label="测试键盘布局"></div></div></div>
+      </div>
       <section id="keyboard-tester" class="keyboard-tester" hidden aria-label="键盘测试器">
-        <div class="tester-heading"><div><h1>按键响应</h1><p id="tester-mode">检测每个按键的响应</p></div><div class="tester-actions"><button id="tester-clear" class="outline small">清空记录</button><button id="tester-toggle" class="primary small">暂停检测</button></div></div>
-        <div class="tester-options">
-          <label>检测方式 <select id="tester-input-mode"><option value="matrix">物理按键（含 MO/Fn）</option><option value="browser">浏览器按键（不含 MO/Fn）</option></select></label>
-          <label id="tester-layer-control" hidden>测试层 <select id="tester-layer"></select></label>
-          <label>提示音 <select id="tester-sound"><option value="digital">电子滴答</option><option value="arcade">复古 8-bit</option><option value="soft">柔和水滴</option><option value="off">关闭提示音</option></select></label>
-          <label>音量 <input id="tester-volume" type="range" min="0" max="100" value="20" aria-label="提示音音量"/><output id="tester-volume-label">20%</output></label>
-          <button id="tester-sound-preview" class="text-button">试听 ♪</button>
-          <span id="tester-audio-status" role="status"></span>
-        </div>
-        <p id="tester-zmk-hint" class="tester-system-hint" hidden>请在键盘上切到相同层。虚线键不计入检测。多个位置输出相同时会一起亮起，松开后显示条纹，只计为一个输出。</p>
-        <p id="tester-system-hint" class="tester-system-hint">Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。</p>
-        <div id="tester-surface" class="tester-surface" tabindex="0" aria-label="键盘测试区域">
-          <div class="keyboard-scroll"><div class="keyboard-case"><div id="tester-keyboard" class="keyboard" aria-label="测试键盘布局"></div></div></div>
-        </div>
-        <div class="tester-summary"><div><span class="tester-dot held"></span>正在按下 <strong id="tester-held">0</strong></div><div><span class="tester-dot seen"></span><span id="tester-count-label">已检测</span> <strong id="tester-count">0 / 81</strong></div><div><span class="tester-dot"></span>未检测</div><p id="tester-status" role="status">打开即开始检测；物理模式连接键盘后自动就绪。</p></div>
-        <div class="tester-details"><div><span>最近按键</span><strong id="tester-last">等待输入</strong><small id="tester-code">—</small></div><div><span>本轮按下次数</span><strong id="tester-total">0</strong><small>长按重复不累计</small></div><div><span>按键记录</span><div id="tester-history" class="tester-history">暂无记录</div></div></div>
-        <p class="tester-note">Esc 用于测试；点击右上角关闭，检测随即暂停。</p>
-        <p class="tester-note" id="tester-note">关闭弹窗即暂停检测；Esc 用于测试，请点击右上角关闭。</p>
+        <div class="tester-summary"><p id="tester-mode"></p><div><span class="tester-dot held"></span>正在按下 <strong id="tester-held">0</strong></div><div><span class="tester-dot seen"></span><span id="tester-count-label">已检测</span> <strong id="tester-count">0 / 81</strong></div><div><span class="tester-dot"></span>未检测</div><p id="tester-status" role="status">打开即开始检测；物理模式连接键盘后自动就绪。</p><div class="tester-actions"><button id="tester-clear" class="outline small">清空记录</button><button id="tester-toggle" class="outline small">暂停检测</button></div></div>
+        <details class="tester-settings">
+          <summary>测试选项</summary>
+          <div class="tester-options">
+            <label>检测方式 <select id="tester-input-mode"><option value="matrix">物理按键（含 MO/Fn）</option><option value="browser">浏览器按键（不含 MO/Fn）</option></select></label>
+            <label id="tester-layer-control" hidden>测试层 <select id="tester-layer"></select></label>
+            <label>提示音 <select id="tester-sound"><option value="digital">电子滴答</option><option value="arcade">复古 8-bit</option><option value="soft">柔和水滴</option><option value="off">关闭提示音</option></select></label>
+            <label>音量 <input id="tester-volume" type="range" min="0" max="100" value="20" aria-label="提示音音量"/><output id="tester-volume-label">20%</output></label>
+            <button id="tester-sound-preview" class="text-button">试听 ♪</button>
+            <span id="tester-audio-status" role="status"></span>
+          </div>
+          <p id="tester-zmk-hint" class="tester-system-hint" hidden>请在键盘上切到相同层。虚线键不计入检测。多个位置输出相同时会一起亮起，松开后显示条纹，只计为一个输出。</p>
+          <p id="tester-system-hint" class="tester-system-hint">Mac 的 F11 可能触发“显示桌面”。物理模式会在失焦后短暂完成采样，保留检测标记；如仍受影响，可在系统设置 → 键盘 → 键盘快捷键 → 调度中心中关闭“显示桌面”。</p>
+          <div class="tester-details"><div><span>最近按键</span><strong id="tester-last">等待输入</strong><small id="tester-code">—</small></div><div><span>本轮按下次数</span><strong id="tester-total">0</strong><small>长按重复不累计</small></div><div><span>按键记录</span><div id="tester-history" class="tester-history">暂无记录</div></div></div>
+          <p class="tester-note" id="tester-note"></p>
+        </details>
       </section>
-        </div><div class="modal-notices"></div>
-      </dialog>
       <dialog id="screen-dialog" class="studio-modal screen-modal" aria-labelledby="screen-modal-title">
         <div class="modal-heading"><div><span class="modal-eyebrow">KBD STUDIO · 128 × 128</span><h2 id="screen-modal-title">屏幕设置</h2><p>一段喜欢的动画，一个陪你打字的小伙伴。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button type="button" class="theme-toggle" data-theme-toggle aria-label="暗色模式" aria-pressed="false" title="暗色模式"><svg class="theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.7 14.2A9 9 0 0 1 9.8 3.3 9 9 0 1 0 20.7 14.2Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.4 1.4m11.2 11.2L19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg></button><button class="outline small" data-modal-connect>连接键盘</button><button id="screen-back" class="modal-close" data-workspace-close aria-label="关闭屏幕设置">×</button></div></div>
         <div class="modal-body">
@@ -228,7 +225,7 @@
               <div class="pet-control-heading">
                 <div>
                   <h3 class="screen-settings-title">编辑画布</h3>
-                  <span id="file-name" data-i18n-skip class="filename">轨道 · 内置示例</span>
+                  <span id="file-name" class="filename">轨道 · 内置示例</span>
                 </div>
                 <div class="actions">
                   <button id="import" class="outline small">＋ 导入 GIF / 图片</button>
@@ -522,7 +519,12 @@
         >
       </footer>
     </main>
-    <div class="site-credit" role="contentinfo"><span>本站使用 AI 辅助构建。</span><button type="button" data-open-feedback>发现问题？提交反馈</button><a href="https://kbd.cool/studio/inbox.html">管理员收件箱</a></div>
+    <div class="site-credit" role="contentinfo">
+      <span>本站使用 AI 辅助构建。</span>
+      <button type="button" data-open-feedback>发现问题？提交反馈</button>
+      <a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a>
+      <a href="https://github.com/kbdfans/athena-studio/blob/HEAD/THIRD_PARTY.md" target="_blank" rel="noopener noreferrer">开源声明</a>
+    </div>
     <dialog id="feedback-dialog" aria-labelledby="feedback-title" data-connection-independent="true">
       <button type="button" class="dialog-close" data-close-feedback aria-label="关闭">×</button>
       <span class="eyebrow">KBD STUDIO · FEEDBACK</span><h2 id="feedback-title">一起让它更好用。</h2>

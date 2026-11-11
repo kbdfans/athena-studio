@@ -12,24 +12,53 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
   dialog.setAttribute('aria-labelledby','firmware-title');
   // Retain the guide across the intentional USB disconnect. Other workspaces close.
   dialog.dataset.connectionIndependent='true';
-  dialog.innerHTML=`<button type="button" class="dialog-close" id="upgrade-close" aria-label="关闭">×</button>
-    <div class="eyebrow">KBD STUDIO · FIRMWARE</div><h2 id="firmware-title">按住 Esc，再连接键盘。</h2>
-    <div class="upgrade-identity">
-      <span class="upgrade-model" id="upgrade-model"></span>
+  dialog.innerHTML=`
+    <div class="upgrade-heading">
+      <h2 id="firmware-title">固件升级</h2>
+      <button type="button" class="dialog-close" id="upgrade-close" aria-label="关闭">×</button>
+    </div>
+    <div class="upgrade-body">
       <dl class="upgrade-versions" aria-live="polite">
+        <div><dt>键盘型号</dt><dd id="upgrade-model"></dd></div>
         <div><dt>当前版本</dt><dd id="upgrade-current-version"></dd></div>
         <div><dt>可升级版本</dt><dd id="upgrade-target-version"></dd></div>
       </dl>
+      <div id="upgrade-workflow" class="upgrade-workflow">
+        <section id="upgrade-guide" class="upgrade-panel">
+          <h3>进入刷机模式</h3>
+          ${bootloaderGuide()}
+        </section>
+        <div class="upgrade-controls">
+          <section id="upgrade-detection" class="upgrade-panel upgrade-detection">
+            <h3>升级设备</h3>
+            <p id="upgrade-detection-text" role="status" aria-live="polite"></p>
+          </section>
+          <label class="upgrade-reset-choice"><input id="upgrade-clear-confirm" type="checkbox"><span><strong>我确认清除全部图片和动画</strong><small id="upgrade-preservation">升级后需重新上传图片。键位配置保留，恢复备份保存在此浏览器。</small></span></label>
+          <div id="upgrade-compatibility" class="upgrade-panel upgrade-compatibility" hidden>
+            <h3>历史固件兼容升级</h3>
+            <p>无法确认旧配置的存储格式。可以重置为本站固件；键位、宏、布局设置、全部图片、宠物外观和成长进度都会恢复默认。恢复备份会先保存在此浏览器。</p>
+            <button type="button" id="upgrade-keymap-download" class="text-button">下载升级前键位文件</button>
+            <label><input type="checkbox" id="upgrade-reset-confirm">我确认这是原版 RP2040 / 16 MB 对应型号，并同意重置以上数据。</label>
+          </div>
+        </div>
+      </div>
+      <div class="upgrade-result">
+        <p id="upgrade-status" role="status" aria-live="polite"></p>
+        <progress id="upgrade-progress" max="100" value="0" hidden></progress>
+        <p id="upgrade-error" class="error" role="alert"></p>
+      </div>
     </div>
-    <p class="upgrade-subtitle" id="upgrade-intro">先识别键盘型号，再按下图进入刷机模式。</p>
-    <div id="upgrade-guide">${bootloaderGuide()}</div>
-    <div id="upgrade-detection" class="upgrade-detection" role="status" aria-live="polite"><span id="upgrade-detection-text"></span><button type="button" id="upgrade-detect" class="primary">授权 RP2 Boot</button></div>
-    <label class="upgrade-reset-choice"><input id="upgrade-clear-confirm" type="checkbox"><span><strong>我确认：升级将清除全部图片和动画</strong><small id="upgrade-preservation">升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。</small></span></label>
-    <div id="upgrade-compatibility" class="upgrade-compatibility" hidden><h3>历史固件兼容升级</h3><p>无法确认旧配置的存储格式。可以重置为本站固件；键位、宏、布局设置、全部图片、宠物外观和成长进度都会恢复默认。恢复备份会先保存在此浏览器。</p><button type="button" id="upgrade-keymap-download" class="text-button">下载升级前键位文件</button><label><input type="checkbox" id="upgrade-reset-confirm">我确认这是原版 RP2040 / 16 MB 对应型号，并同意重置以上数据。</label></div>
-    <progress id="upgrade-progress" max="100" value="0" hidden></progress>
-    <p id="upgrade-status" role="status" aria-live="polite"></p><p id="upgrade-error" class="error" role="alert"></p>
-    <p id="upgrade-blocker" class="upgrade-blocker" role="status" aria-live="polite"></p>
-    <div class="upgrade-footer"><button type="button" class="upgrade-download" id="upgrade-recovery" hidden>下载恢复文件</button><button type="button" class="outline" id="upgrade-back">返回</button><button type="button" class="primary" id="upgrade-start" disabled>开始升级</button></div>`;
+    <div class="upgrade-footer">
+      <p id="upgrade-precheck" class="upgrade-blocker">请先用正常打字模式连接键盘，读取型号和版本。</p>
+      <p id="upgrade-blocker" class="upgrade-blocker" role="status" aria-live="polite"></p>
+      <div class="upgrade-actions">
+        <button type="button" class="upgrade-download" id="upgrade-recovery" hidden>下载恢复文件</button>
+        <button type="button" class="outline" id="upgrade-back">返回</button>
+        <button type="button" class="primary" id="upgrade-connect" hidden>返回连接键盘</button>
+        <button type="button" class="outline" id="upgrade-detect">授权 RP2 Boot</button>
+        <button type="button" class="primary" id="upgrade-start" disabled>开始升级</button>
+      </div>
+    </div>`;
   document.body.append(dialog);
   const $=id=>dialog.querySelector('#'+id);
   let versionBlocked=false,snapshot=null,needsReset=false,identity=null,release=null,uf2=null,running=false,backup=null,boot=null,generation=0,detecting=false,done=false,packageState='idle',deviceState={kind:'waiting',device:null};
@@ -38,16 +67,14 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
     if(running||done||versionBlocked)return;
     const ready=deviceState.kind==='ready';
     $('upgrade-detection').classList.toggle('ready',ready);
-    $('upgrade-detection').classList.toggle('needs-authorization',!ready);
     $('upgrade-detection-text').textContent=ready
-      ? !identity?'已检测到 RPI-RP2。仍需先在正常模式识别键盘型号。':release?'已授权 · RPI-RP2 已连接，升级设备已就绪。':'已授权 · RPI-RP2 已连接，正在等待此型号的升级包。'
+      ? 'RPI-RP2 已连接，可以继续。'
       : deviceState.kind==='multiple'?'发现多个 RP2 Boot，请选择要升级的那一把键盘。'
       : deviceState.kind==='unsupported'?'此浏览器不支持升级设备检测，请使用桌面版 Chrome 或 Edge。'
       : deviceState.kind==='unavailable'?'暂时无法检测设备，请点击授权后重试。'
-      :'首次使用需要授权：按住 Esc 插入 USB，再点击右侧按钮，在浏览器列表中选择 RP2 Boot。已授权的设备会自动识别。';
+      :'进入 RPI-RP2 后，点击授权并在浏览器列表中选择 RP2 Boot。';
     $('upgrade-detect').disabled=detecting||!navigator.usb;
     $('upgrade-detect').textContent=detecting?'请在浏览器中选择 RP2 Boot':ready?'重新选择设备':'授权 RP2 Boot';
-    $('upgrade-detect').className=ready?'outline':'primary';
     $('upgrade-blocker').textContent=!identity?'请先在正常模式连接键盘，确认型号。':!release?(packageState==='loading'?'正在准备此型号的升级文件，请稍候。':'此型号的升级文件尚未就绪，暂不能开始升级。'):!ready?'需要授权并连接 RP2 Boot 后才能开始升级。':!$('upgrade-clear-confirm').checked?'请勾选清除图片和动画的确认项。':'升级条件已齐备，可以开始。';
     $('upgrade-start').disabled=!ready||!identity||!release||detecting||!$('upgrade-clear-confirm').checked||(needsReset&&(!snapshot||!$('upgrade-reset-confirm').checked));
     if(needsReset&&ready&&release&&identity&&$('upgrade-clear-confirm').checked)$('upgrade-blocker').textContent=!snapshot?'缺少升级前键位记录，请返回正常模式连接键盘后重试。':!$('upgrade-reset-confirm').checked?'兼容升级需要额外确认重置键位和所有屏幕数据。':'兼容重置条件已齐备，可以开始。';
@@ -57,8 +84,8 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
   function showVersionOnly(label){
     versionBlocked=true;monitor.stop();dialog.classList.add('version-only');
     $('firmware-title').textContent=label;
-    for(const id of ['upgrade-intro','upgrade-guide','upgrade-detection','upgrade-compatibility','upgrade-progress','upgrade-error','upgrade-status','upgrade-blocker','upgrade-start','upgrade-recovery'])$(id).hidden=true;
-    dialog.querySelector('.upgrade-reset-choice').hidden=true;$('upgrade-start').disabled=true;$('upgrade-back').textContent='关闭';onStateChange?.();
+    for(const id of ['upgrade-workflow','upgrade-progress','upgrade-error','upgrade-status','upgrade-precheck','upgrade-blocker','upgrade-start','upgrade-recovery','upgrade-connect','upgrade-detect'])$(id).hidden=true;
+    dialog.querySelector('.upgrade-reset-choice').hidden=true;$('upgrade-start').disabled=true;$('upgrade-back').hidden=false;$('upgrade-back').textContent='关闭';onStateChange?.();
   }
   function stopWaiting(){monitor.stop();onStateChange?.();}
   $('upgrade-detect').onclick=async()=>{
@@ -70,6 +97,11 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
   function status(label,pct){$('upgrade-status').textContent=label;$('upgrade-progress').hidden=false;$('upgrade-progress').value=pct;}
   function close(){if(!running){generation++;dialog.close();stopWaiting();}}
   $('upgrade-close').onclick=$('upgrade-back').onclick=close;
+  $('upgrade-connect').onclick=()=>{
+    close();
+    const target=document.getElementById(getSelectedProfile?.()?'gate-connect':'connection-model');
+    if(target?.getClientRects().length)target.focus();
+  };
   // Esc is used to enter the keyboard bootloader, so it must never dismiss this guide.
   dialog.addEventListener('cancel',e=>e.preventDefault());
   dialog.addEventListener('close',()=>{monitor.stop();onStateChange?.();});
@@ -79,20 +111,29 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
   };
   async function open(){
     if(getBusy()||running)return;
-    versionBlocked=false;dialog.classList.remove('version-only');$('firmware-title').textContent='按住 Esc，再连接键盘。';$('upgrade-back').textContent='返回';dialog.querySelector('.upgrade-reset-choice').hidden=false;for(const id of ['upgrade-intro','upgrade-error','upgrade-status'])$(id).hidden=false;
-    $('upgrade-preservation').textContent='升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。';
-    identity=getIdentity();snapshot=getSnapshot?.()||null;needsReset=false;$('upgrade-compatibility').hidden=true;$('upgrade-reset-confirm').checked=false;if(identity?.protocol==='zmk')return;packageState='loading';release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
-    const profile=identity?.profile||getSelectedProfile?.();
+    const nextIdentity=getIdentity();
+    const profile=nextIdentity?.profile||getSelectedProfile?.();
+    if(nextIdentity?.protocol==='zmk'||profile?.keymapOnly)return;
+    versionBlocked=false;dialog.classList.remove('version-only','upgrade-complete');$('firmware-title').textContent='固件升级';$('upgrade-back').textContent='返回';dialog.querySelector('.upgrade-reset-choice').hidden=false;for(const id of ['upgrade-error','upgrade-status'])$(id).hidden=false;
+    $('upgrade-preservation').textContent='升级后需重新上传图片。键位配置保留，恢复备份保存在此浏览器。';
+    identity=nextIdentity;snapshot=getSnapshot?.()||null;needsReset=false;$('upgrade-compatibility').hidden=true;$('upgrade-reset-confirm').checked=false;packageState='loading';release=null;uf2=null;backup=null;done=false;detecting=false;deviceState={kind:'waiting',device:null};const ticket=++generation;
     const buildInfo=identity?.buildInfo;
     $('upgrade-model').textContent=profile?.name||'尚未识别键盘';
     $('upgrade-current-version').textContent=buildInfo?.buildId||(identity?'旧版固件未提供版本信息':'连接后读取');
     $('upgrade-target-version').textContent=profile?'正在查询…':'选择键盘后显示';
     $('upgrade-clear-confirm').checked=false;$('upgrade-error').textContent='';$('upgrade-status').textContent='';$('upgrade-guide').hidden=false;$('upgrade-progress').hidden=true;$('upgrade-recovery').hidden=true;
-    $('upgrade-start').textContent='开始升级';$('upgrade-detection').hidden=false;$('upgrade-start').hidden=false;lock(false);
-    $('upgrade-intro').textContent='先识别键盘型号，再按下图进入刷机模式。';
+    $('upgrade-workflow').hidden=false;
+    $('upgrade-precheck').hidden=!!identity;
+    $('upgrade-connect').hidden=!!identity;
+    $('upgrade-back').hidden=!identity;
+    $('upgrade-detect').hidden=$('upgrade-detection').hidden=!identity;
+    dialog.querySelector('.upgrade-reset-choice').hidden=!identity;
+    $('upgrade-start').hidden=!identity;
+    lock(false);
+    $('upgrade-blocker').hidden=!identity;
     if(!dialog.open)dialog.showModal();
-    onStateChange?.();void monitor.start();
-    if(!identity)$('upgrade-status').textContent='请先在正常打字模式连接键盘，以确认升级型号。';
+    onStateChange?.();
+    if(identity)void monitor.start();
     if(!profile)return;
     try{
       const manifestUrl=import.meta.env.DEV?'/__firmware-test/releases.json':`${import.meta.env.BASE_URL}firmware/releases.json`;
@@ -119,8 +160,6 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
       if(await digest(bytes)!==selected.sha256)throw Error('固件下载校验失败');
       if(ticket!==generation)return;
       release=selected;uf2=bytes;packageState='ready';
-      $('upgrade-intro').textContent='拔插时会保留当前型号和升级步骤。进入 RPI-RP2 后点击开始升级，网页会备份、写入、校验并重启。';
-      $('upgrade-status').textContent='本次升级会清除全部旧图片和动画，不迁移旧素材。请确认下方提示后开始。';
       lock(false);
     }catch(e){if(ticket===generation){packageState='unavailable';$('upgrade-target-version').textContent='暂无可用升级包';$('upgrade-error').textContent=e.message;renderDetection();}}
   }
@@ -145,7 +184,7 @@ export function setupFirmwareUpgrade({getIdentity,getSelectedProfile,getSnapshot
         const again=await readFirmwareFlash(boot,p=>status('当前已是此版本，正在回读校验…',30+p*69));
         if(await digest(again)!==plan.targetSha256)throw Error('完整回读校验失败');
       }
-      await boot.reboot();boot=null;done=true;$('upgrade-detection').hidden=true;
+      await boot.reboot();boot=null;done=true;dialog.classList.add('upgrade-complete');$('upgrade-detect').hidden=$('upgrade-detection').hidden=true;
       status(plan.resetSettings?'重置升级与校验完成。键位和屏幕数据已恢复默认，请重新连接键盘。':'升级与校验完成，图片已清空，键盘已重启。重新连接后上传新图片，或启用电子宠物。',100);
       $('upgrade-start').hidden=true;
       onFinished?.();

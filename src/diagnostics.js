@@ -9,6 +9,6 @@ export function startDiagnostics(){
  recordDiagnostic('page.open');
  window.addEventListener('error',e=>recordDiagnostic('runtime.error',{line:e.lineno}));
  window.addEventListener('unhandledrejection',()=>recordDiagnostic('runtime.error'));
- const navigation={'keymap-nav':'view.keymap','screen-nav':'view.screen','tester-nav':'view.tester','firmware-nav':'view.firmware','gate-firmware':'view.firmware','gate-demo':'demo.enter','demo-exit':'demo.exit'};
+ const navigation={'keymap-nav':'view.keymap','screen-nav':'view.screen','firmware-nav':'view.firmware','gate-firmware':'view.firmware','gate-demo':'demo.enter','demo-exit':'demo.exit'};
  document.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(navigation[id])recordDiagnostic(navigation[id]);if(e.target.closest('#key-choices button'))recordDiagnostic('keymap.change');});
 }

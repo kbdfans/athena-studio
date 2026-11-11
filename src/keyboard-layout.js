@@ -61,7 +61,9 @@ export function keyboardLayout(definition, options = 10, model = "athena75") {
   const selected = keys
     .filter((k) => k.group === null || choices[k.group] === k.choice)
     .map((k) => ({ ...k }));
-  for (let g = 0; g < (model==="athena75"?4:3); g++) {
+  const compact = model === "athena75" || model === "athena75-rgb";
+  const groups = model === "athena75-rgb" ? 0 : model === "athena75" ? 4 : 3;
+  for (let g = 0; g < groups; g++) {
     if (!choices[g]) continue;
     const base = keys.filter((k) => k.group === g && k.choice === 0),
       alt = selected.filter((k) => k.group === g);
@@ -75,11 +77,12 @@ export function keyboardLayout(definition, options = 10, model = "athena75") {
       k.y += dy;
     }
   }
-  if(model!=="athena75"){const left=Math.min(...selected.map(k=>k.x+Math.min(0,k.x2)));for(const k of selected)k.x-=left;return selected;}
+  const left = Math.min(...selected.map(k => k.x + Math.min(0, k.x2)));
+  for (const k of selected) k.x -= left;
+  if (!compact) return selected;
   // Keep upstream matrix/option identities, but use the supplied enclosure
   // reference for visual placement: a 16U board and equally spaced F groups.
   for (const k of selected) {
-    k.x -= 2.5;
     if (k.y === 0) {
       if (k.x >= 1.25 && k.x <= 4.25) k.x -= 0.05;
       else if (k.x >= 5.5 && k.x <= 8.5) k.x -= 0.1;

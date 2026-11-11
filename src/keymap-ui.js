@@ -16,6 +16,7 @@ import {
 } from "./keymap-protocol.js";
 import { keyboardLayout, layoutChoices, withLayoutChoice, PHYSICAL_LAYOUT_MASK } from "./keyboard-layout.js";
 import { TKL_KEYS, TKL_MM } from "./tkl-layout.js";
+import { decorateFunctionKey, NUMPAD_KEYS } from "./function-palette.js";
 import { usesModifierColor } from "./keycap-colors.js";
 import { keycapStyle, KEYBOARD_ASPECT_RATIO, SCREEN_POSITION } from "./keyboard-geometry.js";
 import { KEYCODES, keyInfo, parseKeycode, layerExample } from "./keycodes.js";
@@ -33,7 +34,6 @@ export function setupKeymap({
   getBusy,
   setBusy,
   notice,
-  onView = () => {},
 }) {
   let profile=DEVICE_PROFILES.athena75, {definition,defaults}=profileLayout(profile);
   const keyIndex=(layer,row,col)=>modelKeyIndex(layer,row,col,profile);
@@ -123,21 +123,17 @@ export function setupKeymap({
   function viewPage(page) {
     if (getBusy()) return;
     const zmk=getDevice()?.protocol==="zmk";
-    if(zmk && page==="screen")page="keymap";
+    if((zmk||profile.keymapOnly) && page==="screen")page="keymap";
     if(!zmk&&!getDemo()&&(!ready()||(page==="screen"&&!getDevice()?.capabilities?.screen)))page="keymap";
     const value = page === "screen";
     screen = value;
     document.body.classList.toggle("screen-open", false);
-    document.body.classList.toggle("tester-open", page === "test");
     $("keymap-workspace").hidden = zmk;
     $("screen-settings").hidden = !value;
-    $("keyboard-tester").hidden = page !== "test";
     modals.show(page);
-    onView(page);
     history.replaceState(null, "", `#${page}`);
     for (const [id, on] of [
       ["keymap-nav", page === "keymap"],
-      ["tester-nav", page === "test"],
       ["screen-nav", value],
     ]) {
       $(id).classList.toggle("selected", on);
@@ -147,7 +143,6 @@ export function setupKeymap({
       ? "图片、动画和像素小猫，住进键盘的小屏幕。"
       : "每一个按键，每一帧陪伴，都由你决定。";
   }
-  $("tester-nav").onclick = () => viewPage("test");
   $("keymap-nav").onclick = () => viewScreen(false);
   for (const id of ["screen-nav", "screen-shortcut"])
     $(id).onclick = () => viewScreen(true);
@@ -162,12 +157,6 @@ export function setupKeymap({
     });
     if (boundDevice !== getDevice() || !connected()) loaded = false;
     const live = ready();
-    $("keymap-state").textContent = live
-      ? "已连接 · 改键即时生效"
-      : connected()
-        ? "键位尚未读取"
-        : "未连接 · 演示 / 本地预览";
-    $("keymap-state").classList.toggle("live", live);
     $("keymap-reload").disabled = !connected() || getBusy();
     $("keymap-sync").textContent = syncError
         ? "同步未确认 · 请重新读取键盘"
@@ -189,6 +178,7 @@ export function setupKeymap({
     const q = $("key-search").value.trim().toLowerCase(),
       value = draft.keycodes[keyIndex(layer, selected.row, selected.col)],
       host = $("key-choices");
+    const screenModes = !profile.keymapOnly && (getDemo() || getDevice()?.capabilities?.screen);
     host.replaceChildren();
     host.classList.remove("advanced-picker", "numpad-picker", "layout-picker", "screen-shortcut-picker");
     for (const b of $("key-categories").querySelectorAll("button")) {
@@ -207,26 +197,25 @@ export function setupKeymap({
       advanced.render(host, category);
       return;
     }
-    const make = (k) => {
-      const b = document.createElement("button");
-      b.textContent = platformKeyLabel(k);
-      b.title = [k.title, layerExample(k.code)].filter(Boolean).join("。例：");
+    const make = (k, label = platformKeyLabel(k)) => {
+      const b = decorateFunctionKey(document.createElement("button"), label,
+        [k.title, layerExample(k.code)].filter(Boolean).join("。例："));
       b.setAttribute("aria-label", `赋予 ${platformKeyLabel(k)} · ${k.title}`);
       b.classList.toggle("selected", value === k.code);
       b.setAttribute("aria-pressed", String(value === k.code));
-      b.disabled=!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code);
+      b.disabled=!screenModes && SCREEN_SHORTCUTS.some(item=>item.code===k.code);
       b.onclick = () => assign(k.code);
       return b;
     };
-    if (!q && category === "屏幕快捷键" && !getDemo() && !getDevice()?.capabilities?.screen) {
+    if (!q && category === "屏幕快捷键" && !screenModes) {
       const p=document.createElement("p");p.className="empty";p.textContent="此型号的宠物与击打特效需要单独适配固件。当前可分配原有图片切换和屏幕开关。";host.append(p);for(const code of [0x7e04,0x7e05])host.append(make(keyInfo(code)));
     } else if (!q && category === "屏幕快捷键") {
       host.classList.add("screen-shortcut-picker");
       const intro=document.createElement("p");intro.className="screen-shortcut-help";
       intro.textContent="先选上方的按键，再选择屏幕功能。模式键直接切换屏幕，关闭网页后仍可使用。";host.append(intro);
-      for(const k of SCREEN_SHORTCUTS){const b=make(k);b.dataset.screenModeKey=String(k.code);b.classList.add("screen-shortcut-card");const name=document.createElement("strong"),detail=document.createElement("small");name.textContent=k.label;detail.textContent=k.title;b.replaceChildren(name,detail);host.append(b);}
-      const hint=document.createElement("p");hint.className="screen-shortcut-help";hint.textContent="独立模式键需要新版固件；现有左右 Shift + P / T 快捷键仍可使用。";host.append(hint);
+      for(const k of SCREEN_SHORTCUTS){const b=make(k);b.dataset.screenModeKey=String(k.code);host.append(b);}
       for(const code of [0x7e04,0x7e05])host.append(make(keyInfo(code)));
+      const hint=document.createElement("p");hint.className="screen-shortcut-help";hint.textContent="独立模式键需要新版固件；现有左右 Shift + P / T 快捷键仍可使用。";host.append(hint);
     } else if (!q && category === "基础") {
       const scroll = document.createElement("div");
       scroll.className = "function-keyboard-scroll";
@@ -236,9 +225,8 @@ export function setupKeymap({
       board.setAttribute("aria-label", "87 键 TKL 功能布局");
       for (const k of TKL_KEYS) {
         const code = k.code,
-          b = make(keyInfo(code));
+          b = make(keyInfo(code), compactLabel(keyInfo(code)));
         b.classList.add("function-keycap");
-        b.textContent = compactLabel(keyInfo(code));
         b.style.cssText = keycapStyle(k, TKL_MM);
         if (usesModifierColor(code, k.w)) b.classList.add("modifier");
         board.append(b);
@@ -256,26 +244,7 @@ export function setupKeymap({
       host.classList.add("numpad-picker");
       const pad = document.createElement("div");
       pad.className = "numpad-board";
-      const arrangement = [
-        [83, 0, 0],
-        [84, 1, 0],
-        [85, 2, 0],
-        [86, 3, 0],
-        [95, 0, 1],
-        [96, 1, 1],
-        [97, 2, 1],
-        [87, 3, 1, 1, 2],
-        [92, 0, 2],
-        [93, 1, 2],
-        [94, 2, 2],
-        [89, 0, 3],
-        [90, 1, 3],
-        [91, 2, 3],
-        [88, 3, 3, 1, 2],
-        [98, 0, 4, 2],
-        [99, 2, 4],
-      ];
-      for (const [c, x, y, w = 1, h = 1] of arrangement) {
+      for (const [c, x, y, w = 1, h = 1] of NUMPAD_KEYS) {
         const b = make(keyInfo(c));
         b.style.gridColumn = `${x + 1} / span ${w}`;
         b.style.gridRow = `${y + 1} / span ${h}`;
@@ -290,9 +259,8 @@ export function setupKeymap({
     } else {
       const list = categoryKeys(KEYCODES, mode, category, q);
       for (const k of list) {
-        if(!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(item=>item.code===k.code))continue;
+        if(!screenModes && SCREEN_SHORTCUTS.some(item=>item.code===k.code))continue;
         const b = make(k);
-        b.classList.toggle("wide", k.label.length > 5);
         host.append(b);
       }
       if (!list.length) {
@@ -352,7 +320,7 @@ export function setupKeymap({
         info = keyInfo(draft.keycodes[i]),
         b = document.createElement("button");
       b.className = "keycap";
-      if (profile.id==="athena75" && key.row === 8 && key.col === 2) b.classList.add("image-button");
+      if (geometry.screen && key.row === 8 && key.col === 2) b.classList.add("image-button");
       b.dataset.matrix = `${key.row},${key.col}`;
       b.textContent = compactLabel(info);
       if (info.label.length > 8) b.classList.add("long-key-label");
@@ -382,7 +350,16 @@ export function setupKeymap({
       };
       host.append(b);
     }
-    if(!geometry.screen || (!getDemo()&&!getDevice()?.capabilities?.screen))return;
+    if (!geometry.screen) return;
+    if (profile.keymapOnly) {
+      const lcd = document.createElement("div");
+      lcd.className = "keyboard-lcd";
+      lcd.style.cssText = keycapStyle(geometry.screen, geometry.board);
+      lcd.setAttribute("aria-hidden", "true");
+      host.append(lcd);
+      return;
+    }
+    if (!getDemo() && !getDevice()?.capabilities?.screen) return;
     const lcd = document.createElement("button");
     lcd.className = "keyboard-lcd";
     lcd.style.cssText = keycapStyle(geometry.screen,geometry.board);
@@ -442,7 +419,7 @@ export function setupKeymap({
       ["左 Shift", "分裂后为 1.25U Shift 和一个 1U 按键", ["整键 2.25U", "分裂 1.25U＋1U"]],
       ["底排空格", "7U 底排：1.5U＋1U＋1.5U＋7U＋1.5U", ["6.25U", "7U"]],
     ];
-    if(profile.id!=="athena75"){const msg=document.createElement("p");msg.textContent="此型号的布局选项暂仅按设备读取展示，写入支持仍待验证。";panel.append(msg);host.append(panel);return;}
+    if(profile.id!=="athena75"){help.textContent=profile.keymapOnly?"当前固件提供 ANSI 布局。":"此型号的布局选项暂仅按设备读取展示，写入支持仍待验证。";host.append(panel);return;}
     settings.forEach(([title, detail, labels], group) => {
       const row = document.createElement("div"); row.className = "layout-option-row";
       const text = document.createElement("div"), name = document.createElement("strong"), description = document.createElement("p");
@@ -523,7 +500,7 @@ export function setupKeymap({
     }, { quiet: true });
   }
   async function assign(code) {
-    if(!getDemo() && !getDevice()?.capabilities?.screen && SCREEN_SHORTCUTS.some(k=>k.code===code)){notice("此型号尚未支持屏幕工作室固件。",true);return;}
+    if((profile.keymapOnly || (!getDemo() && !getDevice()?.capabilities?.screen)) && SCREEN_SHORTCUTS.some(k=>k.code===code)){notice("此型号尚未支持屏幕工作室固件。",true);return;}
     if(connected() && SCREEN_SHORTCUTS.some(k=>k.code===code)){
       if(getBusy())return;
       let version;
@@ -572,8 +549,6 @@ export function setupKeymap({
     }
     document.querySelector(".sidebar-tools .key-advanced").hidden =
       mode === "basic";
-    $("key-search").placeholder =
-      mode === "basic" ? "搜索常用功能…" : "搜索全部键码…";
   }
   function switchMode(next, keepQuery = false) {
     mode = next;
@@ -657,13 +632,7 @@ export function setupKeymap({
     }
   });
   render();
-  viewPage(
-    location.hash === "#test"
-      ? "test"
-      : location.hash === "#screen"
-        ? "screen"
-        : "keymap",
-  );
+  viewPage(location.hash === "#screen" ? "screen" : "keymap");
   function previewModel(id){
     if(getDevice())throw Error("请先断开键盘再使用演示模式");
     profile=DEVICE_PROFILES[id]||DEVICE_PROFILES.athena75;({definition,defaults}=profileLayout(profile));

@@ -17,6 +17,10 @@ The upstream repository supplies GNU GPL version 2 in its root LICENSE; a copy i
 
 `src/athena1800-definition.json` and related defaults derive from the same pinned upstream repository, `keyboards/ydkb/athena1800/keymaps/vial/`. The upstream GPL notice remains applicable.
 
+# Athena75 RGB layout
+
+`src/athena75-rgb-definition.json` reproduces the RGB model's Vial definition from the same pinned [openkbd/vial-qmk-v6 revision](https://github.com/openkbd/vial-qmk-v6/tree/be6d662bf0412c784f586e68e919547e715fbdba/keyboards/ydkb/athena75_rgb/keymaps/vial). Its two default layers match the Athena75 keymap in that revision and use the shared defaults file. The upstream GPL notice remains applicable.
+
 # Bundled JavaScript dependencies
 
 - gifuct-js 2.1.2 — Matt Way, MIT. Source: https://github.com/matt-way/gifuct-js ; license: `licenses/gifuct-js-MIT.txt`.

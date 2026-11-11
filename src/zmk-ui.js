@@ -1,7 +1,8 @@
-import {ZMK_KEYS,ZMK_MEDIA,ZMK_NUMPAD,behaviorHelp,behaviorInCategory,BASIC_BEHAVIOR_GROUPS,ADVANCED_BEHAVIOR_GROUPS} from './zmk-catalog.js';
+import {ZMK_KEYS,ZMK_MEDIA,behaviorHelp,behaviorInCategory,BASIC_BEHAVIOR_GROUPS,ADVANCED_BEHAVIOR_GROUPS} from './zmk-catalog.js';
 import {translate} from './i18n-core.js';
 import {platformKeyLabel} from './platform-keys.js';
 import {TKL_KEYS,TKL_MM} from './tkl-layout.js';
+import {decorateFunctionKey,NUMPAD_KEYS} from './function-palette.js';
 import {keycapStyle} from './keyboard-geometry.js';
 import {usesModifierColor} from './keycap-colors.js';
 import {keypressBehavior,validBinding,zmkGeometry} from './zmk-model.js';
@@ -11,7 +12,7 @@ const label=code=>platformKeyLabel(ZMK_KEYS.find(k=>k.code===code)||{code,label:
 export function setupZmkUI({getDevice,notice}){
  const root=el('section','keymap-workspace zmk-workspace');root.id='zmk-workspace';root.hidden=true;root.setAttribute('aria-label','ZMK 键位设置');
  document.getElementById('keymap-workspace').after(root);
- root.innerHTML=`<div class="layer-bar"><span class="section-label" data-z="name"></span><div class="layer-chips" data-z="layers"></div><span data-z="status" role="status"></span></div><div class="zmk-warning" data-z="warning" hidden></div><div class="keyboard-stage"><div class="keyboard-scroll"><div class="keyboard-case"><div class="keyboard" data-z="keyboard"></div></div></div></div><aside class="key-inspector"><div class="function-toolbar"><div class="selected-key-row"><span class="section-label">当前选中</span><div class="selected-keycap" data-z="selected"></div><div class="selected-description"><h2 data-z="description"></h2></div><span data-z="position"></span><button data-z="undo" aria-label="撤销上一次改键">撤销</button></div></div><div class="function-sidebar"><div class="key-mode-switch"><button data-z="basic">基础</button><button data-z="advanced">高级</button></div><label class="key-search"><span>⌕</span><input data-z="search" type="search" aria-label="搜索按键或功能" placeholder="搜索功能…"></label><div class="key-categories" data-z="categories"></div><div class="sidebar-tools"><button class="text-button" data-z="reload">重新读取键盘</button><button class="text-button" data-z="export">导出当前键位</button></div></div><div class="zmk-choices" data-z="choices"></div></aside><div class="zmk-sync"><p data-z="sync" role="status" aria-live="polite"></p><button class="text-button" data-z="retry" hidden>重试自动保存</button></div>`;
+ root.innerHTML=`<div class="keymap-toolbar"><div class="layer-bar"><span class="section-label" data-z="name"></span><div class="layer-chips" data-z="layers"></div></div></div><div class="zmk-warning" data-z="warning" hidden></div><div class="keyboard-stage"><div class="keyboard-scroll"><div class="keyboard-case"><div class="keyboard" data-z="keyboard"></div></div></div></div><aside class="key-inspector"><div class="function-toolbar"><div class="selected-key-row"><span class="section-label">当前选中</span><div class="selected-keycap" data-z="selected"></div><div class="selected-description"><h2 data-z="description"></h2></div><span data-z="position"></span><button data-z="undo" aria-label="撤销上一次改键">撤销</button></div></div><div class="function-sidebar"><div class="key-mode-switch"><button data-z="basic">基础</button><button data-z="advanced">高级</button></div><label class="key-search"><span>⌕</span><input data-z="search" type="search" aria-label="搜索按键或功能" placeholder="搜索…"></label><div class="key-categories" data-z="categories"></div><div class="sidebar-tools"><button class="text-button" data-z="reload">重新读取键盘</button><button class="text-button" data-z="export">导出当前键位</button></div></div><div class="zmk-choices" data-z="choices"></div></aside><div class="zmk-sync"><p data-z="sync" role="status" aria-live="polite"></p><button class="text-button" data-z="retry" hidden>重试自动保存</button></div>`;
  const $=name=>root.querySelector(`[data-z="${name}"]`);
  let device=null,layerId=0,position=0,mode='basic',category='基础按键';
  const live=()=>device&&getDevice()===device&&!device.broken&&device.device.opened;
@@ -23,7 +24,7 @@ export function setupZmkUI({getDevice,notice}){
  }
  function refresh(){
   const active=getDevice()?.protocol==='zmk';root.hidden=!active;document.getElementById('keymap-workspace').hidden=active;if(!active)return;
-  const d=getDevice();$('status').textContent=d.locked?'需要解锁':d.broken?'连接已断开':'已连接 · 改键即时生效';
+  const d=getDevice();
   $('sync').textContent=d.error?.message|| (d.locked?'需要解锁':d.preexistingDirty?'键盘有之前未保存的修改，请先确认保留或放弃':d.pending||d.queued?'正在同步到键盘…':d.dirty?'已生效 · 正在自动保存…':'已保存到键盘');
   $('sync').classList.toggle('error',!!d.error);$('retry').hidden=!d.dirty||!d.error||d.broken||d.preexistingDirty||d.uncertain;
   $('undo').disabled=!d.history.length||!!d.error||d.pending||d.locked;
@@ -62,23 +63,23 @@ export function setupZmkUI({getDevice,notice}){
    select.onchange=()=>act(()=>device.selectLayout(Number(select.value)));host.append(select,el('p','muted','未列出的 ANSI、ISO 或底排组合需要该型号的多布局固件。'));return;
   }
   if(mode==='basic'&&category==='基础按键'&&!query&&kp){
-   host.classList.add('physical-picker');const keyboard=el('div','zmk-palette');keyboard.style.aspectRatio=`${TKL_MM.width} / ${TKL_MM.height}`;
-   for(const k of TKL_KEYS){const binding={behaviorId:kp.id,param1:(7<<16)|k.code,param2:0};const b=button(label(k.code),()=>assign(binding),'keycap');b.style.cssText=keycapStyle(k,TKL_MM);b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('modifier',usesModifierColor(k.code,k.w));keyboard.append(b);}host.append(keyboard);const extra=el('div','zmk-simple-extras');for(const behavior of device.behaviors.filter(b=>['transparent','none'].includes(behaviorHelp(b).kind))){const help=behaviorHelp(behavior);const b=button(help.title,()=>renderBehavior(behavior),'outline');b.title=help.description;extra.append(b);}host.append(extra);return;
+   host.classList.add('physical-picker');const scroll=el('div','function-keyboard-scroll'),keyboard=el('div','function-keyboard');keyboard.style.aspectRatio=`${TKL_MM.width} / ${TKL_MM.height}`;
+   for(const k of TKL_KEYS){const binding={behaviorId:kp.id,param1:(7<<16)|k.code,param2:0};const b=decorateFunctionKey(button('',()=>assign(binding),'function-keycap'),label(k.code));b.style.cssText=keycapStyle(k,TKL_MM);b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('modifier',usesModifierColor(k.code,k.w));keyboard.append(b);}scroll.append(keyboard);host.append(scroll);const extra=el('div','zmk-simple-extras');for(const behavior of device.behaviors.filter(b=>['transparent','none'].includes(behaviorHelp(b).kind))){const help=behaviorHelp(behavior);const b=decorateFunctionKey(button('',()=>renderBehavior(behavior)),help.title,help.description);extra.append(b);}host.append(extra);return;
   }
   if(mode==='basic'&&category==='数字小键盘'&&!query&&kp){
    host.classList.add('physical-picker');const pad=el('div','numpad-board zmk-numpad');pad.setAttribute('role','group');pad.setAttribute('aria-label','数字小键盘');
    const current=device.map.layers.find(l=>l.id===layerId).bindings[position];
-   for(const [code,x,y,w=1,h=1]of ZMK_NUMPAD){const binding={behaviorId:kp.id,param1:(7<<16)|code,param2:0};const b=button(label(code).replace(/^KP /,''),()=>assign(binding));b.dataset.usage=String(code);b.title=label(code);b.setAttribute('aria-label',label(code));b.style.gridColumn=`${x+1} / span ${w}`;b.style.gridRow=`${y+1} / span ${h}`;b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('selected',current.behaviorId===kp.id&&current.param1===binding.param1&&current.param2===0);pad.append(b);}host.append(pad);return;
+   for(const [code,x,y,w=1,h=1]of NUMPAD_KEYS){const binding={behaviorId:kp.id,param1:(7<<16)|code,param2:0};const b=decorateFunctionKey(button('',()=>assign(binding)),label(code).replace(/^KP /,''),label(code));b.dataset.usage=String(code);b.setAttribute('aria-label',label(code));b.style.gridColumn=`${x+1} / span ${w}`;b.style.gridRow=`${y+1} / span ${h}`;b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('selected',current.behaviorId===kp.id&&current.param1===binding.param1&&current.param2===0);pad.append(b);}host.append(pad);return;
   }
   if(mode==='basic'&&['基础按键','数字小键盘','媒体控制'].includes(category)){
    if(!kp){host.append(el('p','','此固件未提供标准 Key Press 功能，请使用高级功能选择。'));return;}
    const media=ZMK_MEDIA;
    const items=category==='媒体控制'?media.map(([name,usage])=>({name,value:(12<<16)|usage})):ZMK_KEYS.filter(k=>k.code>=4&&k.code<=231&&(category!=='数字小键盘'||k.code>=83&&k.code<=99)).map(k=>({name:label(k.code),value:(7<<16)|k.code,title:k.title}));
-   for(const item of items){if(query&&!`${item.name} ${item.title||''}`.toLowerCase().includes(query))continue;const binding={behaviorId:kp.id,param1:item.value,param2:0};if(validBinding(binding,device.behaviors,device.map.layers))host.append(button(item.name,()=>assign(binding),'outline'));}return;
+   for(const item of items){if(query&&!`${item.name} ${item.title||''}`.toLowerCase().includes(query))continue;const binding={behaviorId:kp.id,param1:item.value,param2:0};if(validBinding(binding,device.behaviors,device.map.layers))host.append(decorateFunctionKey(button('',()=>assign(binding)),item.name,item.title||item.name));}return;
   }
   const behaviors=device.behaviors.filter(b=>!b.displayName.startsWith('zmk_reserved_')).filter(b=>{const h=behaviorHelp(b);return query?[b.displayName,h.title,h.description,translate(h.title),translate(h.description)].join(' ').toLowerCase().includes(query):behaviorInCategory(b,category);});
   host.classList.add('zmk-behaviors');
-  for(const behavior of behaviors){const h=behaviorHelp(behavior),b=button('',()=>renderBehavior(behavior),'zmk-behavior-card');b.append(el('strong','',h.title),el('code','',behavior.displayName),el('span','',h.description));b.title=h.example;host.append(b);}
+  for(const behavior of behaviors){const h=behaviorHelp(behavior),b=decorateFunctionKey(button('',()=>renderBehavior(behavior),'zmk-behavior-card'),h.title,[h.title,behavior.displayName,h.description].join(' · '));b.dataset.behavior=behavior.displayName;host.append(b);}
   if(!behaviors.length)host.append(el('p','muted','当前固件没有提供此类功能。'));
  }
  function renderBehavior(behavior){
@@ -107,8 +108,12 @@ export function setupZmkUI({getDevice,notice}){
    wrap.append(select,input);if(hasHid)wrap.append(modifiers);if(descriptions.length===0||descriptions.every(d=>d.nil!==undefined))wrap.hidden=true;
    form.append(wrap);
   }
-  const preview=el('div','zmk-binding-preview');host.append(preview);
-  const use=button('应用到选中按键',()=>assign({behaviorId:behavior.id,param1:values[0],param2:values[1]}),'primary');host.append(use);
+  const actionbar=el('div','advanced-actionbar assignment-actionbar'),details=el('div','assignment-details');
+  const preview=el('div','advanced-preview');
+  const layer=device.map.layers.find(l=>l.id===layerId);
+  details.append(preview,el('span','advanced-target',`应用到：${layer.name||`第 ${layerId} 层`} · ${$('selected').textContent}`));
+  const use=button('应用到选中按键',()=>assign({behaviorId:behavior.id,param1:values[0],param2:values[1]}),'primary assign-action');
+  actionbar.append(details,use);host.append(actionbar);
   function update(){const m=metadata[Number(variants.value)||0];preview.textContent=values.map((n,i)=>{const desc=m?.['param'+(i+1)]||[];if(!desc.length||desc.every(d=>d.nil!==undefined))return '';let text=String(n);if(desc.some(d=>d.hidUsage)){const usage=n&65535,page=(n>>>16)&255;const key=page===7?label(usage):ZMK_MEDIA.find(([,u])=>u===usage)?.[0]||'0x'+n.toString(16);text=[...Array.from({length:8},(_,j)=>j).filter(j=>(n>>>24)&(1<<j)).map(j=>label(224+j)),key].join('+');}else if(desc.some(d=>d.layerId!==undefined))text=device.map.layers.find(l=>l.id===n)?.name||String(n);else text=desc.find(d=>d.constant===n)?.name||text;return (help.params[i]||'参数 '+(i+1))+'：'+text;}).filter(Boolean).join(' · ')||'无需参数';use.disabled=device.preexistingDirty||!validBinding({behaviorId:behavior.id,param1:values[0],param2:values[1]},device.behaviors,device.map.layers);}
   function fields(){form.replaceChildren();const m=metadata[Number(variants.value)||0];if(!m){use.disabled=true;return;}field(m.param1,0);field(m.param2,1);update();}variants.onchange=fields;fields();
  }

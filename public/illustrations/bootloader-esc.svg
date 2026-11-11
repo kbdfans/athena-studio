@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" fill="none">
+  <view id="unplug" viewBox="0 0 280 300"/>
+  <view id="hold-esc" viewBox="310 0 280 300"/>
+  <view id="ready" viewBox="620 0 280 300"/>
   <title>Hold Esc while connecting USB; release after RPI-RP2 appears</title>
   <defs><pattern id="keys" width="36" height="36" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="31" height="31" rx="5" fill="#faf9f6" stroke="#d6d5cf"/></pattern></defs>
   <!-- One sequence, no model-specific USB port location is implied. -->

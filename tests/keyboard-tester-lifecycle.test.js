@@ -51,12 +51,11 @@ test('focus loss retains a late physical sample, then pauses within its bounded 
 test('leaving the tester invalidates in-flight initialization and cannot restart sampling',async t=>{
  const f=fixture(t,{connected:true});f.ui.setVisible(true);f.ui.setVisible(false);await delay(25);assert.equal(f.reads(),0);
 });
-test('tester modal permits automatic detection while another modal blocks it',async t=>{
+test('inline tester starts automatically and waits while another dialog is open',async t=>{
  const f=fixture(t,{mode:'browser'});
- document.querySelector=s=>s==='dialog[open]'?{id:'tester-dialog'}:null;
  f.ui.setVisible(true);await delay(5);assert.equal(f.el('tester-toggle').textContent,'暂停检测');
  f.ui.setVisible(false);
- document.querySelector=()=>({id:'connection-dialog'});
+ document.querySelector=s=>s==='dialog[open]'?{id:'connection-dialog'}:null;
  f.ui.setVisible(true);await delay(5);assert.equal(f.el('tester-toggle').textContent,'继续检测');
 });
 

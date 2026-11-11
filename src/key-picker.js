@@ -2,6 +2,7 @@ import {searchText} from "./i18n-core.js";
 import { platformKeyLabel } from "./platform-keys.js";
 import { KEYCODES, keyInfo, parseKeycode } from "./keycodes.js";
 import { isCommonKey } from "./keycode-categories.js";
+import { decorateFunctionKey } from "./function-palette.js";
 export function editableKeyName(code) {
   const info = keyInfo(code);
   // Distinguish numpad 1 from the alpha-section 1, and other duplicate legends.
@@ -58,14 +59,7 @@ export function openKeyPicker(input) {
       input.dataset.basicOnly === "true",
     );
     for (const k of found) {
-      const b = document.createElement("button");
-      b.type = "button";
-      const name = document.createElement("strong");
-      name.textContent = platformKeyLabel(k);
-      const help = document.createElement("small");
-      help.textContent = k.name || k.title;
-      b.append(name, help);
-      b.title = k.title;
+      const b = decorateFunctionKey(document.createElement("button"), platformKeyLabel(k), k.title);
       b.onclick = () => choose(k.code);
       list.append(b);
     }

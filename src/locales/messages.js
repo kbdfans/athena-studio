@@ -18,6 +18,24 @@ export const MESSAGES={
     "fr": "Test du clavier",
     "es": "Prueba del teclado"
   },
+  "搜索…": {
+    "en": "Search…",
+    "zh-TW": "搜尋…",
+    "ja": "検索…",
+    "ko": "검색…",
+    "de": "Suchen…",
+    "fr": "Rechercher…",
+    "es": "Buscar…"
+  },
+  "测试选项": {
+    "en": "Test options",
+    "zh-TW": "測試選項",
+    "ja": "テストオプション",
+    "ko": "테스트 옵션",
+    "de": "Testoptionen",
+    "fr": "Options de test",
+    "es": "Opciones de prueba"
+  },
   "键盘检测": {
     "en": "Keyboard test",
     "zh-TW": "鍵盤檢測",
@@ -3717,6 +3735,12 @@ export const MESSAGES={
   "键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。": {
     "en": "Key mapping and testing share this connection. Update the model-specific firmware to enable screen features."
   },
+  "键位设置和键盘检测共用当前连接。": {
+    "en": "Key mapping and testing share this connection."
+  },
+  "当前固件提供 ANSI 布局。": {
+    "en": "This firmware provides an ANSI layout."
+  },
   "键盘已在播放": {
     "en": "Keyboard is playing"
   },
@@ -4460,6 +4484,9 @@ export const MESSAGES={
   },
   "管理员收件箱": {
     "en": "Admin inbox"
+  },
+  "开源声明": {
+    "en": "Open-source notices"
   },
   "一起让它更好用。": {
     "en": "Help make it better."
@@ -5480,5 +5507,38 @@ export const MESSAGES={
   },
   "升级包未提供可比较的版本号": {
     "en": "The upgrade package has no comparable version number"
+  },
+  "键盘型号": {
+    "en": "Keyboard model"
+  },
+  "先连接键盘": {
+    "en": "Connect your keyboard first"
+  },
+  "请先用正常打字模式连接键盘，读取型号和版本。": {
+    "en": "Connect the keyboard in normal typing mode to read its model and version."
+  },
+  "升级设备": {
+    "en": "Bootloader device"
+  },
+  "我确认清除全部图片和动画": {
+    "en": "I agree to clear all images and animations"
+  },
+  "升级后需重新上传图片。键位配置保留，恢复备份保存在此浏览器。": {
+    "en": "Upload your images again after the upgrade. Key mappings are kept and a recovery backup stays in this browser."
+  },
+  "返回连接键盘": {
+    "en": "Return to connect"
+  },
+  "RPI-RP2 已连接，可以继续。": {
+    "en": "RPI-RP2 is connected. You can continue."
+  },
+  "进入 RPI-RP2 后，点击授权并在浏览器列表中选择 RP2 Boot。": {
+    "en": "After entering RPI-RP2, authorize and select RP2 Boot in the browser list."
+  },
+  "断开键盘的数据线。": {
+    "en": "Unplug the keyboard’s USB cable."
+  },
+  "插线时一直按住左上角 Esc。": {
+    "en": "Hold the top-left Esc key while reconnecting USB."
   }
 };

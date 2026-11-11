@@ -14,6 +14,7 @@ export async function readFirmwareFlash(boot,onProgress=()=>{}){
   return data;
 }
 export async function writeFirmwarePlan(boot,plan,backupId,onProgress=()=>{}){
+  if(DEVICE_PROFILES[plan.model]?.keymapOnly)throw Error('此型号暂未提供在线升级');
   // Recheck the durable backup and immutable plan before any erase.
   const backup=await getFirmwareBackup(backupId);
   if(!backup||backup.model!==plan.model||backup.targetSha256!==plan.targetSha256||backup.sha256!==plan.originalSha256||await digest(backup.data)!==backup.sha256||await digest(plan.target)!==plan.targetSha256)throw Error('升级计划或恢复备份校验失败，未开始写入');

@@ -63,8 +63,6 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
       $('tester-last').textContent='等待输入';$('tester-code').textContent='—';
       if(zmkBoard){
         const geometry=zmkBoard;keys=geometry.keys;host.style.aspectRatio=`${geometry.board.width} / ${geometry.board.height}`;
-        host.parentElement.style.width=`min(100%, ${Math.min(1100,geometry.board.width/geometry.board.height*320,geometry.board.width/19*60)}px)`;
-        host.parentElement.style.minWidth=`${Math.min(600,geometry.board.width/19*60)}px`;
         for(const k of keys){
           const cap=document.createElement('div');cap.className='keycap tester-keycap';cap.dataset.position=k.position;
           cap.textContent=k.label;cap.style.cssText=keycapStyle(k,geometry.board);
@@ -84,8 +82,6 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
       }
       browserPositions=new Set(codes.values());paint();return;
     }
-    const hostCase=$('tester-keyboard').parentElement;
-    if(hostCase){hostCase.style.width='';hostCase.style.minWidth='';}
     renderedDevice=current;
     outputIds.clear();
     const nextLayout = getLayoutOptions();
@@ -100,7 +96,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     for (const k of keys) {
       const id = `${k.row},${k.col}`, label = name(id), cap = document.createElement('div');
       cap.className = 'keycap tester-keycap';
-      if(profile.id==="athena75"&&k.row===8 && k.col===2) cap.classList.add('image-button'); cap.dataset.matrix = id;
+      if(geometry.screen&&k.row===8 && k.col===2) cap.classList.add('image-button'); cap.dataset.matrix = id;
       cap.textContent = label === '切换图片' ? '图片' : label;
       cap.setAttribute('aria-label', `${label}：未检测`);
       cap.style.cssText = keycapStyle(k,geometry.board);
@@ -150,7 +146,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     $('tester-status').textContent=message;
   }
   async function start() {
-    if (starting || active || getBusy() || !visible || document.hidden || document.querySelector('dialog[open]:not(#tester-dialog)')) return;
+    if (starting || active || getBusy() || !visible || document.hidden || document.querySelector('dialog[open]')) return;
     void enableAudio();
     const token=++epoch; starting=true;
     $('tester-toggle').disabled=true;
@@ -200,10 +196,10 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     if(token===epoch) timer=setTimeout(()=>tick(token),8);
   }
   function onKey(event) {
-    if(!active || !visible || document.hidden || document.querySelector('dialog[open]:not(#tester-dialog)')) return;
+    if(!active || !visible || document.hidden || document.querySelector('dialog[open]')) return;
     // Controls keep normal keyboard navigation; the focused test surface captures
     // Tab and other cancelable browser shortcuts as test input.
-    if(event.target?.closest?.('.tester-options, .tester-actions, .modal-heading, .modal-notices'))return;
+    if(event.target?.closest?.('#keyboard-test-switch, #keyboard-tester'))return;
     if(audio.context?.state!=='running')void enableAudio();
     event.preventDefault(); event.stopPropagation();
     if(event.type==='keydown') $('tester-code').textContent=`${event.code || '未知键码'} · ${event.key===' '?'Space':event.key}`;
@@ -216,7 +212,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
   }
   window.addEventListener('keydown',onKey,true); window.addEventListener('keyup',onKey,true);
   function autoStart() {
-    if(!visible || !focused || manualPaused || document.hidden || getBusy() || document.querySelector('dialog[open]:not(#tester-dialog)'))return;
+    if(!visible || !focused || manualPaused || document.hidden || getBusy() || document.querySelector('dialog[open]'))return;
     if(failedDevice && failedDevice===live())return;
     clearTimeout(focusTimer);focusTimer=null;focusDeadline=0;
     void start();

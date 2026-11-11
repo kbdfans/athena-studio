@@ -85,15 +85,6 @@ body.workspace-modal-open { overflow: hidden; }
 .studio-modal .muted, .studio-modal .write-note { font-size: 11px; line-height: 1.7; }
 .studio-modal .stats strong { font-size: 20px; }
 .studio-modal .write-panel { margin-top: 14px; }
-.studio-modal .keyboard-tester { padding: 0; }
-.studio-modal .tester-heading h1 { font-size: 15px; }
-.studio-modal .tester-heading p, .studio-modal .tester-options label { font-size: 12px; }
-.studio-modal .tester-options { background: var(--paper); padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; gap: 12px 18px; }
-.studio-modal .tester-system-hint { font-size: 11px; margin: 12px 0 16px; }
-.studio-modal .tester-surface .keyboard-case { width: 100%; }
-.studio-modal .tester-summary { flex-wrap: wrap; font-size: 12px; }
-.studio-modal .tester-details { padding: 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; }
-.studio-modal .tester-note { font-size: 11px; margin-bottom: 0; }
 .studio-modal .modal-notices:has(.notice:not([hidden])) { position: sticky; bottom: 0; padding: 12px 28px; background: color-mix(in srgb, var(--gray-98) 94.9%, transparent); border-top: 1px solid var(--line); z-index: 6; }
 .studio-modal .notice { position: static; margin: 0; font-size: 12px; }
 @media (max-width: 850px) {
@@ -118,7 +109,6 @@ body.workspace-modal-open { overflow: hidden; }
   .studio-modal .preview-area { grid-template-columns: 1fr; }
   .studio-modal .screen-side { padding: 14px; border-radius: 10px; background: var(--gray-96); }
   .studio-modal .device-model { margin-top: 0; }
-  .studio-modal .tester-options label { flex-wrap: wrap; }
 }
 /* Reset legacy full-page heading spacing inside the compact dialog. */
 .studio-modal .section-heading h2, .studio-modal .pet-card-title h2 { margin: 0; line-height: 1.4; }
@@ -155,18 +145,13 @@ body.workspace-modal-open { overflow: hidden; }
   .studio-modal .pet-save-state { margin: 8px 0 12px; }
   .studio-modal .pet-details summary { padding: 9px 0; }
 }
-@media (min-width: 851px) and (max-height: 850px) {
-  .studio-modal .tester-surface .keyboard-case { width: min(100%, calc((100dvh - 440px) * 2.57)); margin: auto; }
-  .studio-modal .tester-heading { margin-bottom: 10px; }
-  .studio-modal .tester-details { padding: 12px 16px; }
-}
 .studio-v2 button.device-connected { color: var(--gray-40); border-color: var(--gray-85); background: var(--gray-96); }
 .studio-v2 button.device-connected::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-right: 7px; border-radius: 50%; background: var(--gray-50); vertical-align: middle; }
 .shared-connection p { font-size: 13px; color: var(--gray-40); line-height: 1.8; }
 .connection-features { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px; }
 .connection-features span { background: var(--gray-96); color: var(--gray-40); border-radius: 7px; padding: 7px 10px; font-size: 12px; }
 /* One primary action, always at the same top-right position. */
-#screen-dialog .screen-primary-actions .primary { padding: 10px 16px; white-space: nowrap; min-height: 38px; }
+#screen-dialog .screen-primary-actions .primary { padding: 10px 16px; min-height: 38px; }
 #source-history-count { color: var(--muted); white-space: nowrap; font: 11px monospace; padding-top: 2px; }
 .source-history-list { display: grid; grid-auto-flow: column; grid-auto-columns: 136px; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
 .source-history-card { position: relative; min-width: 0; }
@@ -184,9 +169,10 @@ body.workspace-modal-open { overflow: hidden; }
   #screen-dialog .screen-primary-actions .primary { padding: 8px 12px; font-size: 12px; }
 }
 
-.studio-modal .screen-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-.studio-modal .screen-toolbar .mode-tabs { margin-bottom: 0; flex-shrink: 0; }
-.studio-modal .screen-primary-actions { display: flex; justify-content: flex-end; flex-shrink: 0; }
+.studio-modal .screen-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+.studio-modal .screen-toolbar .mode-tabs { margin-bottom: 0; flex-wrap: wrap; max-width: 100%; }
+.studio-modal .screen-primary-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; max-width: 100%; margin-inline-start: auto; }
+.studio-modal .screen-toolbar button, .image-preview-controls .actions button { white-space: normal; overflow-wrap: anywhere; }
 @media (min-width: 851px) and (max-height: 850px) { .studio-modal .screen-toolbar { margin-bottom: 14px; } }
 @media (max-width: 480px) {
   .studio-modal .screen-toolbar { gap: 8px; }
@@ -240,14 +226,6 @@ body.workspace-modal-open { overflow: hidden; }
   background: var(--paper);
 }
 .typing-background-fields .typing-color-fields { margin-top: 0; }
-/* Keep test controls reachable and key legends legible on narrow screens. */
-@media (max-width: 600px) {
-  #tester-dialog .modal-heading { flex-wrap: wrap; }
-  #tester-dialog .modal-heading-actions { width: 100%; gap: 10px; justify-content: flex-end; }
-  #tester-dialog .modal-heading h2 { font-size: 22px; }
-  #tester-dialog .keyboard-scroll { overflow-x: auto; }
-}
-
 /* Shared preview and settings for pet and keystroke effects. */
 #screen-dialog .pet-large {
   height: auto;
@@ -522,9 +500,8 @@ body.workspace-modal-open { overflow: hidden; }
 .image-preview-controls .filename {
   display: block;
   max-width: 220px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .image-preview-controls .actions { display: flex; gap: 8px; flex-wrap: wrap; }
 .image-edit-grid {

@@ -35,6 +35,7 @@ export class RuntimeV2 {
   static async tryConnect(device, uid) {
     const profile=device.vendorId===undefined ? (uid===ATHENA_UID?DEVICE_PROFILES.athena75:null) : identifyProfile(device,uid);
     if (!profile) throw Error("键盘身份不匹配");
+    if (profile.keymapOnly) return null;
     const p = new RuntimeV2(device,profile);
     try {
       await device.open();

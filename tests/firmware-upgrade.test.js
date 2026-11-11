@@ -113,6 +113,15 @@ test('successful programming verifies the entire flash and never sends reboot it
 test('both original keyboard models use only keymap connection, never a private screen probe',async()=>{
  for(const id of ['athena75','athena1800']){let opens=0;const device={productName:'Original keyboard',async open(){opens++;this.opened=true;},async sendReport(){throw Error('Legacy must not probe screen');}};const runtime=await connectIdentifiedKeyboard({profile:{id},device});assert.equal(opens,1);assert.equal(runtime.capabilities.screen,false);}
 });
+test('Athena75 RGB stays on the keymap transport and outside the online upgrade path',async()=>{
+ const rgb=DEVICE_PROFILES['athena75-rgb'];
+ const device={vendorId:rgb.vid,productId:rgb.pid,productName:'Athena75 Screen Studio v2',async open(){this.opened=true;},async sendReport(){throw Error('RGB must not probe screen');}};
+ const runtime=await connectIdentifiedKeyboard({profile:rgb,device,uid:rgb.uid});
+ assert.equal(runtime.profile,rgb);
+ assert.equal(runtime.capabilities.screen,false);
+ await assert.rejects(planFirmwareUpgrade(new Uint8Array(),new Uint8Array(),{},rgb),/暂未提供在线升级/);
+ await assert.rejects(writeFirmwarePlan({}, {model:rgb.id}, 'unused'),/暂未提供在线升级/);
+});
 test('unknown history requires explicit reset consent and a matching normal-mode keymap snapshot',async()=>{
  const {uf2,current,release}=await fixture();release.sources=[];release.compatibility={mode:'athena-rp2040-reset-v1',hardwareRevision:'original-rp2040-16mb',flashBytes:0x1000000};
  const evidence={confirmed:true,identity:{model:profile.id,vid:profile.vid,pid:profile.pid,uid:profile.uid},keymap:{format:'athena-keymap-v1',model:profile.id,uid:profile.uid,protocol:12,layers:profile.layers,rows:profile.rows,cols:profile.cols,layoutOptions:0,keycodes:Array(profile.layers*profile.rows*profile.cols).fill(4)}};

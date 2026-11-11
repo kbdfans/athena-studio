@@ -1,6 +1,7 @@
 // Names are navigation hints only. The connected firmware supplies the real identity.
 export const CONNECTION_MODELS=Object.freeze([
  {id:'athena75',name:'Athena75',protocol:'qmk'},
+ {id:'athena75-rgb',name:'Athena75 RGB',protocol:'qmk'},
  {id:'athena1800',name:'Athena1800',protocol:'qmk'},
  {id:'agar-ble',name:'Agar BLE',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-agar-ble'},
  {id:'agar-mini-ble',name:'Agar Mini BLE',protocol:'zmk',source:'https://github.com/openkbd/zmk-config-agar-mini-ble'},

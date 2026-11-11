@@ -327,6 +327,8 @@ TT 锁层连按次数|Tap count to toggle a TT layer
 重启键盘|Restart keyboard
 重新连接键盘|Reconnect keyboard
 键位设置和键盘检测共用当前连接。当前固件尚未支持屏幕工作室，请先升级对应型号固件。|Key mapping and testing share this connection. Update the model-specific firmware to enable screen features.
+键位设置和键盘检测共用当前连接。|Key mapping and testing share this connection.
+当前固件提供 ANSI 布局。|This firmware provides an ANSI layout.
 键盘已在播放|Keyboard is playing
 键盘已重启|Keyboard restarted
 键盘正在通信，请稍后再试|Keyboard communication in progress. Try again shortly.
@@ -577,6 +579,7 @@ USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份�
 本站使用 AI 辅助构建。|Built with AI assistance.
 发现问题？提交反馈|Found a bug? Send feedback
 管理员收件箱|Admin inbox
+开源声明|Open-source notices
 一起让它更好用。|Help make it better.
 遇到问题，告诉我们。无需登录即可提交。|Tell us what went wrong. No account needed.
 产品型号|Product model
@@ -889,3 +892,14 @@ ZMK 当前固件未提供物理按键状态。Fn、层切换、双功能和宏�
 正在查询…|Checking…
 需升级固件|Firmware update required
 升级包未提供可比较的版本号|The upgrade package has no comparable version number
+键盘型号|Keyboard model
+先连接键盘|Connect your keyboard first
+请先用正常打字模式连接键盘，读取型号和版本。|Connect the keyboard in normal typing mode to read its model and version.
+升级设备|Bootloader device
+我确认清除全部图片和动画|I agree to clear all images and animations
+升级后需重新上传图片。键位配置保留，恢复备份保存在此浏览器。|Upload your images again after the upgrade. Key mappings are kept and a recovery backup stays in this browser.
+返回连接键盘|Return to connect
+RPI-RP2 已连接，可以继续。|RPI-RP2 is connected. You can continue.
+进入 RPI-RP2 后，点击授权并在浏览器列表中选择 RP2 Boot。|After entering RPI-RP2, authorize and select RP2 Boot in the browser list.
+断开键盘的数据线。|Unplug the keyboard’s USB cable.
+插线时一直按住左上角 Esc。|Hold the top-left Esc key while reconnecting USB.

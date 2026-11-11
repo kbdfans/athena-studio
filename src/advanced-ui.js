@@ -343,15 +343,17 @@ export function setupAdvanced({
         0,
       ),
     );
-    const result = el("div", "advanced-actionbar");
+    const result = el("div", "advanced-actionbar assignment-actionbar");
+    const details = el("div", "assignment-details");
     const summary = el("div", "advanced-preview");
     const target = el("span", "advanced-target");
     const apply = button(
       "赋予当前按键",
       safe(() => assign(compute())),
     );
-    apply.classList.add("primary-action");
-    result.append(summary, target, apply);
+    apply.classList.add("primary-action", "assign-action");
+    details.append(summary, target);
+    result.append(details, apply);
     root.append(result);
     const compute = () =>
       buildKeycode(type.value, {
@@ -402,21 +404,21 @@ export function setupAdvanced({
   function entries(root, type) {
     const spec = {
       td: [
-        "多击动作 · Tap Dance",
+        "多击动作",
         "同一键可分别设置轻按、长按、双击、双击后按住。应用后再赋予 TD 键。",
       ],
       combo: [
-        "组合触发 · Combo",
+        "组合触发",
         "同时按下 2–4 个键码触发另一个功能，无需占用额外键位。",
       ],
       override: [
-        "按键替换 · Key Override",
+        "按键替换",
         "按住指定修饰键时，将一个按键替换为另一个功能。",
       ],
     }[type];
     header(root, ...spec);
     const toolbar = el("div", "advanced-row");
-    const slots = select([], "");
+    const slots = select([["", "尚未读取"]], "");
     slots.setAttribute("aria-label", `${spec[0]}编号`);
     const edit = el("div", "advanced-form");
     let before = null,
@@ -443,25 +445,23 @@ export function setupAdvanced({
       updateRuleActions();
       report(`已读取 ${index} · 共 ${a.caps[type]} 个位置`);
     };
-    toolbar.append(
-      slots,
-      button("读取配置", () =>
-        task(async () => {
-          const a = await ensure();
-          if (!a.caps[type]) throw Error("当前固件未提供此功能");
-          if (dirty) throw Error("此条有未应用修改，请先应用或撤销编辑");
-          const value = slots.value;
-          slots.replaceChildren();
-          for (let i = 0; i < a.caps[type]; i++) {
-            const o = el("option", "", `${type === "td" ? "TD" : "规则"} ${i}`);
-            o.value = i;
-            slots.append(o);
-          }
-          if (value) slots.value = value;
-          await loadEntry();
-        }),
-      ),
+    const read = button("读取配置", () =>
+      task(async () => {
+        const a = await ensure();
+        if (!a.caps[type]) throw Error("当前固件未提供此功能");
+        if (dirty) throw Error("此条有未应用修改，请先应用或撤销编辑");
+        const value = slots.value;
+        slots.replaceChildren();
+        for (let i = 0; i < a.caps[type]; i++) {
+          const o = el("option", "", `${type === "td" ? "TD" : "规则"} ${i}`);
+          o.value = i;
+          slots.append(o);
+        }
+        if (value) slots.value = value;
+        await loadEntry();
+      }),
     );
+    toolbar.append(slots, read);
     slots.onchange = () => {
       if (dirty) {
         slots.value = index;
@@ -574,30 +574,35 @@ export function setupAdvanced({
       button("应用此条规则", () => task(() => apply())),
       button("清空此条", () => task(() => apply(true))),
     );
-    if (type === "td")
-      actions.append(
-        button(
+    const assignButton = type === "td"
+      ? button(
           "赋予当前按键",
           safe(() => {
             if (!before || session !== getDevice())
               throw Error("请先读取并配置 TD");
             assign(0x5700 + index);
           }),
-        ),
-      );
+        )
+      : null;
     const undo = button("撤销编辑", () => {
       dirty = false;
       draw();
       updateRuleActions();
     });
     actions.append(undo, draftState);
+    if (assignButton) {
+      assignButton.classList.add("assign-action");
+      actions.append(assignButton);
+    }
     function updateRuleActions() {
       const loaded = !!before && session === getDevice() && ready();
       const buttons = actions.querySelectorAll("button");
       buttons[0].disabled = !loaded || !dirty;
       buttons[0].classList.add("primary-action");
       buttons[1].disabled = !loaded;
-      if (type === "td") buttons[2].disabled = !loaded || dirty;
+      if (assignButton) assignButton.disabled = !loaded || dirty;
+      slots.disabled = !loaded;
+      read.disabled = !ready();
       undo.disabled = !dirty;
       draftState.textContent = !loaded
         ? "尚未读取"
@@ -633,7 +638,7 @@ export function setupAdvanced({
       decoded = true,
       dirty = false;
     const toolbar = el("div", "advanced-row"),
-      slots = select([], ""),
+      slots = select([["", "尚未读取"]], ""),
       editor = el("div", "macro-steps"),
       usage = el("p", "advanced-note");
     slots.setAttribute("aria-label", "宏编号");
@@ -650,26 +655,24 @@ export function setupAdvanced({
       }
       draw();
     };
-    toolbar.append(
-      slots,
-      button("读取宏", () =>
-        task(async () => {
-          const a = await ensure();
-          if (dirty) throw Error("此宏有未应用修改，请先应用或撤销编辑");
-          before = await a.readMacros();
-          parts = splitMacros(before, a.caps.macros);
-          session = bound;
-          slots.replaceChildren();
-          for (let i = 0; i < a.caps.macros; i++) {
-            const o = el("option", "", `M(${i})`);
-            o.value = i;
-            slots.append(o);
-          }
-          show();
-          report(`已读取 ${a.caps.macros} 个宏 · ${a.caps.macroSize} 字节`);
-        }),
-      ),
+    const read = button("读取宏", () =>
+      task(async () => {
+        const a = await ensure();
+        if (dirty) throw Error("此宏有未应用修改，请先应用或撤销编辑");
+        before = await a.readMacros();
+        parts = splitMacros(before, a.caps.macros);
+        session = bound;
+        slots.replaceChildren();
+        for (let i = 0; i < a.caps.macros; i++) {
+          const o = el("option", "", `M(${i})`);
+          o.value = i;
+          slots.append(o);
+        }
+        show();
+        report(`已读取 ${a.caps.macros} 个宏 · ${a.caps.macroSize} 字节`);
+      }),
     );
+    toolbar.append(slots, read);
     slots.onchange = () => {
       if (dirty) {
         slots.value = index;
@@ -810,17 +813,18 @@ export function setupAdvanced({
           report(`M(${index}) 已清空，其他宏保留`);
         }),
       ),
-      button(
-        "赋予当前按键",
-        safe(() => {
-          if (!parts || session !== getDevice()) throw Error("请先读取宏");
-          assign(0x7700 + index);
-        }),
-      ),
+    );
+    const assignButton = button(
+      "赋予当前按键",
+      safe(() => {
+        if (!parts || session !== getDevice()) throw Error("请先读取宏");
+        assign(0x7700 + index);
+      }),
     );
     const draftState = el("span", "draft-state");
     const undo = button("撤销编辑", () => show());
-    row.append(undo, draftState);
+    assignButton.classList.add("assign-action");
+    row.append(undo, draftState, assignButton);
     function updateMacroActions() {
       const loaded = !!parts && session === getDevice() && ready(),
         buttons = row.querySelectorAll("button");
@@ -828,7 +832,9 @@ export function setupAdvanced({
       buttons[1].disabled = !loaded || !decoded || !dirty;
       buttons[1].classList.add("primary-action");
       buttons[2].disabled = !loaded;
-      buttons[3].disabled = !loaded || dirty;
+      assignButton.disabled = !loaded || dirty;
+      slots.disabled = !loaded;
+      read.disabled = !ready();
       undo.disabled = !dirty;
       draftState.textContent = !loaded
         ? "尚未读取"

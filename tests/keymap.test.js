@@ -355,3 +355,23 @@ test('model layouts have unique valid switch coordinates and square 1U geometry'
   assert.equal(defaults.length,p.rows*p.cols*p.layers);
  }
 });
+
+test('Athena75 RGB uses a separate VID/PID model even with the same UID and matrix',async()=>{
+ const profile=DEVICE_PROFILES['athena75-rgb'];
+ const {vid,pid,uid}=profile;
+ assert.equal(identifyProfile({vendorId:vid,productId:pid},uid),profile);
+ assert.equal(identifyProfile({vendorId:vid,productId:0x2513},uid),DEVICE_PROFILES.athena75);
+ assert.equal(identifyProfile({vendorId:vid,productId:pid},'0000000000000000'),null);
+ const h=new Hid();h.profile=profile;h.options=profile.layoutOptions;
+ const api=new KeymapDevice({device:h,profile,pending:false,broken:false});
+ const before=await api.read();
+ assert.equal(before.model,'athena75-rgb');
+ const after={...before,keycodes:[...before.keycodes]};
+ after.keycodes[keyIndex(7,10,0,profile)]=42;
+ const saved=await api.apply(before,after,async()=>{});
+ assert.equal(saved.keycodes[keyIndex(7,10,0,profile)],42);
+ await assert.rejects(api.apply(before,{...after,model:'athena75'},async()=>{}));
+ await assert.rejects(api.applyLayout(before,0x100,async()=>{}));
+ assert.equal((await api.readMatrix()).length,11);
+ assert(!h.calls.some(p=>p[0]===0xfd));
+});
