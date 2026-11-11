@@ -40,3 +40,10 @@
 @media(max-width:540px){.feedback-trigger span{display:none;}.studio-v2>header .feedback-trigger{padding:7px;min-width:34px;}#feedback-dialog{padding:24px 20px;}.site-credit{padding:16px;}.feedback-actions .primary{padding:12px 18px;}}
 
 #feedback-dialog textarea:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+/* Reserve a separate navigation row before the feedback action crowds the brand. */
+@media(max-width:1000px){
+ .studio-v2>header{grid-template-columns:minmax(0,1fr) auto;gap:6px 14px;}
+ .studio-v2>header .header-right{grid-column:2;grid-row:1;}
+ .studio-v2>header .console-tabs{grid-column:1/-1;grid-row:2;justify-self:stretch;justify-content:center;width:auto;gap:24px;overflow-x:auto;}
+ .studio-v2>header .console-tabs button{flex:0 0 auto;}
+}
