@@ -1,4 +1,4 @@
-import {ZMK_KEYS,ZMK_MEDIA,behaviorHelp,behaviorInCategory,BASIC_BEHAVIOR_GROUPS,ADVANCED_BEHAVIOR_GROUPS} from './zmk-catalog.js';
+import {ZMK_KEYS,ZMK_MEDIA,ZMK_NUMPAD,behaviorHelp,behaviorInCategory,BASIC_BEHAVIOR_GROUPS,ADVANCED_BEHAVIOR_GROUPS} from './zmk-catalog.js';
 import {translate} from './i18n-core.js';
 import {platformKeyLabel} from './platform-keys.js';
 import {TKL_KEYS,TKL_MM} from './tkl-layout.js';
@@ -64,6 +64,11 @@ export function setupZmkUI({getDevice,notice}){
   if(mode==='basic'&&category==='基础按键'&&!query&&kp){
    host.classList.add('physical-picker');const keyboard=el('div','zmk-palette');keyboard.style.aspectRatio=`${TKL_MM.width} / ${TKL_MM.height}`;
    for(const k of TKL_KEYS){const binding={behaviorId:kp.id,param1:(7<<16)|k.code,param2:0};const b=button(label(k.code),()=>assign(binding),'keycap');b.style.cssText=keycapStyle(k,TKL_MM);b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('modifier',usesModifierColor(k.code,k.w));keyboard.append(b);}host.append(keyboard);const extra=el('div','zmk-simple-extras');for(const behavior of device.behaviors.filter(b=>['transparent','none'].includes(behaviorHelp(b).kind))){const help=behaviorHelp(behavior);const b=button(help.title,()=>renderBehavior(behavior),'outline');b.title=help.description;extra.append(b);}host.append(extra);return;
+  }
+  if(mode==='basic'&&category==='数字小键盘'&&!query&&kp){
+   host.classList.add('physical-picker');const pad=el('div','numpad-board zmk-numpad');pad.setAttribute('role','group');pad.setAttribute('aria-label','数字小键盘');
+   const current=device.map.layers.find(l=>l.id===layerId).bindings[position];
+   for(const [code,x,y,w=1,h=1]of ZMK_NUMPAD){const binding={behaviorId:kp.id,param1:(7<<16)|code,param2:0};const b=button(label(code).replace(/^KP /,''),()=>assign(binding));b.dataset.usage=String(code);b.title=label(code);b.setAttribute('aria-label',label(code));b.style.gridColumn=`${x+1} / span ${w}`;b.style.gridRow=`${y+1} / span ${h}`;b.disabled=!validBinding(binding,device.behaviors,device.map.layers)||device.preexistingDirty;b.classList.toggle('selected',current.behaviorId===kp.id&&current.param1===binding.param1&&current.param2===0);pad.append(b);}host.append(pad);return;
   }
   if(mode==='basic'&&['基础按键','数字小键盘','媒体控制'].includes(category)){
    if(!kp){host.append(el('p','','此固件未提供标准 Key Press 功能，请使用高级功能选择。'));return;}

@@ -56,3 +56,12 @@ export function behaviorHelp(behavior){
 export const BASIC_BEHAVIOR_GROUPS=['常用层切换','蓝牙与输出','鼠标与滚轮','布局设置'];
 export const ADVANCED_BEHAVIOR_GROUPS=['输入与组合','层与双功能','无线与设备','灯光与电源','鼠标与滚轮','维护与固件','固件自定义','布局设置'];
 export function behaviorInCategory(behavior,category){const h=behaviorHelp(behavior);if(category==='常用层切换')return ['mo','tog','to','sl','lt','custom-layer'].includes(h.kind);if(category==='蓝牙与输出')return ['bt','out','device-usb','device-bt'].includes(h.kind);return category===h.group;}
+
+// Native HID usages arranged as a physical 17-key numeric keypad.
+export const ZMK_NUMPAD=[
+ [83,0,0],[84,1,0],[85,2,0],[86,3,0],
+ [95,0,1],[96,1,1],[97,2,1],[87,3,1,1,2],
+ [92,0,2],[93,1,2],[94,2,2],
+ [89,0,3],[90,1,3],[91,2,3],[88,3,3,1,2],
+ [98,0,4,2],[99,2,4],
+];
