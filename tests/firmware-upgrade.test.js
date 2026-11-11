@@ -39,6 +39,42 @@ test('QGF normalization preserves full-frame pixels and rejects truncated and un
  const image=encodeQgf([{data:new Uint16Array(16384).fill(0x5678),delay:123}],0);assert.deepEqual(normalizeLegacyQgf(image),image);
  assert.throws(()=>normalizeLegacyQgf(image.subarray(0,image.length-1)));const bad=image.slice();bad[37]=7;assert.throws(()=>normalizeLegacyQgf(bad));
 });
+test('explicit legacy image reset accepts missing animations and clears every old image slot',async()=>{
+ const {uf2,current,release}=await fixture('legacy');
+ current.fill(255,0x500000,0x600000); // Missing daily image previously blocked migration.
+ current.fill(0x52,0xa00000,0xe00000); // Includes the two final legacy animation locations.
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile),/缺失或损坏/);
+ const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true});
+ assert.ok(plan.target.subarray(0x400000,0xe00000).every(b=>b===255));
+ assert.deepEqual(plan.target.subarray(4096,0x400000),current.subarray(4096,0x400000));
+ assert.deepEqual(plan.target.subarray(0xe00000),current.subarray(0xe00000));
+ assert.equal(plan.sectors.at(-1),0);
+ current[101]=15;
+ await assert.rejects(planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true}),/尚未验证/);
+});
+test('v2 image reset preserves pet, growth journal, keymap and all other non-image data',async()=>{
+ const {uf2,current,release}=await fixture();current.fill(0x36,0xa00000,0xe00000);
+ const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true});
+ assert.ok(plan.target.subarray(0x400000,0xa00000).every(b=>b===255));
+ assert.deepEqual(plan.target.subarray(4096,0x400000),current.subarray(4096,0x400000));
+ assert.deepEqual(plan.target.subarray(0xa00000),current.subarray(0xa00000));
+ const record=await saveFirmwareBackup(current,plan),memory=current.slice(),erased=[];
+ const boot={async command(code,args,len,payload){if(code===6)return;const view=new DataView(args.buffer,args.byteOffset,args.byteLength),off=view.getUint32(0,true)-0x10000000,size=view.getUint32(4,true);if(code===0x84)return memory.slice(off,off+size);if(code===3){erased.push(off);memory.fill(255,off,off+size);}else if(code===5)memory.set(payload,off);else throw Error('Unexpected command');}};
+ await writeFirmwarePlan(boot,plan,record.id);
+ assert.deepEqual(memory,plan.target);assert.ok(erased.some(off=>off>=0x400000));
+ assert.ok(erased.every(off=>off===0||(off>=0x400000&&off<0xa00000)));
+ assert.equal((await getFirmwareBackup(record.id)).phase,'verified');
+});
+test('image reset transport refuses writes outside actual firmware and image boundaries before USB access',async()=>{
+ const {uf2,current,release}=await fixture();
+ for(const off of [4096,0x1f0000,0x200000,0xa00000,0xdfe000,0xe00000]){
+  const plan=await planFirmwareUpgrade(current,uf2,release,profile,{clearImages:true});
+  plan.target[off]^=1;plan.sectors.push(off);plan.targetSha256=await digest(plan.target);
+  const record=await saveFirmwareBackup(current,plan);let commands=0;
+  await assert.rejects(writeFirmwarePlan({command(){commands++;}},plan,record.id),/越界/);
+  assert.equal(commands,0);
+ }
+});
 test('durable backup must match the whole plan before any USB command',async()=>{
  const {uf2,current,release}=await fixture();const plan=await planFirmwareUpgrade(current,uf2,release,profile),record=await saveFirmwareBackup(current,plan,'test-serial');
  assert.equal((await getFirmwareBackup(record.id)).sha256,await digest(current));

@@ -15,10 +15,11 @@ export async function writeFirmwarePlan(boot,plan,backupId,onProgress=()=>{}){
   // Recheck the durable backup and immutable plan before any erase.
   const backup=await getFirmwareBackup(backupId);
   if(!backup||backup.model!==plan.model||backup.targetSha256!==plan.targetSha256||backup.sha256!==plan.originalSha256||await digest(backup.data)!==backup.sha256||await digest(plan.target)!==plan.targetSha256)throw Error('升级计划或恢复备份校验失败，未开始写入');
+  if(!Number.isInteger(plan.mainBytes)||plan.mainBytes<=0||plan.mainBytes>=MAIN_LIMIT||plan.mainBytes%SECTOR)throw Error('主程序范围无效');
   if(plan.target.length!==FLASH_BYTES)throw Error('升级计划长度不正确');
   const expected=[];
   for(let off=0;off<FLASH_BYTES;off+=SECTOR){if(backup.data.subarray(off,off+SECTOR).some((b,j)=>b!==plan.target[off+j])){
-    if(!(off<MAIN_LIMIT||(plan.layout==='legacy'&&off>=0x400000&&off<0xe00000)))throw Error('升级计划越界');expected.push(off);
+    if(!(off<plan.mainBytes||(plan.layout==='legacy'&&off>=0x400000&&off<0xe00000)||(plan.clearImages===true&&off>=0x400000&&off<0xa00000)))throw Error('升级计划越界');expected.push(off);
   }}
   if(plan.sectors.length!==expected.length||new Set(plan.sectors).size!==expected.length||plan.sectors.some(n=>!expected.includes(n)))throw Error('升级扇区列表不一致');
   // Device may have been replaced since plan creation. Read again before erase.

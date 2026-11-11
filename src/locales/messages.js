@@ -4583,5 +4583,20 @@ export const MESSAGES={
   },
   "拔插时会保留当前型号和升级步骤。进入 RPI-RP2 后点击开始升级，网页会备份、写入、校验并重启。": {
     "en": "Your model and upgrade steps stay open while reconnecting. Once RPI-RP2 is detected, click Start upgrade to back up, write, verify and restart."
+  },
+  "我确认：升级将清除全部图片和动画": {
+    "en": "I understand: upgrading clears all images and animations"
+  },
+  "升级后提供 3 个空白图片位置，需要重新上传。键位配置保留；恢复备份会保存在此浏览器。": {
+    "en": "After upgrading, all 3 image slots will be empty. Upload your images again. Key mappings are kept; a recovery backup is saved in this browser."
+  },
+  "本次升级会清除全部旧图片和动画，不迁移旧素材。请确认下方提示后开始。": {
+    "en": "This upgrade clears all existing images and animations. Confirm below to continue."
+  },
+  "核对型号与清空范围…": {
+    "en": "Checking the model and reset boundaries…"
+  },
+  "升级与校验完成，图片已清空，键盘已重启。重新连接后上传新图片，或启用电子宠物。": {
+    "en": "Upgrade verified, images cleared and keyboard restarted. Reconnect to upload new images or enable the pixel pet."
   }
 };

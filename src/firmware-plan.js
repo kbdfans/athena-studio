@@ -51,7 +51,7 @@ export function normalizeLegacyQgf(data) {
   }
   return out;
 }
-export async function planFirmwareUpgrade(current, uf2, release, profile) {
+export async function planFirmwareUpgrade(current, uf2, release, profile, {clearImages=false}={}) {
   assert(current instanceof Uint8Array && current.length===FLASH_BYTES,'需要完整的 16 MB 读取结果');
   assert(release.model===profile.id && release.pid===profile.pid && profile.vid===0x9d5b,'键盘型号与固件不匹配');
   assert(await digest(uf2)===release.sha256,'固件下载校验失败');
@@ -65,7 +65,11 @@ export async function planFirmwareUpgrade(current, uf2, release, profile) {
   assert(source,'当前固件版本尚未验证，已停止升级，未擦除或写入');
   assert(source.layout==='legacy'||source.layout==='v2','未知存储布局');
   const target=current.slice();target.set(main);
-  if(source.layout==='legacy'){
+  if(clearImages){
+    // The user explicitly chose a clean three-slot image area. Never parse old images.
+    target.fill(255,0x400000,0xa00000);
+    if(source.layout==='legacy')target.fill(255,0xa00000,0xe00000);
+  }else if(source.layout==='legacy'){
     const offsets=[0x500000,0x600000,0x800000];
     for(let i=0;i<3;i++){
       const off=offsets[i],max=i===0?0x100000:0x200000;
@@ -79,12 +83,12 @@ export async function planFirmwareUpgrade(current, uf2, release, profile) {
   const sectors=[];
   for(let off=0;off<FLASH_BYTES;off+=SECTOR){
     if(current.subarray(off,off+SECTOR).some((b,j)=>b!==target[off+j])){
-      assert(off<main.length || (source.layout==='legacy'&&off>=0x400000&&off<0xe00000),'升级计划越过允许区域');sectors.push(off);
+      assert(off<main.length || (source.layout==='legacy'&&off>=0x400000&&off<0xe00000) || (clearImages&&off>=0x400000&&off<0xa00000),'升级计划越过允许区域');sectors.push(off);
     }
   }
   // Migrate resources before the main program. Configuration is never writable.
   sectors.sort((a,b)=>(a<MAIN_LIMIT)-(b<MAIN_LIMIT)||a-b);
-  return {target,sectors,model:profile.id,layout:source.layout,release:release.version,originalSha256:await digest(current),targetSha256:await digest(target)};
+  return {target,sectors,mainBytes:main.length,clearImages,model:profile.id,layout:source.layout,release:release.version,originalSha256:await digest(current),targetSha256:await digest(target)};
 }
 export function recoveryUf2(flash) {
   assert(flash.length===FLASH_BYTES,'恢复数据长度不正确');

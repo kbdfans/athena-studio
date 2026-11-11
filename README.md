@@ -53,7 +53,7 @@ A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Si
 
 ## Online firmware upgrade (under device validation)
 
-The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, migrates supported legacy animations, and verifies flash before reboot. Public firmware binaries are not distributed by this release: the public write action remains unavailable until device testing and corresponding-source release preparation are complete. Synthetic transport tests and a local hardware test are distinct validation steps.
+The illustrated bootloader guide uses: disconnect USB, hold **Esc** while reconnecting, then release Esc when **RPI-RP2** appears. The browser upgrade implementation checks model-specific firmware fingerprints, makes and verifies a full recovery backup, protects keyboard configuration, clears all old images and animations after explicit confirmation, and verifies flash before reboot. Upgrading creates three empty image slots; users upload their images again afterward. Existing v2 pet assets and growth data are preserved. Old or damaged animation files no longer block a clean upgrade; model and firmware fingerprint checks still apply. Public firmware binaries are not distributed by this release: the public write action remains unavailable until device testing and corresponding-source release preparation are complete. Synthetic transport tests and a local hardware test are distinct validation steps.
 
 ## Anonymous bug reports
 
