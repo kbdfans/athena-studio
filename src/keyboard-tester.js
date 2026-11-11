@@ -102,8 +102,8 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
     $('tester-status').textContent='正在准备测试…';
     device=live();
     const requested=$('tester-input-mode').value;
-    $('tester-mode').textContent=requested==='matrix'?'物理按键模式 · 含 MO/Fn，需连接 Athena75':'浏览器模式 · 不支持 MO/Fn';
-    if(requested==='matrix'&&!device){stop('等待连接 Athena75，连接成功后自动检测（含 MO/Fn）。');$('tester-toggle').textContent='等待连接';$('tester-toggle').disabled=true;return;}
+    $('tester-mode').textContent=requested==='matrix'?'物理按键模式 · 含 MO/Fn，需连接键盘':'浏览器模式 · 不支持 MO/Fn';
+    if(requested==='matrix'&&!device){stop('等待连接键盘，连接成功后自动检测（含 MO/Fn）。');$('tester-toggle').textContent='等待连接';$('tester-toggle').disabled=true;return;}
 
     try {
       let available=false;
@@ -173,7 +173,7 @@ export function setupKeyboardTester({ getDevice, getBusy, getLayoutOptions, getP
   document.querySelectorAll('dialog').forEach(dialog=>dialog.addEventListener('close',autoStart));
   $('tester-input-mode').onchange=()=>{
     stop();manualPaused=false;failedDevice=null;
-    $('tester-mode').textContent=$('tester-input-mode').value==='matrix'?'物理按键模式 · 含 MO/Fn，需连接 Athena75':'浏览器模式 · 不支持 MO/Fn';
+    $('tester-mode').textContent=$('tester-input-mode').value==='matrix'?'物理按键模式 · 含 MO/Fn，需连接键盘':'浏览器模式 · 不支持 MO/Fn';
     state.clear();paint();$('tester-last').textContent='等待输入';$('tester-code').textContent='—';autoStart();
   };
   $('tester-toggle').onclick=()=>{

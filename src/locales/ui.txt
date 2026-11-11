@@ -226,3 +226,5 @@ HP · 体力|HP · energy|HP · 體力|HP · 体力|HP · 체력|HP · Energie|H
 退出演示|Exit demo|退出示範|デモを終了|데모 종료|Demo beenden|Quitter la démo|Salir de la demo
 演示键盘型号|Demo keyboard model|示範鍵盤型號|デモのキーボード機種|데모 키보드 모델|Demo-Tastaturmodell|Modèle de clavier de démo|Modelo de teclado de la demo
 返回|Back|返回|戻る|뒤로|Zurück|Retour|Volver
+固件升级|Firmware upgrade|韌體升級|ファームウェア更新|펌웨어 업데이트|Firmware-Update|Mise à jour du firmware|Actualizar firmware
+升级操作图示|Upgrade instructions|升級操作圖示|更新手順|업데이트 안내|Update-Anleitung|Instructions de mise à jour|Instrucciones de actualización

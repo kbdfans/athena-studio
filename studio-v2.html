@@ -5,9 +5,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta
       name="description"
-      content="Athena75 键盘控制台：自定义键位、屏幕动画与像素宠物。"
+      content="Athena 键盘控制台：自定义键位、屏幕动画与像素宠物。"
     />
     <title>Athena · Studio</title>
+    <!-- Load layout before first paint, independently of the application modules. -->
+    <link rel="stylesheet" href="/src/firmware-upgrade.css" />
+    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="/src/pet.css" />
+    <link rel="stylesheet" href="/src/console.css" />
+    <link rel="stylesheet" href="/src/workspace-modals.css" />
+    <link rel="stylesheet" href="/src/write-feedback.css" />
   </head>
   <body class="studio-v2 connection-required">
     <header>
@@ -18,11 +25,11 @@
         ><button id="tester-nav" aria-pressed="false">键盘测试</button
         ><button id="screen-nav" aria-pressed="false">
           屏幕设置 <span>↗</span>
-        </button>
+        </button><button id="firmware-nav" aria-haspopup="dialog">固件升级</button>
       </nav>
       <div class="header-right">
         <button id="connect" class="outline">连接键盘 <span>↗</span></button>
-        <label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label>
+        <label class="language-control" title="语言"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label>
       </div>
     </header>
     <section id="connection-gate" class="connection-gate" aria-labelledby="gate-title">
@@ -32,6 +39,7 @@
       <p>连接键盘后，开始设置键位、屏幕和你的像素伙伴。</p>
       <div class="gate-actions"><button id="gate-connect" class="primary">连接键盘 ↗</button><button id="gate-demo" class="outline">体验演示模式</button></div>
       <small>支持 Athena75 · Athena1800，连接后自动识别型号与功能。</small>
+      <button id="gate-firmware" class="text-button">升级操作图示</button>
       <p id="gate-error" class="error" role="alert"></p>
       <small>使用 USB 数据线连接，再从浏览器列表中选择你的键盘。</small>
       <small><a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a> · <a href="./THIRD_PARTY.txt" target="_blank" rel="noopener noreferrer">Open-source notices</a></small>
@@ -41,7 +49,7 @@
       <section class="console-heading">
         <div>
           <div class="eyebrow">MAKE IT YOURS</div>
-          <h1>我的 Athena75<span>。</span></h1>
+          <h1>我的键盘<span>。</span></h1>
           <p id="console-subtitle">每一个按键，每一帧陪伴，都由你决定。</p>
         </div>
       </section>
@@ -162,7 +170,7 @@
         <p id="keymap-sync" class="keymap-sync" role="status" aria-live="polite">离线仅预览 · 连接后读取键盘实际配置</p>
       </section>
       <dialog id="tester-dialog" class="studio-modal tester-modal" aria-labelledby="tester-modal-title">
-        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO</span><h2 id="tester-modal-title">键盘检测</h2><p>按下每一颗键，看看它的回应。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button class="modal-close" data-workspace-close aria-label="关闭键盘检测">×</button></div></div>
+        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO</span><h2 id="tester-modal-title">键盘检测</h2><p>按下每一颗键，看看它的回应。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button class="modal-close" data-workspace-close aria-label="关闭键盘检测">×</button></div></div>
         <div class="modal-body">
       <section id="keyboard-tester" class="keyboard-tester" hidden aria-label="键盘测试器">
         <div class="tester-heading"><div><h1>按键响应</h1><p id="tester-mode">检测每个按键的响应</p></div><div class="tester-actions"><button id="tester-clear" class="outline small">清空记录</button><button id="tester-toggle" class="primary small">暂停检测</button></div></div>
@@ -185,7 +193,7 @@
         </div><div class="modal-notices"></div>
       </dialog>
       <dialog id="screen-dialog" class="studio-modal screen-modal" aria-labelledby="screen-modal-title">
-        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO · 128 × 128</span><h2 id="screen-modal-title">屏幕设置</h2><p>一段喜欢的动画，一个陪你打字的小伙伴。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button id="screen-back" class="modal-close" data-workspace-close aria-label="关闭屏幕设置">×</button></div></div>
+        <div class="modal-heading"><div><span class="modal-eyebrow">ATHENA STUDIO · 128 × 128</span><h2 id="screen-modal-title">屏幕设置</h2><p>一段喜欢的动画，一个陪你打字的小伙伴。</p></div><div class="modal-heading-actions"><label class="language-control" title="语言"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M5 6.5h14M5 17.5h14"/></svg><select class="language-picker" aria-label="语言"></select></label><button class="outline small" data-modal-connect>连接键盘 ↗</button><button id="screen-back" class="modal-close" data-workspace-close aria-label="关闭屏幕设置">×</button></div></div>
         <div class="modal-body">
       <section id="screen-settings" hidden aria-label="屏幕设置">
         <div class="screen-toolbar">
@@ -600,7 +608,7 @@
       <button class="dialog-close" data-close aria-label="关闭">×</button>
       <div class="write-confirm-heading"><span class="write-confirm-kicker">FROM YOUR DESK, TO YOUR KEYS</span><h2 id="write-confirm-title">让喜欢的画面，<br>住进键盘。</h2><p>再看一眼，准备好就出发。</p></div>
       <div class="confirm-preview write-preview-card">
-        <div class="write-device-frame"><canvas id="confirm-screen" width="128" height="128"></canvas><span>ATHENA 75</span></div>
+        <div class="write-device-frame"><canvas id="confirm-screen" width="128" height="128"></canvas><span>ATHENA</span></div>
         <div class="write-preview-info"><span class="write-section-label">即将写入</span><div id="confirm-details"></div><span class="write-preview-badge"><i></i> 128 × 128 屏幕</span></div>
       </div>
       <div class="write-options-heading"><span>写入选项</span><span>其他图片与宠物保持不变</span></div>

@@ -570,3 +570,6 @@ USB 通信超时，请拔插键盘并重新进入升级模式。原动画备份�
 未完成|Incomplete
 由层切换键启用|Enabled by a layer-switch key
 下载 UF2 文件|Download UF2 file
+我的键盘|My keyboard
+物理按键模式 · 含 MO/Fn，需连接键盘|Physical key mode · includes MO/Fn; connect your keyboard
+等待连接键盘，连接成功后自动检测（含 MO/Fn）。|Connect your keyboard to start physical testing, including MO/Fn.

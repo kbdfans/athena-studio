@@ -7,7 +7,6 @@ import { transferImage } from "./image-transfer.js";
 import { setupWriteFeedback } from "./write-feedback.js";
 import { setupSourceHistory } from "./source-history-ui.js";
 import { hasLiveConnection, renderConnectionControls } from "./connection-state.js";
-import "./style.css";
 import {
   SLOTS,
   slotAt,
@@ -20,11 +19,7 @@ import {
 } from "./format-v2.js";
 import { identifyAthena } from "./device.js";
 import { setupPet } from "./pet-ui.js";
-import "./pet.css";
 import { setupKeymap } from "./keymap-ui.js";
-import "./console.css";
-import "./workspace-modals.css";
-import "./write-feedback.css";
 import { setupKeyboardTester } from "./keyboard-tester.js";
 let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI;
 let sourceId = null, sourceSettingsTimer;
@@ -678,15 +673,15 @@ async function connectKeyboard() {
     if (state.boot) await state.boot.close();
     state.boot = null;
     state.identity = await identifyAthena({ prompt: true, models:["athena75","athena1800"] });
-    $("identity").textContent = `已识别 ${state.identity.name}`;
+    $("identity").textContent = `已识别 ${state.identity.profile.name}`;
     const runtime = await connectIdentifiedKeyboard(state.identity);
     state.identity.runtimeUpload = !!runtime;
     if (runtime) {
       state.boot = runtime;
       state.headers = runtime.capabilities?.screen ? await runtime.headers() : null;
+      state.demo=false;
       await keymapUI.load();
       state.sessionReady=true;
-      state.demo=false;
       $("connection-dialog").close();
       writeFeedback.dismiss();
       $("notice").hidden = true;
@@ -711,7 +706,7 @@ firmwareUI=setupFirmwareUpgrade({
   releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
   onFinished:()=>{state.identity=null;updateDevice();},
 });
-$("firmware-entry").onclick=()=>{$("connection-dialog").close();firmwareUI.open();};
+$("firmware-entry").onclick=$("firmware-nav").onclick=$("gate-firmware").onclick=()=>{$("connection-dialog").close();firmwareUI.open();};
 
 function openWriteConfirmation() {
   writeFeedback.dismiss();

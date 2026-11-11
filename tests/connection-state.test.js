@@ -11,7 +11,7 @@ test('all three connection controls follow the same runtime through busy, unplug
     getElementById: id => ids[id],
   };
   let calls = 0;
-  const runtime = { device:{opened:true, close(){calls++;}}, broken:false, close(){calls++;} };
+  const runtime = { profile:{name:'Athena75'}, device:{opened:true, close(){calls++;}}, broken:false, close(){calls++;} };
   for (let i=0;i<3;i++) renderConnectionControls(runtime,false,root);
   assert.ok(controls.every(b=>b.textContent==='已连接 · Athena75' && !b.disabled));
   assert.equal(ids.identify.disabled,true);
@@ -33,4 +33,13 @@ test('only an open, healthy device is a reusable session', () => {
   assert.equal(hasLiveConnection({device:{opened:false}}),false);
   assert.equal(hasLiveConnection({device:{opened:true},broken:true}),false);
   assert.equal(hasLiveConnection({device:{opened:true}}),true);
+});
+
+
+test('connection header uses the identified model, never a fixed Athena75 label',()=>{
+ const button={textContent:'',classList:{toggle(){}},disabled:false};
+ const ids=Object.fromEntries(['connection-title','identify','connection-disconnect'].map(id=>[id,{}]));
+ const root={querySelectorAll:s=>s==='#connect, [data-modal-connect]'?[button]:[],getElementById:id=>ids[id]};
+ renderConnectionControls({profile:{name:'Athena1800'},device:{opened:true}},false,root);
+ assert.equal(button.textContent,'已连接 · Athena1800');assert.equal(ids['connection-title'].textContent,'已连接 · Athena1800');
 });

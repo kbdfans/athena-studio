@@ -4,7 +4,6 @@ import {planFirmwareUpgrade,recoveryUf2} from './firmware-plan.js';
 import {readFirmwareFlash,writeFirmwarePlan} from './firmware-transport.js';
 import {saveFirmwareBackup} from './firmware-backup.js';
 import {digest} from './backup-v2.js';
-import './firmware-upgrade.css';
 
 export function setupFirmwareUpgrade({getIdentity,getBusy,releaseConnection,onFinished}) {
   const dialog=document.createElement('dialog');dialog.id='firmware-dialog';

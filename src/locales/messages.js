@@ -2043,6 +2043,24 @@ export const MESSAGES={
     "fr": "Retour",
     "es": "Volver"
   },
+  "固件升级": {
+    "en": "Firmware upgrade",
+    "zh-TW": "韌體升級",
+    "ja": "ファームウェア更新",
+    "ko": "펌웨어 업데이트",
+    "de": "Firmware-Update",
+    "fr": "Mise à jour du firmware",
+    "es": "Actualizar firmware"
+  },
+  "升级操作图示": {
+    "en": "Upgrade instructions",
+    "zh-TW": "升級操作圖示",
+    "ja": "更新手順",
+    "ko": "업데이트 안내",
+    "de": "Update-Anleitung",
+    "fr": "Instructions de mise à jour",
+    "es": "Instrucciones de actualización"
+  },
   "每一个按键，每一帧陪伴，都由你决定。": {
     "en": "Make every key and every frame your own."
   },
@@ -4421,5 +4439,14 @@ export const MESSAGES={
   },
   "下载 UF2 文件": {
     "en": "Download UF2 file"
+  },
+  "我的键盘": {
+    "en": "My keyboard"
+  },
+  "物理按键模式 · 含 MO/Fn，需连接键盘": {
+    "en": "Physical key mode · includes MO/Fn; connect your keyboard"
+  },
+  "等待连接键盘，连接成功后自动检测（含 MO/Fn）。": {
+    "en": "Connect your keyboard to start physical testing, including MO/Fn."
   }
 };
