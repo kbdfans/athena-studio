@@ -50,7 +50,8 @@ export function setupFirmwareUpgrade({getIdentity,getBusy,releaseConnection,onFi
   function status(label,pct){$('upgrade-status').textContent=label;$('upgrade-progress').hidden=false;$('upgrade-progress').value=pct;}
   function close(){if(!running){generation++;dialog.close();stopWaiting();}}
   $('upgrade-close').onclick=$('upgrade-back').onclick=close;
-  dialog.addEventListener('cancel',e=>{if(running)e.preventDefault();else generation++;});
+  // Esc is used to enter the keyboard bootloader, so it must never dismiss this guide.
+  dialog.addEventListener('cancel',e=>e.preventDefault());
   dialog.addEventListener('close',()=>{monitor.stop();onStateChange?.();});
   window.addEventListener('beforeunload',e=>{if(running){e.preventDefault();e.returnValue='';}});
   $('upgrade-recovery').onclick=()=>{
