@@ -9,6 +9,10 @@ Open-source browser configurator for KBDfans Athena75/Athena1800 and keyboards e
 
 Immediate key remapping, layers, advanced QMK functions, physical keyboard testing, GIF/image crop and upload, customizable pixel cats, and typing-ball animation settings. The editor and screen dialogs share one WebHID connection. Images are processed locally; recent media is stored in the current browser. Desktop Chrome or Edge with WebHID and HTTPS (or localhost) is required. Browser authorization is required at each site origin; permissions and cached media do not transfer between the two domains.
 
+## Connection
+
+Choose the keyboard name, then click Connect. First use requires the browser device chooser. On later visits the model choice is remembered; clicking Connect reuses an unambiguous matching permission where available. Serial permissions are reused only for a USB identity successfully recognized by this site before. Multiple matching devices, revoked permission or an explicit **Authorize again / choose another device** action open the chooser. Connected model names always come from the actual device, not the selection hint. Permissions are separate for the two site origins.
+
 ## Device support
 
 Athena75 and Athena1800 have separate matrix definitions and VID/PID checks. Original supported Vial firmware supports key mapping; screen upload, pets and typing mode require the matching Screen Studio firmware. This website does not automatically flash firmware. Do not flash Athena75 firmware onto Athena1800.
@@ -53,7 +57,7 @@ A first visit to `v.kbd.cool` uses English; `kbd.cool` and `www.kbd.cool` use Si
 
 ## ZMK Studio
 
-Choose **ZMK · Agar / Tofu BLE** when connecting. The firmware must expose ZMK Studio RPC over USB. Basic and Advanced use native ZMK behaviors, with explanations, examples, named parameters and modifier shortcuts. Assignment applies immediately, is read back, and is automatically saved to the keyboard. Available functions and physical layouts come from the device. Single-layout firmware shows a read-only layout; additional layout variants require firmware support.
+Choose your keyboard name (for example, **Agar Micro** or **Tofu60 BLE 3.0**) when connecting. The website chooses the transport internally. The firmware must expose ZMK Studio RPC over USB. Basic and Advanced use native ZMK behaviors, with explanations, examples, named parameters and modifier shortcuts. Assignment applies immediately, is read back, and is automatically saved to the keyboard. Available functions and physical layouts come from the device. Single-layout firmware shows a read-only layout; additional layout variants require firmware support.
 
 Agar Micro BLE was hardware-tested: identification and geometry, immediate Esc-to-A remapping, persistence after USB reconnect, and restoring Esc all passed. Its firmware provides one layout. Multiple-layout switching is simulation-tested only. Compiled macros/hold-tap behaviors can be assigned, but their internal definitions and timing cannot be edited through this RPC. See [ZMK support and limitations](design/zmk-support.md).
 

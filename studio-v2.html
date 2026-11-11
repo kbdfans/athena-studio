@@ -39,12 +39,11 @@
       <span class="eyebrow">YOUR KEYBOARD, YOUR WAY</span>
       <h1 id="gate-title">连接你的键盘。</h1>
       <p>连接键盘后，开始设置键位、屏幕和你的像素伙伴。</p>
-      <label class="connection-protocol">键盘类型 <select id="connection-protocol" data-connection-protocol aria-label="键盘类型"><option value="qmk">Athena · QMK / Vial</option><option value="zmk">ZMK · Agar / Tofu BLE</option></select></label>
+      <label class="connection-protocol">键盘名称 <select id="connection-model" data-connection-model aria-label="键盘名称"><option value="">请选择你的键盘</option></select></label>
       <div class="gate-actions"><button id="gate-connect" class="primary">连接键盘 ↗</button><button id="gate-demo" class="outline">体验演示模式</button></div>
-      <small>支持 Athena75、Athena1800，以及启用 ZMK Studio 的 Agar / Tofu BLE。</small>
-      <button id="gate-firmware" class="text-button">升级操作图示</button>
+      <div class="connection-help"><small>首次连接：插好 USB 数据线，在浏览器弹窗中选择键盘并授权。</small><small>已授权的键盘会优先直接重连；两个站点的授权需要分别进行。</small></div>
+      <div class="connection-tools"><button class="text-button" data-reauthorize>重新授权 / 选择其他设备</button><button id="gate-firmware" class="text-button">升级操作图示</button></div>
       <p id="gate-error" class="error" role="alert"></p>
-      <small>使用 USB 数据线连接，再从浏览器列表中选择你的键盘。</small>
       <small><a href="https://github.com/kbdfans/athena-studio" target="_blank" rel="noopener noreferrer">GitHub · GPL-2.0</a> · <a href="./THIRD_PARTY.txt" target="_blank" rel="noopener noreferrer">Open-source notices</a></small>
     </section>
     <main id="studio-main" inert>
@@ -619,10 +618,11 @@
         <button id="connection-disconnect" class="outline full">断开连接</button>
       </div>
       <p data-disconnected-only>
-        连接 Athena75 或 Athena1800。旧版固件可先设置键位，屏幕功能需升级对应型号固件。
+        选择键盘名称后连接。可用功能以键盘实际固件为准。
       </p>
-      <label class="connection-protocol" data-disconnected-only>键盘类型 <select data-connection-protocol aria-label="键盘类型"><option value="qmk">Athena · QMK / Vial</option><option value="zmk">ZMK · Agar / Tofu BLE</option></select></label>
+      <label class="connection-protocol" data-disconnected-only>键盘名称 <select data-connection-model aria-label="键盘名称"><option value="">请选择你的键盘</option></select></label>
       <button id="identify" class="primary" data-disconnected-only>连接正常模式键盘</button>
+      <button class="text-button" data-disconnected-only data-reauthorize>重新授权 / 选择其他设备</button>
       <p id="identity" class="success"></p>
       <p id="connection-error" class="error" role="alert"></p>
       <p class="muted" data-disconnected-only>首次连接需浏览器授权，连接后全部功能共用。连接过程不会写入动画。</p>

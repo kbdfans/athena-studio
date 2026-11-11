@@ -5273,5 +5273,32 @@ export const MESSAGES={
   },
   "自定义层功能的触发规则由固件定义。": {
     "en": "The firmware defines the activation rules for custom layer behaviors."
+  },
+  "键盘名称": {
+    "en": "Keyboard name"
+  },
+  "请选择你的键盘": {
+    "en": "Choose your keyboard"
+  },
+  "其他兼容键盘": {
+    "en": "Other compatible keyboard"
+  },
+  "请先选择键盘名称。": {
+    "en": "Please choose your keyboard first."
+  },
+  "选择键盘名称，网页会自动使用对应的连接方式。": {
+    "en": "Choose your keyboard name. The website handles the connection method."
+  },
+  "首次连接：插好 USB 数据线，在浏览器弹窗中选择键盘并授权。": {
+    "en": "First connection: plug in a USB data cable, then select and authorize your keyboard in the browser prompt."
+  },
+  "重新授权 / 选择其他设备": {
+    "en": "Authorize again / choose another device"
+  },
+  "已授权的键盘会优先直接重连；两个站点的授权需要分别进行。": {
+    "en": "Previously authorized keyboards reconnect directly when possible. Each website needs its own permission."
+  },
+  "选择键盘名称后连接。可用功能以键盘实际固件为准。": {
+    "en": "Choose your keyboard, then connect. Available features depend on its firmware."
   }
 };

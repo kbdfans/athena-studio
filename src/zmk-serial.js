@@ -1,7 +1,7 @@
 // Use official protobuf messages; own lifecycle prevents unbounded pending RPCs.
-export async function connectZmkSerial({onDisconnect=()=>{}}={}){
+export async function connectZmkSerial({onDisconnect=()=>{},port:selectedPort}={}){
  if(!navigator.serial)throw Error('ZMK USB 配置需要桌面版 Chrome 或 Edge');
- const port=await navigator.serial.requestPort(); // Must be called in the user gesture.
+ const port=selectedPort||await navigator.serial.requestPort(); // Must be called in the user gesture.
  const {Request,Response}=await import('@zmkfirmware/zmk-studio-ts-client/studio');
  const {get_decoder,get_encoder}=await import('@zmkfirmware/zmk-studio-ts-client/framing');
  await port.open({baudRate:12500});

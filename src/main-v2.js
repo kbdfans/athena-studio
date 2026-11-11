@@ -1,3 +1,4 @@
+import {CONNECTION_MODELS,connectionModel,readConnectionModel,rememberConnectionModel,chooseSerialPort,rememberSerialPort} from './connection-models.js';
 import {ZmkRuntime} from './zmk-runtime.js';
 import {connectZmkSerial} from './zmk-serial.js';
 import {setupZmkUI} from './zmk-ui.js';
@@ -27,6 +28,7 @@ import { setupPet } from "./pet-ui.js";
 import { setupKeymap } from "./keymap-ui.js";
 import { setupKeyboardTester } from "./keyboard-tester.js";
 startDiagnostics();
+let connectionStorage;try{connectionStorage=window.localStorage;}catch{}
 let petUI, keymapUI, testerUI, sourceHistoryUI, firmwareUI, zmkUI;
 let sourceId = null, sourceSettingsTimer;
 let transferStarted = 0;
@@ -671,7 +673,7 @@ $("download").onclick = () => {
     download(encodeUf2(state.bytes, state.slot), `athena-gif${state.slot}.uf2`);
 };
 $("connect").onclick = $("help").onclick = showConnection;
-async function connectKeyboard() {
+async function connectKeyboard({forcePrompt=false}={}) {
   recordDiagnostic("connection.request");
   if (state.busy) return;
   if (hasLiveConnection(state.boot)) {
@@ -679,6 +681,8 @@ async function connectKeyboard() {
     updateDevice();
     return;
   }
+  const model=connectionModel($('connection-model').value);
+  if(!model){$('gate-error').textContent='请先选择键盘名称。';$('connection-model').focus();return;}
   $("connection-error").textContent = "";
   $("gate-error").textContent = "";state.sessionReady=false;
   $("notice").hidden = true;
@@ -686,19 +690,22 @@ async function connectKeyboard() {
   try {
     if (state.boot) await state.boot.close();
     state.boot = null;
-    if($('connection-protocol').value==='zmk'){
+    if(model.protocol==='zmk'){
       testerUI?.setVisible(false);
       let runtime;
-      const rpc=await connectZmkSerial({onDisconnect:()=>{runtime?.disconnected();updateDevice();}});
+      if(!navigator.serial)throw Error('请使用桌面版 Chrome 或 Edge，通过 USB 连接');
+      const port=await chooseSerialPort({model:model.id,serial:navigator.serial,storage:connectionStorage,forcePrompt});
+      const rpc=await connectZmkSerial({port,onDisconnect:()=>{runtime?.disconnected();updateDevice();}});
       runtime=new ZmkRuntime(rpc,{onChange:()=>zmkUI?.refresh()});
       state.boot=runtime;
       await runtime.initialize();
+      rememberSerialPort(model.id,port,connectionStorage);
       state.identity={profile:runtime.profile,protocol:'zmk',name:runtime.profile.name};state.demo=false;
       zmkUI.load();state.sessionReady=true;
       $('identity').textContent=`已识别 ${runtime.profile.name}`;
       $('connection-dialog').close();recordDiagnostic('connection.ready');updateDevice();return;
     }
-    state.identity = await identifyAthena({ prompt: true, models:["athena75","athena1800"] });
+    state.identity = await identifyAthena({ prompt: forcePrompt, models:[model.id] });
     $("identity").textContent = `已识别 ${state.identity.profile.name}`;
     const runtime = await connectIdentifiedKeyboard(state.identity);
     state.identity.runtimeUpload = !!runtime;
@@ -730,7 +737,12 @@ async function connectKeyboard() {
   }
 }
 $("identify").onclick = $("gate-connect").onclick = connectKeyboard;
-for(const picker of document.querySelectorAll('[data-connection-protocol]'))picker.onchange=()=>{for(const other of document.querySelectorAll('[data-connection-protocol]'))other.value=picker.value;};
+const rememberedModel=readConnectionModel(connectionStorage);
+for(const picker of document.querySelectorAll('[data-connection-model]')){
+ for(const model of CONNECTION_MODELS){const option=document.createElement('option');option.value=model.id;option.textContent=model.name;picker.append(option);}picker.value=rememberedModel;
+ picker.onchange=()=>{for(const other of document.querySelectorAll('[data-connection-model]'))other.value=picker.value;rememberConnectionModel(picker.value,connectionStorage);$('gate-error').textContent='';updateDevice();};
+}
+for(const button of document.querySelectorAll('[data-reauthorize]'))button.onclick=()=>connectKeyboard({forcePrompt:true});
 firmwareUI=setupFirmwareUpgrade({
   getIdentity:()=>state.identity,getSnapshot:()=>keymapUI.snapshot(),getBusy:()=>state.busy,
   releaseConnection:async()=>{testerUI?.setVisible(false);await state.boot?.close();state.boot=null;state.sessionReady=false;state.headers=null;updateDevice();},
