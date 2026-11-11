@@ -23,7 +23,10 @@ Cat and Shiba selection and color preferences are saved separately in the browse
 Default Shiba palette is orange/cream/dark brown; users can recolor or choose
 existing fur patterns. Browser checks cover all eight previews, species/color
 persistence, returning to the original cat settings, English UI and disabled
-writes in demo mode. Physical display acceptance remains to be checked by user.
+writes in demo mode. On 2026-11-11, the user confirmed the Shiba appearance and motions displayed
+correctly on the keyboard after uploading from kbd.cool. The reply did not
+specify which Athena model, so this is not recorded as separate acceptance for
+both models.
 
 Project-created artwork is provided under GPL-2.0-only to the extent of the
 contributors' rights, as described in THIRD_PARTY.md.
