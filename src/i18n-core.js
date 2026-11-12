@@ -8,7 +8,7 @@ export function resolveLocale(value='en'){
 export function initialLocale({saved,hostname='',browserLanguage='en'}={}){
  if(saved&&LANGUAGES.some(([id])=>id===saved))return saved;
  const host=hostname.toLowerCase();
- if(host==='v.kbd.cool')return 'en';
+ if(host==='v.kbd.cool'||host==='config.kbdfans.com')return 'en';
  if(host==='kbd.cool'||host==='www.kbd.cool')return 'zh-CN';
  return resolveLocale(browserLanguage);
 }

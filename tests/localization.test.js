@@ -22,6 +22,7 @@ test('connection gate requires a verified ready open runtime; disconnection cann
 test('site defaults are host-specific; a deliberate language choice takes priority',async()=>{
  const {initialLocale}=await import('../src/i18n-core.js');
  assert.equal(initialLocale({hostname:'v.kbd.cool',browserLanguage:'zh-CN'}),'en');
+ assert.equal(initialLocale({hostname:'config.kbdfans.com',browserLanguage:'zh-CN'}),'en');
  assert.equal(initialLocale({hostname:'kbd.cool',browserLanguage:'en-US'}),'zh-CN');
  assert.equal(initialLocale({hostname:'www.kbd.cool',browserLanguage:'en-US'}),'zh-CN');
  assert.equal(initialLocale({hostname:'v.kbd.cool',saved:'ja'}),'ja');
