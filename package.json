@@ -7,6 +7,7 @@
     "dev": "vite --host 127.0.0.1 --port 8770",
     "build": "vite build",
     "build:hosted": "vite build --mode hosted && node scripts/package-hosted.mjs",
+    "build:hosted:cn": "vite build --mode hosted --base /config/ && node scripts/package-hosted.mjs /config/",
     "test": "node --test tests/*.test.js",
     "test:firmware": "node firmware/test.mjs",
     "test:pet": "node firmware/v2/test.mjs",

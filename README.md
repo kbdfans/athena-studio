@@ -2,11 +2,11 @@
 
 ## Public deployment and source (2026-11-11)
 
-- China: https://kbd.cool/studio/
+- China: https://kbd.cool/config
 - International: https://v.kbd.cool/studio/
 - KBDfans configurator: https://config.kbdfans.com/. The Railway service loads `scripts/studio-domain.mjs` with Node’s `--import` flag. Point the custom domain to port 3001 and publish the hosted build to `public/studio/`.
 - Public source: https://github.com/kbdfans/athena-studio (GPL-2.0-only, with third-party notices)
-- Hosted build: `npm run build:hosted`. Serve `dist/` at `/studio/`. The integrated configurator is the default hosted index.
+- Hosted builds: `npm run build:hosted` for `/studio/` and `npm run build:hosted:cn` for `/config/`. The integrated configurator is the default hosted index.
 - Athena1800 has now passed initial hardware screen/pet/typing checks. Athena75 intermittent black-screen diagnosis remains unresolved; the latest user report was recovery after restarting the Mac. Historical notes below are development history, not current release guarantees.
 - Deployment evidence and private rollback material: `.artifacts/deploy-20261111/`. Public repository is an allowlisted source export; device backups, unrelated sites, credentials and third-party reference artwork are excluded.
 
